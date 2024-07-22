@@ -17,4 +17,4 @@ jobs:
         server: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         password: ${{ secrets.PASS }}
-        server-dir: /home2/larjov06/public_html/sistema/
+        server-dir: /public_html/sistema/
