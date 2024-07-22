@@ -5,6 +5,7 @@
 .env
 .env.backup
 .phpunit.result.cache
+.htaccess
 Homestead.json
 Homestead.yaml
 npm-debug.log

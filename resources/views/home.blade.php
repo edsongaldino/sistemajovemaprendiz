@@ -124,7 +124,7 @@
                             <div class="col-lg-6">
                                 <div class="slider-content">
                                     <h1 class="title">ESTUDANTE</h1>
-                                    <p class="text">O Jovem Aprendiz é uma política pública que incentiva jovens estudantes a procurarem o primeiro emprego, garantindo todos os seus direitos. O modelo une experiência profissional com curso de profissionalização em alguma área específica.</p>
+                                    <p class="text">O Programa do Jovem Aprendiz é uma política pública que incentiva jovens estudantes a procurarem o primeiro emprego, garantindo todos os seus direitos. O modelo une experiência profissional com curso de profissionalização em alguma área específica.</p>
                                     <ul class="slider-btn rounded-buttons">
                                         <li><a class="main-btn rounded-one page-scroll" href="#about">SAIBA COMO FUNCIONA</a></li>
                                         <li><a class="main-btn rounded-two" href="{{ url("cadastro-jovem-aprendiz") }}">CADASTRE-SE</a></li>
