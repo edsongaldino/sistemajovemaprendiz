@@ -1,0 +1,323 @@
+.bg-login{
+    background-image: url(../img/bg_login.jpg);
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.btn-incluir{
+    height: 50px;
+    width: auto;
+    padding: 0 20px;
+    background-color: rgb(11, 141, 135);
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    float: right;
+    margin-top: -50px;
+}
+
+.btn-incluir:hover{
+    background-color: rgb(5, 85, 81);
+    cursor: pointer;
+}
+
+.ver-contratos{
+    text-align: center;
+}
+
+.valor-pago{
+    color: #04a848;
+}
+.valor-juros{
+    color: #ad3b05;
+    font-size: 11px !important;
+}
+
+#ModalInformarPedido .modal-dialog{
+    width: 600px !important;
+}
+
+.nova-data{
+    font-size: 20px !important;
+}
+
+.ver-contratos .qtd{
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+.ver-contratos .numero-pedido{
+    font-size: 12px !important;
+}
+
+.ver-contratos .btn-ver-contratos{
+    height: 20px;
+    line-height: 20px;
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+}
+
+.btn-imprimir{
+    height: 50px;
+    width: auto;
+    padding: 0 20px;
+    background-color: rgb(156, 29, 12);
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    float: right;
+    margin-top: -50px;
+}
+
+.btn-imprimir:hover{
+    background-color: rgb(85, 5, 5);
+    cursor: pointer;
+}
+
+.botoes-faturamento{
+    width: 100%;
+    height: 60px;
+}
+
+
+.btn-incluir.faturados{
+    margin-top: 0px;
+    background-color: #0866c6;
+    margin-right: 15px;
+}
+
+.btn-incluir.faturados:hover{
+    background-color: #054483;
+    cursor: pointer;
+}
+
+.btn-incluir.situacao{
+    margin-top: 0px;
+    background-color: #d39d39;
+    margin-right: 15px;
+}
+
+.btn-incluir.situacao:hover{
+    background-color: #d48c05;
+    cursor: pointer;
+}
+
+.btn-incluir.pendentes{
+    margin-top: 0px;
+    background-color: brown;
+    margin-right: 15px;
+}
+
+.btn-incluir.pendentes:hover{
+    background-color: rgb(71, 11, 3);
+    cursor: pointer;
+}
+
+.btn-incluir.faturamento{
+    margin-top: 0px;
+}
+
+.btn-incluir.faturamento:hover{
+    background-color: rgb(5, 85, 81);
+    cursor: pointer;
+}
+
+.btn-incluir.remessa{
+    margin-top: 0px;
+    background-color: rgb(226, 105, 5);
+    float: left;
+}
+
+.btn-incluir.remessa:hover{
+    background-color: rgb(194, 89, 4);
+    cursor: pointer;
+}
+
+.btn-incluir.retorno{
+    margin-top: 0px;
+    background-color: rgb(5, 37, 124);
+    float: left;
+}
+
+.btn-incluir.retorno:hover{
+    background-color: rgb(3, 1, 34);
+    cursor: pointer;
+}
+
+
+.btn-incluir.integracao-contabil{
+    margin-top: 0px;
+    background-color: rgb(187, 147, 15);
+    float: left;
+}
+
+.btn-incluir.integracao-contabil:hover{
+    background-color: rgb(139, 108, 4);
+    cursor: pointer;
+}
+
+span.data-cadastro{
+    font-size: 12px !important;
+}
+
+.btn-incluir.exames{
+    margin-top: 0px;
+    background-color: rgb(6, 91, 160);
+    margin-left: 15px;
+}
+
+.btn-busca{
+    height: 70px;
+    width: 100%;
+    background-color: #17a2b8;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    float: right;
+    line-height: 50px;
+}
+
+.btn-busca:hover{
+    background-color: #045d6b;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-primary{
+    cursor: pointer;
+}
+
+.btn-gravar{
+    height: 50px;
+    width: auto;
+    padding: 0 20px;
+    float: right;
+}
+
+.pergunta{
+    text-align: center;
+    font-size: 30px;
+    color: darkcyan;
+}
+
+.btn-enviar-candidatos{
+    margin-right: 60px;
+    margin-top: -60px;
+}
+
+.btn-copiar-link{
+    margin-right: 360px;
+    margin-top: -60px;
+    background-color: #df9c0b;
+}
+
+.btn-gravar:hover{
+    cursor: pointer;
+}
+
+.titulo-sessao{
+    font-size: 14px !important;
+    color: #333 !important;
+    font-weight: bold;
+}
+
+.varias-inscricoes{
+    margin-top: 10px;
+}
+
+.AddContato{
+    float: right;
+    width: 200px;
+    cursor: pointer;
+}
+
+.RemoverContato{
+    margin: auto;
+    width: 100%;
+    cursor: pointer;
+}
+
+.form-busca{
+    width: 100%;
+    height: auto;
+    float: left;
+    margin-bottom: 20px;
+}
+
+#calendario-aluno{
+    padding: 20px;
+}
+
+input.valor-bolsa{
+    color: #17a2b8 !important;
+    font-size: 25px !important;
+}
+
+tr.entrada{
+    background-color: #00b29726;
+}
+
+tr.saida{
+    background-color: #b8371717;
+}
+
+td.quantidade{
+    color: #878484;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.modal.modal-fullscreen .modal-dialog {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+
+  .modal.modal-fullscreen .modal-content {
+    height: auto;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+
+  .modal.modal-fullscreen .modal-body {
+    overflow-y: auto;
+  }
+
+  .form-faturar{
+      width: 665px !important;
+  }
+
+  /* Estilo Fontes*/
+  .fs-20{
+      font-size: 20px !important;
+  }
+
+  span.descontos{
+    font-size: 12px;
+  }
+
+  .situacao-contrato{
+    background-color: #e7ebea !important;
+  }
+
+  .remover-contato{
+    width: 40px;
+    height: 40px;
+    background-color: #cb2333;
+    position: absolute;
+    right: -20px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 20px;
+    color: #FFF;
+    border-radius: 5px;
+    top: 85px;
+  }
+
+  .remover-contato:hover{
+    background-color: #7a0b16;
+    cursor: pointer;
+  }

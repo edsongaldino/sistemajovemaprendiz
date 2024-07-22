@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\Http",
+    "\\app\\Http\\Controllers",
+    "\\resources\\views"
+  ],
+  "SelectedNode": "\\.env.example",
+  "PreviewInSolutionExplorer": false
+}
