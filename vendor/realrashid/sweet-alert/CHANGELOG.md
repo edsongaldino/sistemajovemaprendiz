@@ -2,6 +2,51 @@
 
 All notable changes to `sweet-alert` will be documented in this file.
 
+## v7.2.0 - 2024-06-15
+- Added Laravel 11 Support
+- Upgraded SweetAlert2 to latest version
+- Bug Fixes
+- Docs Updated
+
+## v7.1.0 - 2023-08-08
+- Upgraded SweetAlert2 to latest version
+- Bug Fixes
+- Docs Updated
+
+## v7.0.0 - 2023-04-20
+- Added confirmDelete function
+- Added themes feature
+- Upgraded SweetAlert2 to latest version
+- Bug Fixes
+- Docs Updated
+
+## v6.0.0 - 2023-02-15
+- Added Laravel 10 Support
+- Bug Fixes
+- Docs Updated
+
+## v5.1.0 - 2022-05-28
+- Added Laravel 9 Support
+- Bug Fixes
+- Docs Updated
+
+## v5.0.0 - 2022-02-04
+- Added Laravel 9 Support
+- Bug Fixes
+- Upgraded SweetAlert2 to latest version
+- Docs Updated
+
+## v4.1.0 - 2021-11-05
+- Bug Fixes
+- Upgraded SweetAlert2 to latest version
+- Docs Updated
+
+## v4.0.0 - 2021-06-14
+- Bug Fixes
+- Upgraded SweetAlert2 to latest version
+- .gitattributes file
+- Docs Updated
+
 ## v3.2.3 - 2021-05-26
 - Bug Fixes
 - Upgraded SweetAlert2 to latest version

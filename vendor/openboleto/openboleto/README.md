@@ -1,10 +1,14 @@
-# OpenBoleto [![Build Status](https://travis-ci.org/openboleto/openboleto.png)](https://travis-ci.org/openboleto/openboleto)
+# OpenBoleto
 
 O OpenBoleto é uma biblioteca de código aberto para geração de boletos bancários, um meio de pagamento muito comum no Brasil. O foco é ser simples e ter uma arquitetura compatível com os recursos mais modernos do PHP.
 
-## Ajude o Projeto a continuar, faça uma doação!
+Se esse projeto te auxiliou de alguma forma, você pode contribuir financeiramente para que eu possa continuar a desenvolver projetos open source. As contribuições podem ser:
 
-[![Pague com PagSeguro - é rápido, grátis e seguro!](https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/209x48-doar-assina.gif)](https://pag.ae/7UaL6CCHQ)
+# Ajude o Projeto a continuar, faça uma doação no PIX!
+
+    b230c7a8-8743-459f-bae5-541ea46a3533
+
+![302100763-dc530122-d9fb-41e4-9edf-dc9c32e74adc](https://github.com/fredroo/cnpj2sql/assets/6863089/1a6505e5-5039-4609-87af-ba84f03d4b08)
 
 ## Instalação
 
@@ -29,8 +33,8 @@ Se você quer simplesmente baixar e dar um include, também é muito simples. Pr
 Essa é a melhor parte. Não poderia ser mais simples, veja um exemplo básico:
 
 ```php
-use OpenBoleto\Banco\BancoDoBrasil;
 use OpenBoleto\Agente;
+use OpenBoleto\Banco\BancoDoBrasil;
 
 $sacado = new Agente('Fernando Maia', '023.434.234-34', 'ABC 302 Bloco N', '72000-000', 'Brasília', 'DF');
 $cedente = new Agente('Empresa de cosméticos LTDA', '02.123.123/0001-11', 'CLS 403 Lj 23', '71000-000', 'Brasília', 'DF');
@@ -46,10 +50,15 @@ $boleto = new BancoDoBrasil(array(
     'carteira' => 18,
     'conta' => 10403005, // Até 8 dígitos
     'convenio' => 1234, // 4, 6 ou 7 dígitos
+    'qrCode' => 'otpauth://totp/test?secret=B3JX4VCVJDVNXNZ5&issuer=chillerlan.net', // Caso o Boleto tenha registro para uso de QrCode Pix
 ));
 
 echo $boleto->getOutput();
 ```
+## Como adiquirir o QrCode Pix
+
+O uso padrão do PIX não pode ser usado no boleto, à instituição bancária tem um serviço da qual você passa o boleto registrado e solicita a PIX, o banco vai te retornar uma string na qual é o PIX que identifica o boleto, para quando realizar o pagamento via PIX, tenha referência do boleto para ser baixado.
+
 
 Sim, só isso! Lembre-se de que cada banco possui alguma particularidade, mas em geral são estes parâmetros os obrigatórios. Na pasta **samples** existe um exemplo funcional de cada banco, você pode verificar lá quais são os parâmetros necessários para cada banco.
 
@@ -153,7 +162,7 @@ Atualmente o OpenBoleto funciona com os bancos abaixo:
  <td>--</td>
  <td>BETA</td>
  </tr>
- 
+
  </table>
 
 ### API Banco Inter

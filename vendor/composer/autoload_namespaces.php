@@ -6,6 +6,4 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'OpenBoleto\\' => array($vendorDir . '/openboleto/openboleto/src'),
-    'Mockery' => array($vendorDir . '/mockery/mockery/library'),
 );
