@@ -51,8 +51,14 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
 
-        if((New Empresa())->verificaDuplicidade('cnpj', $request->cnpj)){
-            return redirect()->back()->with('warning', 'Este CNPJ já consta em nosso banco de dados! Verifique.');
+        if($request->tipo_cadastro == 'CEI'){
+            if((New Empresa())->verificaDuplicidade('cei', $request->cei)){
+                return redirect()->back()->with('warning', 'Este CPF já consta em nosso banco de dados! Verifique.');
+            }
+        }else{
+            if((New Empresa())->verificaDuplicidade('cnpj', $request->cnpj)){
+                return redirect()->back()->with('warning', 'Este CNPJ já consta em nosso banco de dados! Verifique.');
+            }
         }
 
         $endereco = (new EnderecoController())->salvarEndereco($request);
