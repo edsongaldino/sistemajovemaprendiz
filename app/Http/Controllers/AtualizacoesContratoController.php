@@ -82,6 +82,11 @@ class AtualizacoesContratoController extends Controller
 
                 break;
 
+            case "Benefícios":
+                $atualizacao->valor = $request->valor;
+                $atualizacao->tipo_beneficio = $request->tipo_beneficio;
+                break;
+
         }
 
         if($atualizacao->save()):

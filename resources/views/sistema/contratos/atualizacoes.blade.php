@@ -14,6 +14,7 @@
       <h4 class="tx-gray-800 mg-b-5"><i class="fa fa-bank"></i> Atualizações do contrato</h4>
       <p class="mg-b-0">Lista de contratos cadastrados no sistema</p>
 
+      <a href="#" data-toggle="modal" data-target="#ModalBeneficio"><button class="btn btn-incluir beneficios"><i class="fa fa-star" aria-hidden="true"></i> Lançar Benefícios</button></a>
       <a href="#" data-toggle="modal" data-target="#ModalExame"><button class="btn btn-incluir exames"><i class="fa fa-user-md" aria-hidden="true"></i> Lançar Exames</button></a>
       <a href="#" data-toggle="modal" data-target="#ModalFaltas"><button class="btn btn-incluir faturamento"><i class="fa fa-plus"></i> Lançar Falta</button></a>
       <a href="#" data-toggle="modal" data-target="#ModalUniforme"><button class="btn btn-incluir faturados"><i class="fa fa-check"></i> Lançar Uniforme</button></a>
@@ -79,14 +80,17 @@
                 @if($atualizacao->tipo == 'Entrega de Uniforme')
                 <td class="text-center">Quantidade <br/><b>{{ $atualizacao->quantidade }}</b></td>
                 <td class="text-center">Tamanho <br/><b>{{ $atualizacao->tamanho }}</b></td>
-                <td class="text-center">Valor <br/><b>{{ $atualizacao->valor }}</b></td>
+                <td class="text-center">Valor <br/>R$ <b>{{ Helper::converte_valor_real($atualizacao->valor) }}</b></td>
                 @elseif($atualizacao->tipo == 'Exame Admissional' || $atualizacao->tipo == 'Exame Demissional')
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <td class="text-center">Valor <br/><b>{{ $atualizacao->valor }}</b></td>
                 @elseif($atualizacao->tipo == 'Atualização Contratual')
-                <td class="text-center">Tipo <br/><b>{{ $atualizacao->situacao_contrato }}</b></td>
+                <td class="text-center">Tipo <br/><b>{{ $atualizacao->tipo }}</b></td>
                 <td class="text-center" colspan="2">Motivo <br/><b>{{ $atualizacao->motivo_desligamento }}</b></td>
+                @elseif($atualizacao->tipo == 'Benefícios')
+                <td class="text-center">Tipo <br/><b>{{ $atualizacao->tipo_beneficio }}</b></td>
+                <td class="text-center" colspan="2">Valor <br/>R$ <b>{{ Helper::converte_valor_real($atualizacao->valor) }}</b></td>
                 @else
                 <td class="text-center"></td>
                 <td class="text-center">Falta Justificada? <br/><b>{{ $atualizacao->falta_justificada }}</b></td>
@@ -307,6 +311,56 @@
                       </div>
                   </div><!-- col-4 -->
 
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Gravar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="ModalBeneficio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Lançar Benefício</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+  
+            <form action="{{ route('sistema.contrato.gravarAtualizacao') }}" method="POST" name="AtualizacaoContrato" id="AtualizacaoContrato">
+              @csrf
+              <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
+              <input type="hidden" name="tipo" value="Benefícios">
+              <div class="modal-body form-faturar">
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                      <label class="form-control-label">Data: <span class="tx-danger">*</span></label>
+                      <input class="form-control" type="date" name="data" id="data" value="" placeholder="" required>
+                      </div>
+                  </div><!-- col-4 -->
+                  <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="form-control-label">Tipo Benefício: <span class="tx-danger">*</span></label>
+                    <select class="form-control" id="tipo_beneficio" name="tipo_beneficio" data-placeholder="Selecione" required>
+                      <option label="Selecione"></option>
+                      <option value="Vale Alimentação">Vale Alimentação</option>
+                      <option value="Vale Transporte">Vale Transporte</option>
+                      <option value="Plano de Saúde">Plano de Saúde</option>
+                    </select>
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Valor (R$): <span class="tx-danger">*</span></label>
+                    <input class="form-control moeda" type="text" name="valor" id="valor" value="" placeholder="R$" required>
+                  </div>
+                </div><!-- col-4 -->
                 </div>
               </div>
               <div class="modal-footer">

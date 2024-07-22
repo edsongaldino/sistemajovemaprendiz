@@ -179,7 +179,7 @@ function EnviarFormContrato() {
         },
         function() {
           $.ajax({
-            url: '/sistema/atualizacao/excluir',
+            url: '/sistema/contrato/excluirAtualizacao',
             method: 'POST',
             data: {
               id: id,

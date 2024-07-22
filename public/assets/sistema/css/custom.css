@@ -122,6 +122,17 @@
     cursor: pointer;
 }
 
+.btn-incluir.beneficios{
+    margin-top: 0px;
+    margin-left: 15px;
+    background-color: #23bf08;
+}
+
+.btn-incluir.beneficios:hover{
+    background-color: rgb(2, 129, 29);
+    cursor: pointer;
+}
+
 .btn-incluir.remessa{
     margin-top: 0px;
     background-color: rgb(226, 105, 5);

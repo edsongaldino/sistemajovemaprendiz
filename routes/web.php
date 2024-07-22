@@ -244,7 +244,7 @@ Route::post('sistema/contrato/faturar', 'FaturamentoController@faturarContrato')
 Route::get('sistema/contrato/{id}/calendario-pdf', 'ContratoController@CalendarioPDF')->name('sistema.contrato.calendario-pdf')->middleware('auth');
 
 Route::post('sistema/contrato/gravarAtualizacao', 'AtualizacoesContratoController@store')->name('sistema.contrato.gravarAtualizacao')->middleware('auth');
-Route::post('sistema/atualizacao/excluir', 'AtualizacoesContratoController@destroy')->name('sistema.atualizacao.excluir')->middleware('auth');
+Route::post('sistema/contrato/excluirAtualizacao', 'AtualizacoesContratoController@destroy')->name('sistema.atualizacao.excluir')->middleware('auth');
 
 //Rotas Convênios
 Route::get('sistema/convenios', 'ConvenioController@index')->name('sistema.convenios')->middleware('auth');
