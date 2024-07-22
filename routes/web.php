@@ -5,6 +5,7 @@ use App\Http\Controllers\FaturamentoBoletoController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Carbon;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,7 @@ use Illuminate\Support\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', 'AppController@index')->name('site');
 Route::post('/gravar-pre-cadastro', 'PreCadastroController@store')->name('gravar-pre-cadastro');
 
