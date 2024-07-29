@@ -13,7 +13,6 @@ class RelatoriosController extends Controller
 {
     public function RelatorioBusca(Request $request)
     {
-
         $buscaFaturamento = Faturamento::select('faturamentos.*')
                         ->join('convenios', 'convenios.id', '=', 'faturamentos.convenio_id')
                         ->join('empresas', 'empresas.id', '=', 'convenios.empresa_id')
@@ -21,7 +20,6 @@ class RelatoriosController extends Controller
                         ->leftjoin('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id')
                         ->leftjoin('faturamento_boletos', 'faturamentos.id', '=', 'faturamento_boletos.faturamento_id')
                         ->where('faturamentos.deleted_at', null)->where('faturamento_boletos.deleted_at', null);
-
 
         if($request->codigoEmpresa){
             $buscaFaturamento->where('convenios.empresa_id', $request->codigoEmpresa);
@@ -61,7 +59,6 @@ class RelatoriosController extends Controller
 
             }
         }
-
 
         $faturamentos = $buscaFaturamento->groupBy('faturamentos.id')->orderBy('faturamentos.data', 'desc')->get();
 
