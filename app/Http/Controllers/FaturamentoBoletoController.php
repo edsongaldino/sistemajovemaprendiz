@@ -852,7 +852,7 @@ class FaturamentoBoletoController extends Controller
 
     public function AtualizarBoletos(){
 
-        $boletos = FaturamentoBoleto::where('status','Emitido')->get()->random(1);
+        $boletos = FaturamentoBoleto::where('status','<>','LIQUIDACAO')->get()->random(1);
 
         foreach($boletos as $boleto){
             //URL do serviço /boleto + /token

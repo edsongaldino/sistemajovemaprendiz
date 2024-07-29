@@ -16,6 +16,53 @@
     </div>
 
     <div class="br-pagebody">
+
+
+      <div class="botoes-faturamento mg-t-20">
+        <a href="{{ url('sistema/faturamento/adicionar') }}"><button class="btn btn-incluir faturamento"><i class="fa fa-print"></i> Imprimir Relatório</button></a>
+      </div>
+
+      <div class="row row-sm">
+
+        <div class="col-sm-6 col-xl-4">
+          <div class="bg-teal rounded overflow-hidden">
+            <div class="pd-25 d-flex align-items-center">
+              <i class="ion ion-person-stalker tx-60 lh-0 tx-white op-7"></i>
+              <div class="mg-l-20">
+                <p class="tx-10 tx-spacing-1 tx-mont tx-medium tx-uppercase tx-white-8 mg-b-10">Recebidos</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-2 lh-1">R$ {{ Helper::converte_valor_real(Helper::ValorTotalRecebido($faturamentos)) }}</p>
+                <span class="tx-11 tx-roboto tx-white-6">Valor total recebido</span>
+              </div>
+            </div>
+          </div>
+        </div><!-- col-3 -->
+        <div class="col-sm-6 col-xl-4 mg-t-20 mg-sm-t-0">
+          <div class="bg-primary rounded overflow-hidden">
+            <div class="pd-25 d-flex align-items-center">
+              <i class="ion ion-power tx-60 lh-0 tx-white op-7"></i>
+              <div class="mg-l-20">
+                <p class="tx-10 tx-spacing-1 tx-mont tx-medium tx-uppercase tx-white-8 mg-b-10">À Receber</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-2 lh-1">R$ {{ Helper::converte_valor_real(Helper::ValorTotalReceber($faturamentos)) }}</p>
+                <span class="tx-11 tx-roboto tx-white-6">Valor total à receber no período</span>
+              </div>
+            </div>
+          </div>
+        </div><!-- col-3 -->
+        <div class="col-sm-6 col-xl-4 mg-t-20 mg-xl-t-0">
+          <div class="bg-danger rounded overflow-hidden">
+            <div class="pd-25 d-flex align-items-center">
+              <i class="icon ion-pie-graph tx-60 lh-0 tx-white op-7"></i>
+              <div class="mg-l-20">
+                <p class="tx-10 tx-spacing-1 tx-mont tx-medium tx-uppercase tx-white-8 mg-b-10">Vencidos</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-2 lh-1">R$ {{ Helper::converte_valor_real(Helper::ValorTotalVencido($faturamentos)) }}</p>
+                <span class="tx-11 tx-roboto tx-white-6">Valor total dos contratos vencidos</span>
+              </div>
+            </div>
+          </div>
+        </div><!-- col-3 -->
+
+      </div><!-- row -->
+
       <div class="br-section-wrapper">
 
         <div class="form-busca">
@@ -24,19 +71,31 @@
 
             @csrf
             <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                <label class="form-control-label">Nome Fantasia (Empresa): <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="nome_fantasia" value="" placeholder="Nome Fantasia (Empresa)">
-                </div>
-              </div><!-- col-4 -->
-              <div class="col-md-3 mg-t--1 mg-md-t-0">
-                <div class="form-group mg-md-l--1">
-                <label class="form-control-label">CNPJ: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="cnpj" id="cnpj" value="">
-                </div>
-              </div><!-- col-4 -->
+
               <div class="col-md-2">
+                <div class="form-group">
+                <label class="form-control-label">Tipo Relatório: <span class="tx-danger">*</span></label>
+                <select class="form-control" name="tipo_relatorio" data-placeholder="Selecione o tipo do relatório">
+                    <option label="Selecione o tipo do relatório"></option>
+                    <option value="1">À Receber</option>
+                    <option value="2">Recebidos</option>
+                    <option value="3">Vencidos</option>
+                </select>
+                </div>
+              </div><!-- col-4 -->
+              
+              <div class="col-md-2">
+                <div class="form-group">
+                <label class="form-control-label">Banco: <span class="tx-danger">*</span></label>
+                <select class="form-control" name="banco" data-placeholder="Selecione o Banco">
+                    <option label="Selecione o banco"></option>
+                    <option value="">Todos</option>
+                    <option value="1">Sicredi</option>
+                    <option value="2">Bradesco</option>
+                </select>
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
                   <div class="form-group">
                   <label class="form-control-label">Pólo: <span class="tx-danger">*</span></label>
                   <select class="form-control" name="polo" data-placeholder="Selecione o Pólo">
@@ -50,13 +109,20 @@
 
               <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
-                <label class="form-control-label">Dia Faturamento: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="number" name="dia_faturamento" id="dia_faturamento" value="">
+                <label class="form-control-label">Data Inicial: <span class="tx-danger">*</span></label>
+                <input class="form-control" type="date" name="data_inicial" id="data_inicial" value="">
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-md-2 mg-t--1 mg-md-t-0">
-                <button type="submit" class="btn btn-busca"><i class="fa fa-search"></i><br/> Pesquisar</button>
+                <div class="form-group mg-md-l--1">
+                <label class="form-control-label">Data Final: <span class="tx-danger">*</span></label>
+                <input class="form-control" type="date" name="data_final" id="data_final" value="">
+                </div>
+              </div><!-- col-4 -->
+
+              <div class="col-md-1 mg-t--1 mg-md-t-0">
+                <button type="submit" class="btn btn-busca"><i class="fa fa-search"></i><br/></button>
               </div>
 
             </div>
@@ -68,42 +134,45 @@
 
         <div class="bd bd-gray-300 rounded table-responsive">
           <table class="table table-hover mg-b-0">
+
+
             <thead>
               <tr>
-                <th>Razão Social</th>
+                <th>Data Emissão</th>
+                <th>Nº NF</th>
                 <th>CNPJ</th>
-                <th>Data Emissão NF</th>
-                <th>Número NF</th>
+                <th>Razão Social</th>
+                <th>Vencimento</th>
+                <th>Situação</th>
+                <th>Tipo</th>
                 <th>Valor NF</th>
-                <th>Método Pagamento</th>
                 <th>Juros/Multa</th>
-                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
 
               @foreach ($faturamentos as $faturamento)
-              <tr>
-                <td>{{ $faturamento->convenio->empresa->razao_social ?? '' }}</td>
-                <td>{{ $faturamento->convenio->empresa->cnpj ?? '' }}</td>
-                <td>{{ $faturamento->notaFiscal->created_at ?? '' }}</td>
+              <tr class="item-faturamento">
+                <td>{{ Helper::datetime_br($faturamento->data) ?? '' }}</td>
                 <td>{{ $faturamento->notaFiscal->numero_nf ?? '' }}</td>
-                <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
-                <td>{{ $faturamento->forma_pagamento }}</td>
-                <td></td>
-                <td>
-                  <a href="{{ url('sistema/convenio/'.$faturamento->id.'/imprimir') }}" target="_blank"><div class="btn btn-warning" title="Imprimir Contrato de Convênio"><i class="fa fa-print" aria-hidden="true"></i></div></a>
-                  <a href="{{ url('sistema/convenio/'.$faturamento->id.'/contratos') }}" target="_blank"><div class="btn btn-success" title="Listas Contratos desse convênio"><i class="fa fa-user" aria-hidden="true"></i></div></a>
-                  <a href="{{ url('sistema/convenio/'.$faturamento->id.'/editar') }}"><div class="btn btn-info"><i class="icon ion-edit"></i></div></a>
-                  <a href="#" class="excluirConvenio" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><div class="btn btn-danger"><i class="icon ion-close"></i></div></a>
-                </td>
+                <td>{{ $faturamento->convenio->empresa->cnpj ?? '' }}</td>
+                <td>{{ $faturamento->convenio->empresa->razao_social ?? '' }}</td>
+                @if(isset($faturamento->boleto->codigo_boleto))
+                <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
+                <td>{{ $faturamento->boleto->status ?? '' }}</td>
+                <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
+                <td>R$ {{ Helper::converte_valor_real($faturamento->boleto->valor) }}</td>
+                <td>{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</td>
+                @else
+
+                @endif
               </tr>
               @endforeach
 
             </tbody>
           </table>
 
-          {{ $faturamentos->links() }}
+
 
         </div>
         </div>

@@ -18,7 +18,9 @@ class RelatoriosController extends Controller
                         ->join('convenios', 'convenios.id', '=', 'faturamentos.convenio_id')
                         ->join('empresas', 'empresas.id', '=', 'convenios.empresa_id')
                         ->join('enderecos', 'enderecos.id', '=', 'empresas.endereco_id')
-                        ->where('convenios.deleted_at', null);
+                        ->leftjoin('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id')
+                        ->leftjoin('faturamento_boletos', 'faturamentos.id', '=', 'faturamento_boletos.faturamento_id')
+                        ->where('faturamentos.deleted_at', null)->where('faturamento_boletos.deleted_at', null);
 
 
         if($request->codigoEmpresa){
@@ -45,7 +47,23 @@ class RelatoriosController extends Controller
             $buscaFaturamento->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
         }
 
-        $faturamentos = $buscaFaturamento->orderBy('faturamentos.data', 'desc')->paginate(20);
+        if($request->tipo_relatorio){
+            switch($request->tipo_relatorio){
+                case "1":
+                    $buscaFaturamento->where('faturamento_boletos.status', 'Emitido');
+                break;
+                    case "2":
+                        $buscaFaturamento->where('faturamento_boletos.status', 'LIQUIDACAO')->where('faturamento_boletos.data_pagamento','<>', '0000-00-00');
+                    break;
+                        case "3":
+                            $buscaFaturamento->where('faturamento_boletos.status', 'VENCIDO');
+                        break;
+
+            }
+        }
+
+
+        $faturamentos = $buscaFaturamento->groupBy('faturamentos.id')->orderBy('faturamentos.data', 'desc')->get();
 
         $polos = Polo::all();
         $estados = Estado::all();

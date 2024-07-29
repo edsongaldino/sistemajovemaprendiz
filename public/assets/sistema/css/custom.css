@@ -332,3 +332,7 @@ td.quantidade{
     background-color: #7a0b16;
     cursor: pointer;
   }
+
+  .item-faturamento{
+    font-size: 12px !important;
+  }

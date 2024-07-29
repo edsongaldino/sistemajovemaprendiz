@@ -487,6 +487,43 @@ class Helper{
 	
 	}
 	
+
+	public static function ValorTotalRecebido($faturamentos){
+		$valorTotal = 0;
+		foreach($faturamentos as $faturamento){
+			if(isset($faturamento->boleto)){
+				if($faturamento->boleto->status == "LIQUIDACAO"){
+					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
+				}	
+			}
+		}
+		return $valorTotal;
+	}
+
+	public static function ValorTotalReceber($faturamentos){
+		$valorTotal = 0;
+		foreach($faturamentos as $faturamento){
+			if(isset($faturamento->boleto)){
+				if($faturamento->boleto->status == "Emitido"){
+					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
+				}	
+			}
+		}
+		return $valorTotal;
+	}
+
+	public static function ValorTotalVencido($faturamentos){
+		$valorTotal = 0;
+		foreach($faturamentos as $faturamento){
+			if(isset($faturamento->boleto)){
+				if($faturamento->boleto->status == "VENCIDO"){
+					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
+				}	
+			}
+		}
+		return $valorTotal;
+	}
+
 }
 
 ?>
