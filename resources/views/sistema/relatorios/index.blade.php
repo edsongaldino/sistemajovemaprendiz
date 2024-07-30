@@ -19,7 +19,17 @@
 
 
       <div class="botoes-faturamento mg-t-20">
-        <a href="{{ url('sistema/faturamento/adicionar') }}"><button class="btn btn-incluir faturamento"><i class="fa fa-print"></i> Imprimir Relatório</button></a>
+        <form class="form-horizontal" method="post" action={{route('sistema.relatorio.imprimir')}}>
+          @csrf
+
+          <input type="hidden" name="tipo_relatorio" value="{{ $request->tipo_relatorio }}">
+          <input type="hidden" name="banco" value="{{ $request->banco }}">
+          <input type="hidden" name="polo" value="{{ $request->polo }}">
+          <input type="hidden" name="data_inicial" value="{{ $request->data_inicial }}">
+          <input type="hidden" name="data_final" value="{{ $request->data_final }}">
+
+          <button type="submit" class="btn btn-incluir faturamento"><i class="fa fa-print"></i> Imprimir Relatório</button>
+        </form>
       </div>
 
       <div class="row row-sm">
@@ -77,9 +87,9 @@
                 <label class="form-control-label">Tipo Relatório: <span class="tx-danger">*</span></label>
                 <select class="form-control" name="tipo_relatorio" data-placeholder="Selecione o tipo do relatório">
                     <option label="Selecione o tipo do relatório"></option>
-                    <option value="1">À Receber</option>
-                    <option value="2">Recebidos</option>
-                    <option value="3">Vencidos</option>
+                    <option value="1" @if($request->tipo_relatorio == "1") selected="selected" @endif>À Receber</option>
+                    <option value="2" @if($request->tipo_relatorio == "2") selected="selected" @endif>Recebidos</option>
+                    <option value="3" @if($request->tipo_relatorio == "3") selected="selected" @endif>Vencidos</option>
                 </select>
                 </div>
               </div><!-- col-4 -->
@@ -90,8 +100,8 @@
                 <select class="form-control" name="banco" data-placeholder="Selecione o Banco">
                     <option label="Selecione o banco"></option>
                     <option value="">Todos</option>
-                    <option value="1">Sicredi</option>
-                    <option value="2">Bradesco</option>
+                    <option value="1" @if($request->banco == "1") selected="selected" @endif>Sicredi</option>
+                    <option value="2" @if($request->banco == "2") selected="selected" @endif>Bradesco</option>
                 </select>
                 </div>
               </div><!-- col-4 -->
@@ -101,7 +111,7 @@
                   <select class="form-control" name="polo" data-placeholder="Selecione o Pólo">
                       <option label="Selecione o pólo"></option>
                       @foreach ($polos as $polo)
-                      <option value="{{ $polo->id }}">{{ $polo->nome }}</option>
+                      <option value="{{ $polo->id }}" @if($request->polo == $polo->id) selected="selected" @endif>{{ $polo->nome }}</option>
                       @endforeach
                   </select>
                   </div>
@@ -110,14 +120,14 @@
               <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">Data Inicial: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="date" name="data_inicial" id="data_inicial" value="">
+                <input class="form-control" type="date" name="data_inicial" id="data_inicial" value="{{ $request->data_inicial ?? '' }}">
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">Data Final: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="date" name="data_final" id="data_final" value="">
+                <input class="form-control" type="date" name="data_final" id="data_final" value="{{ $request->data_final ?? '' }}">
                 </div>
               </div><!-- col-4 -->
 

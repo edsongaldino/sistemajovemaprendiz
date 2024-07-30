@@ -284,6 +284,7 @@ Route::get('envio-email-boleto', function(){
 //Relatórios
 Route::get('/sistema/relatorios', 'RelatoriosController@RelatorioBusca')->name('relatorios')->middleware('auth');
 Route::match(['get', 'post'], 'sistema/relatorios/buscar', 'RelatoriosController@RelatorioBusca')->name('sistema.relatorios.buscar');
+Route::post('sistema/relatorio/imprimir', 'RelatoriosController@ImprimirRelatorio')->name('sistema.relatorio.imprimir');
 
 // Clear application cache:
 Route::get('clear-cache', function() {
