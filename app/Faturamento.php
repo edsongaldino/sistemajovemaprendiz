@@ -25,7 +25,7 @@ class Faturamento extends Model
 
     public function informePagamento()
     {
-        return $this->hasOne(InformePagamento::class);
+        return $this->hasOne(InformePagamento::class)->orderBy('id', 'DESC');
     }
 
     public function notaFiscal()

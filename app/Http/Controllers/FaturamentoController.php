@@ -312,7 +312,7 @@ class FaturamentoController extends Controller
         $InformePagamento->user_id = Auth::user()->id;
         $InformePagamento->faturamento_id = $Faturamento->id;
         $InformePagamento->conta_id = $request->conta_bancaria;
-        $InformePagamento->valor_pago = $request->valor_pago;
+        $InformePagamento->valor_pago = Helper::converte_reais_to_mysql($request->valor_pago);
         $InformePagamento->data_pagamento = $request->data_pagamento;
 
         if($InformePagamento->save()):
