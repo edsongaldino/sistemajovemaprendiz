@@ -198,7 +198,15 @@
                 <td class="ver-contratos"> - </td>
                 @endif
                 <td>
-                  @if(isset($faturamento->boleto->codigo_boleto))
+                  @if($faturamento->forma_pagamento == 'Depósito')
+                    @if(isset($faturamento->informePagamento->id))
+                    Valor Pago<br/>
+                    <strong class="valor-pago">R$ {{ Helper::converte_valor_real($faturamento->informePagamento->valor_pago) }}</strong><br/>
+                    {{ Helper::data_br($faturamento->informePagamento->data_pagamento) }}
+                    @else
+                    <strong>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</strong><br/>{{ $faturamento->forma_pagamento }}
+                    @endif
+                  @elseif(isset($faturamento->boleto->codigo_boleto))
                         @if($faturamento->boleto->status == 'LIQUIDACAO')
                           Valor Pago<br/>
                           <strong class="valor-pago">R$ {{ Helper::converte_valor_real($faturamento->boleto->valor_pago) }}</strong>
@@ -225,16 +233,21 @@
                     @else
                         <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Emitir NF</a>
                     @endif
+                   
+                    @if($faturamento->forma_pagamento == 'Depósito')
+                      @if(isset($faturamento->informePagamento->id))
+                      <a href="#" class="btn btn-success boletoLiquidado" title="Pagamento Informado"><i class="fa fa-money" aria-hidden="true"></i> Pagamento Informado</a>
+                      @else
 
-                    @if(isset($faturamento->boleto->codigo_boleto))
-                        @if($faturamento->boleto->status == 'LIQUIDACAO')
-                            <a href="#" class="btn btn-success boletoLiquidado" title="Boleto Liquidado"><i class="fa fa-check" aria-hidden="true"></i> Liquidado</a>
-                        @else
-                            <a href="faturamento/boleto/{{ $faturamento->boleto->id }}/visualizar" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Boleto</a>
-                            <a href="#" class="btn btn-danger excluirBoleto" data-id="{{ $faturamento->boleto->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar Cobrança</a>
-                            <a href="#" class="btn btn-danger boletoAtivo"><i class="fa fa-close" aria-hidden="true"></i></a>
-                        @endif
-
+                      @endif
+                    @elseif(isset($faturamento->boleto->codigo_boleto))
+                      @if($faturamento->boleto->status == 'LIQUIDACAO')
+                          <a href="#" class="btn btn-success boletoLiquidado" title="Boleto Liquidado"><i class="fa fa-check" aria-hidden="true"></i> Liquidado</a>
+                      @else
+                          <a href="faturamento/boleto/{{ $faturamento->boleto->id }}/visualizar" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Boleto</a>
+                          <a href="#" class="btn btn-danger excluirBoleto" data-id="{{ $faturamento->boleto->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar Cobrança</a>
+                          <a href="#" class="btn btn-danger boletoAtivo"><i class="fa fa-close" aria-hidden="true"></i></a>
+                      @endif
                     @else
                         <a href="#" class="btn btn-info gerarCobranca" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" class="btn btn-info"><i class="fa fa-file-text-o" aria-hidden="true"></i> Gerar Cobrança</a>
                         <a href="#" class="btn btn-danger excluirFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i></a>
@@ -258,6 +271,16 @@
                         @if(isset($faturamento->boleto->codigo_boleto))
                           @if($faturamento->boleto->status != 'LIQUIDACAO')
                           <a href="#" class="dropdown-item AlterarVencimentoBoleto" data-id="{{ $faturamento->boleto->id }}">Alterar Vencimento do Boleto</a>
+                          @endif
+                        @endif
+
+                        @if($faturamento->forma_pagamento == 'Depósito')
+                          <a href="#" class="dropdown-item InformarPagamento" data-id="{{ $faturamento->id }}">Informar Pagamento</a>
+                        @elseif($faturamento->forma_pagamento == 'Depósito')
+                          @if(isset($faturamento->boleto->codigo_boleto))
+                            @if($faturamento->boleto->status != 'LIQUIDACAO')
+                            <a href="#" class="dropdown-item InformarPagamento" data-id="{{ $faturamento->id }}">Informar Pagamento</a>
+                            @endif
                           @endif
                         @endif
                         
@@ -380,6 +403,51 @@
             </div>
         </form>
     </div>
-</div>
+  </div>
+
+  <div class="modal fade" id="ModalInformarPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('sistema.faturamento.informar-pagamento') }}" method="POST">
+            @csrf
+            <input type="hidden" name="Modalfaturamento_id_IP" id="Modalfaturamento_id_IP" value="">
+            <div class="modal-content modal-comentarios">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-cube" aria-hidden="true"></i> Informar Pagamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="message-text" class="col-form-label">Data do Pagamento:</label>
+                        <input type="date" name="data_pagamento" id="data_pagamento" class="form-control" value="">
+                      </div>
+                    
+                      <div class="form-group col-md-6">
+                        <label for="message-text" class="col-form-label">Valor Pago:</label>
+                        <input type="text" name="valor_pago" id="valor_pago" class="form-control moeda">
+                      </div>
+                    </div>
+
+                    <label for="conta_bancaria" class="col-form-label">Conta Bancária:</label>
+                    <select class="form-control" id="conta_bancaria" name="conta_bancaria" data-placeholder="Informar a conta que recebeu">
+                      <option label="Selecione a conta"></option>
+                      @foreach ($contas as $conta)
+                      <option value="{{ $conta->id }}">{{ $conta->banco }} - ({{ $conta->conta_corrente }})</option>
+                      @endforeach
+                    </select>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save" aria-hidden="true"></i> Gravar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
 
 @endsection

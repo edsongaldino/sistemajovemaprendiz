@@ -176,6 +176,7 @@ Route::post('sistema/faturamento/importar-retorno', 'FaturamentoBoletoController
 Route::post('sistema/faturamento/informar-numero-pedido', 'FaturamentoController@InformarNumeroPedido')->name('sistema.faturamento.informar-numero-pedido')->middleware('auth');
 Route::post('sistema/faturamento/alterar-vencimento-boleto', 'FaturamentoBoletoController@AlterarVencimentoBoleto')->name('sistema.faturamento.alterar-vencimento-boleto')->middleware('auth');
 Route::get('/sistema/financeiro/faturamento/boleto/{id}/visualizar', 'FaturamentoBoletoController@VisualizarBoleto')->name('sistema.faturamento.visualizar-boleto');
+Route::post('sistema/faturamento/informar-pagamento', 'FaturamentoController@InformarPagamento')->name('sistema.faturamento.informar-pagamento')->middleware('auth');
 
 //Rotas para geração de arquivos
 Route::get('sistema/arquivo/arquivos-importacao', 'ArquivoController@index')->name('sistema.arquivo.arquivos-importacao')->middleware('auth');

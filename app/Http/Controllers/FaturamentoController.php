@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 include_once(base_path() . '/vendor/enotas/php-client/src/eNotasGW.php');
 
+use App\ContaBancaria;
 use App\Contrato;
 use App\Convenio;
 use App\EmpresaContato;
@@ -14,9 +15,11 @@ use App\FaturamentoContratoInstituicaoDados;
 use App\FaturamentoNF;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\InformePagamento;
 use App\Mail\EmailFaturamento;
 use App\Polo;
 use Carbon\Carbon;
+use CodePhix\Asaas\Conta;
 use eNotasGW;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +45,8 @@ class FaturamentoController extends Controller
         $polos = Polo::all();
         $estados = Estado::all();
         $faturamentos = Faturamento::orderBy('created_at', 'desc')->paginate(10);
-        return view('sistema.financeiro.index', compact('faturamentos', 'polos', 'estados', 'FaturamentosTotal'));
+        $contas = ContaBancaria::all();
+        return view('sistema.financeiro.index', compact('faturamentos', 'polos', 'estados', 'FaturamentosTotal', 'contas'));
     }
 
     /**
@@ -97,8 +101,9 @@ class FaturamentoController extends Controller
 
         $polos = Polo::all();
         $estados = Estado::all();
+        $contas = ContaBancaria::all();
 
-        return view('sistema.financeiro.index', compact('faturamentos', 'polos', 'estados', 'request', 'FaturamentosTotal'));
+        return view('sistema.financeiro.index', compact('faturamentos', 'polos', 'estados', 'request', 'FaturamentosTotal', 'contas'));
     }
 
 
@@ -294,6 +299,26 @@ class FaturamentoController extends Controller
             return redirect()->back()->with('success', 'Os dados foram informados!');
         else:
             return redirect()->back()->with('error', 'Erro ao informar dados!');
+        endif;
+    }
+
+    public function InformarPagamento(Request $request)
+    {
+        $Faturamento = Faturamento::find($request->Modalfaturamento_id_IP);
+        $Faturamento->forma_pagamento = 'Depósito';
+        $Faturamento->update();
+
+        $InformePagamento = new InformePagamento();
+        $InformePagamento->user_id = Auth::user()->id;
+        $InformePagamento->faturamento_id = $Faturamento->id;
+        $InformePagamento->conta_id = $request->conta_bancaria;
+        $InformePagamento->valor_pago = $request->valor_pago;
+        $InformePagamento->data_pagamento = $request->data_pagamento;
+
+        if($InformePagamento->save()):
+            return redirect()->back()->with('success', 'O pagamento foi informado!');
+        else:
+            return redirect()->back()->with('error', 'Erro ao informar pagamento!');
         endif;
     }
 

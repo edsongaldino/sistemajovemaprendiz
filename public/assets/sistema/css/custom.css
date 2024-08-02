@@ -37,6 +37,10 @@
     width: 600px !important;
 }
 
+#ModalInformarPagamento .modal-dialog{
+    width: 600px !important;
+}
+
 .nova-data{
     font-size: 20px !important;
 }

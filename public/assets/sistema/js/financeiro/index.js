@@ -803,3 +803,12 @@ $(document).on('click', '.EnviarEmailFaturamento', function (e) {
     $('#ModalAlterarVencimento').modal('show');
     
   });
+
+  $(document).on('click', '.InformarPagamento', function (e) {
+
+    e.preventDefault();
+    var id = $(this).data('id');
+    $("#Modalfaturamento_id_IP").val(id);
+    $('#ModalInformarPagamento').modal('show');
+    
+  });

@@ -23,6 +23,11 @@ class Faturamento extends Model
         return $this->hasOne(FaturamentoBoleto::class)->whereNull('deleted_at');
     }
 
+    public function informePagamento()
+    {
+        return $this->hasOne(InformePagamento::class);
+    }
+
     public function notaFiscal()
     {
         return $this->hasOne(FaturamentoNF::class)->whereNull('deleted_at');
