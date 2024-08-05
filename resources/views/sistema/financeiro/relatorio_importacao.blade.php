@@ -60,8 +60,6 @@
                   </tr>
                   @endforeach
 
-                  {{ $arquivos->links() }}
-
                 </tbody>
 
               </table>
