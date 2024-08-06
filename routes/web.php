@@ -1,5 +1,7 @@
 <?php
 
+use App\Faturamento;
+use App\FaturamentoBoleto;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\FaturamentoBoletoController;
 use Illuminate\Support\Facades\Artisan;
@@ -339,4 +341,14 @@ Route::get('/atualiza-boletos-hoje', function() {
     $data = date('Y-m-d');
     $valor = FaturamentoBoletoController::CronAtualizarBoletos($data);
     return $valor;
+});
+
+Route::get('/atualiza-pagamentos', function() {
+    $boletosPagos = FaturamentoBoleto::where('status', 'LIQUIDACAO')->get();
+    $i = 0;
+    foreach($boletosPagos as $boleto){
+        Faturamento::informarPagamento($boleto->faturamento_id, 'Boleto', $boleto->data_pagamento);
+        $i++;
+    }
+    echo "Foram atualizados " . $i . " Pagamentos";
 });
