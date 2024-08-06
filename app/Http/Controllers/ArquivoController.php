@@ -22,9 +22,10 @@ class ArquivoController extends Controller
 
     public function GerarTXTFaturamento(Request $request){
 
-        $FaturamentoPeriodo = Faturamento::whereBetween('data', [$request->data_inicial, $request->data_final])->get();
 
         if($request->tipo == 'FATURAMENTO'){
+
+            $FaturamentoPeriodo = Faturamento::whereBetween('data', [$request->data_inicial, $request->data_final])->get();
 
             $nomeArquivo = $request->tipo.Carbon::now()->format('mY');
             $urlArquivo = "/uploads/faturamentos/".$nomeArquivo.".txt";
@@ -86,6 +87,8 @@ class ArquivoController extends Controller
                 }
             }
         }else{
+
+            $FaturamentoPeriodo = Faturamento::where('situacao_pagamento', 'Liquidado')->whereBetween('data_pagamento', [$request->data_inicial, $request->data_final])->get();
 
             $nomeArquivo = $request->tipo.Carbon::now()->format('mY');
             $urlArquivo = "/uploads/recebimentos/".$nomeArquivo.".txt";

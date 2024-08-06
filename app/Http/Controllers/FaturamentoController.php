@@ -304,9 +304,8 @@ class FaturamentoController extends Controller
 
     public function InformarPagamento(Request $request)
     {
-        $Faturamento = Faturamento::find($request->Modalfaturamento_id_IP);
-        $Faturamento->forma_pagamento = 'Depósito';
-        $Faturamento->update();
+        //Informa Pagamento
+        $Faturamento = Faturamento::InformarPagamento($request->Modalfaturamento_id_IP,$request->data_pagamento, 'Depósito');
 
         $InformePagamento = new InformePagamento();
         $InformePagamento->user_id = Auth::user()->id;

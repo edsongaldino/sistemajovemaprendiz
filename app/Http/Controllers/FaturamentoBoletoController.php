@@ -229,7 +229,7 @@ class FaturamentoBoletoController extends Controller
             'boleto.pagador.endereco.complemento'=> $faturamento->convenio->empresa->endereco->complemento_endereco ?? '',
             'boleto.instrucao'=> array(
                                         '*O DEPOSITO NAO QUITA ESTE BOLETO*',
-                                        'BOLETO REFERENTE A '.strtoupper(Helper::ParteData($faturamento->data_final,'mes')).'/'.Helper::ParteData($faturamento->data_final,'ano').', no valor de '.Helper::GetValorTotalFaturado($faturamento->id).' com vencimento em '.Helper::data_br($data_vencimento)
+                                        'BOLETO REFERENTE AO PERÍODO '.strtoupper(Helper::ParteData($faturamento->data_final,'mes')).'/'.Helper::ParteData($faturamento->data_final,'ano')
                                 )
             );
             //NOTA '.$faturamento->notaFiscal->id ?? '0'.'
@@ -816,15 +816,21 @@ class FaturamentoBoletoController extends Controller
                             echo $ocorrencia->situacao."<br/>";
                             echo $ocorrencia->info->valorPago ?? null;
                             $data_pagamento = strtotime($ocorrencia->info->dataDeCredito ?? null);
-                            FaturamentoBoleto::where('codigo_boleto', $titulo->token)
-                                ->update([
-                                    'status' => $ocorrencia->situacao,
-                                    'valor_pago' => $ocorrencia->info->valorPago ?? null,
-                                    'valor_juros' => $ocorrencia->info->jurosMora ?? null,
-                                    'data_pagamento' => date('Y-m-d', $data_pagamento)
-                                    ]);
 
-                            //jurosMora
+                            $FaturamentoBoleto = FaturamentoBoleto::where('codigo_boleto', $titulo->token)->first();
+
+                            $boleto = FaturamentoBoleto::findOrFail($FaturamentoBoleto->id);
+                            $boleto->status = $ocorrencia->situacao;
+                            $boleto->valor_pago = $ocorrencia->info->valorPago ?? null;
+                            $boleto->valor_juros = $ocorrencia->info->jurosMora ?? null;
+                            $boleto->data_pagamento = date('Y-m-d', $data_pagamento ?? null);
+                            $boleto->save();
+                            
+                            if($ocorrencia->situacao == 'LIQUIDACAO'){
+                                //Informa Pagamento
+                                Faturamento::InformarPagamento($FaturamentoBoleto->faturamento_id,$data_pagamento, 'Boleto');
+                            }
+                            
                         }
                     }
 
@@ -902,11 +908,17 @@ class FaturamentoBoletoController extends Controller
                         echo $ocorrencia->info->valorPago ?? null;
                         echo $ocorrencia->info->jurosMora ?? null;
 
+                        $data_pagamento = strtotime($ocorrencia->info->dataDeCredito ?? null);
+
                         $boleto = FaturamentoBoleto::findOrFail($boleto->id);
                         $boleto->status = $ocorrencia->situacao;
                         $boleto->valor_pago = $ocorrencia->info->valorPago ?? null;
                         $boleto->valor_juros = $ocorrencia->info->jurosMora ?? null;
                         $boleto->save();
+
+                        if($ocorrencia->situacao == 'LIQUIDACAO'){
+                        Faturamento::InformarPagamento($boleto->faturamento_id,$data_pagamento, 'Boleto');
+                        }
 
                     }
                 }
@@ -977,6 +989,12 @@ class FaturamentoBoletoController extends Controller
                         $boleto->valor_pago = $ocorrencia->info->valorPago ?? null;
                         $boleto->valor_juros = $ocorrencia->info->jurosMora ?? null;
                         $boleto->save();
+
+                        $data_pagamento = strtotime($ocorrencia->info->dataDeCredito ?? null);
+
+                        if($ocorrencia->situacao == 'LIQUIDACAO'){
+                        Faturamento::InformarPagamento($boleto->faturamento_id,$data_pagamento, 'Boleto');
+                        }
 
                     }
                 }
