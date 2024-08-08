@@ -85,7 +85,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                 <label class="form-control-label">Tipo Relatório: <span class="tx-danger">*</span></label>
-                <select class="form-control" name="tipo_relatorio" data-placeholder="Selecione o tipo do relatório">
+                <select class="form-control" name="tipo_relatorio" data-placeholder="Selecione o tipo do relatório" required>
                     <option label="Selecione o tipo do relatório"></option>
                     <option value="1" @if($request->tipo_relatorio == "1") selected="selected" @endif>À Receber</option>
                     <option value="2" @if($request->tipo_relatorio == "2") selected="selected" @endif>Recebidos</option>
@@ -109,7 +109,7 @@
                   <div class="form-group">
                   <label class="form-control-label">Pólo: <span class="tx-danger">*</span></label>
                   <select class="form-control" name="polo" data-placeholder="Selecione o Pólo">
-                      <option label="Selecione o pólo"></option>
+                      <option label="Todos os pólos"></option>
                       @foreach ($polos as $polo)
                       <option value="{{ $polo->id }}" @if($request->polo == $polo->id) selected="selected" @endif>{{ $polo->nome }}</option>
                       @endforeach
@@ -120,14 +120,14 @@
               <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">Data Inicial: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="date" name="data_inicial" id="data_inicial" value="{{ $request->data_inicial ?? '' }}">
+                <input class="form-control" type="date" name="data_inicial" id="data_inicial" value="{{ $request->data_inicial ?? '' }}" required>
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">Data Final: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="date" name="data_final" id="data_final" value="{{ $request->data_final ?? '' }}">
+                <input class="form-control" type="date" name="data_final" id="data_final" value="{{ $request->data_final ?? '' }}" required>
                 </div>
               </div><!-- col-4 -->
 

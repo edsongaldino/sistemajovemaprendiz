@@ -69,7 +69,7 @@ class RelatoriosController extends Controller
             }
         }
 
-        $faturamentos = $buscaFaturamento->groupBy('faturamentos.id')->orderBy('faturamentos.data', 'desc')->get();
+        $faturamentos = $buscaFaturamento->groupBy('faturamentos.id')->orderBy('convenios.polo_id', 'desc')->orderBy('faturamentos.data', 'desc')->get();
 
         return $faturamentos;
     }

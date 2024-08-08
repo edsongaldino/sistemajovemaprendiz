@@ -524,6 +524,27 @@ class Helper{
 		return $valorTotal;
 	}
 
+	public static function GetTipoRelatorioByID($id){
+        
+		switch($id){
+			case 1:
+				$tipo = "À Receber";
+				break;
+			case 2:
+				$tipo = "Recebidos";
+				break;
+			case 3:
+				$tipo = "Vencidos";
+				break;
+			default:
+				$tipo = "Á Receber";
+				break;
+		}
+
+        return $tipo;
+
+    }
+
 }
 
 ?>
