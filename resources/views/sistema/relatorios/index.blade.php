@@ -19,7 +19,7 @@
 
 
       <div class="botoes-faturamento mg-t-20">
-        <form class="form-horizontal" method="post" action={{route('sistema.relatorio.imprimir')}}>
+        <form class="form-horizontal" target="_blank" method="post" action={{route('sistema.relatorio.imprimir')}}>
           @csrf
 
           <input type="hidden" name="tipo_relatorio" value="{{ $request->tipo_relatorio }}">
