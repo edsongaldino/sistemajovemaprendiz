@@ -219,7 +219,7 @@ class FaturamentoBoletoController extends Controller
             'boleto.titulo'=> 'DM',
             'boleto.valor'=> Helper::converte_reais_to_mysql(Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id))),
             'boleto.pagador.nome'=> $faturamento->convenio->empresa->razao_social ?? '',
-            'boleto.pagador.cprf'=> $faturamento->convenio->empresa->cnpj ?? '',
+            'boleto.pagador.cprf'=> $faturamento->convenio->empresa->cnpj ?? $faturamento->convenio->empresa->cei,
             'boleto.pagador.endereco.cep'=> substr($faturamento->convenio->empresa->endereco->cep_endereco ?? '', 0, 5) . '-' . substr($faturamento->convenio->empresa->endereco->cep_endereco ?? '', 5, 3),
             'boleto.pagador.endereco.uf'=> $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado ?? '',
             'boleto.pagador.endereco.localidade'=> $faturamento->convenio->empresa->endereco->cidade->nome_cidade ?? '',
