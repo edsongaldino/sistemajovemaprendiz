@@ -10,6 +10,7 @@ use App\Contrato;
 use App\Convenio;
 use App\Faturamento;
 use App\FaturamentoContrato;
+use App\FaturamentoCredito;
 use App\Tabela;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Carbon;
@@ -383,7 +384,9 @@ class Helper{
 	}
 
     public static function GetValorTotalFaturado($faturamento_id){
+		
         $faturamentos = FaturamentoContrato::where('faturamento_id', $faturamento_id)->whereNull('deleted_at')->get();
+		$credito = FaturamentoCredito::where('faturamento_id', $faturamento_id)->first();
         $totalGeral = 0;
 
         foreach($faturamentos as $faturamento){
@@ -395,6 +398,9 @@ class Helper{
             }
 
         }
+		if(isset($credito)){
+			$totalGeral = $totalGeral - $credito->valor_credito;
+		}
 
         return $totalGeral;
 

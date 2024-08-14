@@ -188,7 +188,7 @@
                 <td>CNPJ: <b>{{ Helper::mask($faturamento->convenio->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b><br/>{{ $faturamento->convenio->empresa->razao_social ?? $faturamento->convenio->empresa->nome_fantasia }}<br/>{{ $faturamento->convenio->empresa->endereco->cidade->nome_cidade ?? '' }} ({{ $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado ?? '' }})</td>
                 @if(isset($faturamento->convenio->contratos))
                 <td class="ver-contratos">
-                  <span class="qtd">{{ $faturamento->convenio->contratos->count() ?? '' }}</span><br/>
+                  <span class="qtd">{{ $faturamento->faturamentoContratos->count() ?? '' }}</span><br/>
                   <a href="/sistema/faturamento/convenio/{{ $faturamento->id }}/contratos" class="btn btn-info btn-ver-contratos"><i class="fa fa-eye" aria-hidden="true"></i> Ver Contratos</a><br/>
                   @if(isset($faturamento->numero_pedido))
                   <span class="numero-pedido">Nº Pedido: <b>{{ $faturamento->numero_pedido }}</b></span>
@@ -218,6 +218,10 @@
                         @endif
                   @else
                     <strong>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</strong><br/>{{ $faturamento->forma_pagamento }}
+                  @endif
+
+                  @if(isset($faturamento->credito->id))
+                    <br/><span class="credito" title="{{ $faturamento->credito->descricao_credito }}">[C] R$ {{ Helper::converte_valor_real($faturamento->credito->valor_credito) }}</span> 
                   @endif
                 </td>
                 <td>
@@ -282,6 +286,12 @@
                             <a href="#" class="dropdown-item InformarPagamento" data-id="{{ $faturamento->id }}">Informar Pagamento</a>
                             @endif
                           @endif
+                        @endif
+
+                        @if(isset($faturamento->credito->id))
+                        <a href="#" class="dropdown-item AlterarCredito" data-id="{{ $faturamento->id }}" data-credito-id="{{ $faturamento->credito->id }}" data-valor-credito="{{ $faturamento->credito->valor_credito }}" data-descricao-credito="{{ $faturamento->credito->descricao_credito }}">Alterar Crédito</a>
+                        @else
+                        <a href="#" class="dropdown-item InformarCredito" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}">Informar Crédito</a>
                         @endif
                         
                         </div>
@@ -449,5 +459,40 @@
         </form>
     </div>
   </div>
+
+  <div class="modal fade" id="ModalInformarCredito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('sistema.faturamento.informar-credito') }}" method="POST">
+            @csrf
+            <input type="hidden" name="ModalCreditoFaturamento_id" id="ModalCreditoFaturamento_id" value="">
+            <input type="hidden" name="Credito_id" id="Credito_id" value="">
+            <div class="modal-content modal-comentarios">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-cube" aria-hidden="true"></i> Informar crédito</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Valor Crédito:</label>
+                      <input type="text" name="valor_credito" id="valor_credito" class="form-control moeda" value="">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Descrição:</label>
+                      <textarea type="text" name="descricao_credito" id="descricao_credito" class="form-control"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save" aria-hidden="true"></i> Gravar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 @endsection

@@ -172,7 +172,7 @@
             float: left;
         }
         .linha-rodape .total-contratos{
-            width:40%;
+            width:30%;
             height: 40px;
             float: right;
         }
@@ -212,6 +212,27 @@
             background-color: #9b9a9a;
             color: #333;
             font-size: 20px;
+        }
+
+        .linha-rodape .total-credito{
+            width:20%;
+            height: 40px;
+            float: right;
+        }
+        .linha-rodape .total-credito .titulo{
+            width:60%;
+            float: left;
+            height: 40px;
+            background-color: #c4dfed;
+            color: #333;
+        }
+        .linha-rodape .total-credito .valor{
+            width:40%;
+            float: right;
+            height: 40px;
+            background-color: #96b6d5;
+            color: #333;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -253,10 +274,6 @@
         <div class="col-6">TOTAL</div>
     </div>
 
-    @php
-        $totalGeral = 0;
-    @endphp
-
     @foreach ($faturamento->faturamentoContratos as $faturamentoContrato)
 
     @php
@@ -288,10 +305,6 @@
         <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_exames ?? 0 }}</div>
         <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_uniforme ?? 0 }}</div>
         <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0 }}</div>
-
-        @php
-            $totalGeral += $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_total + ($faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0);
-        @endphp
         <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_total) }}</div>
         @else
         <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
@@ -314,9 +327,6 @@
         <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_uniforme ?? 0 }}</div>
         <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_issqn ?? 0 }}</div>
         <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoEmpresaDados->valor_total) }}</div>
-        @php
-            $totalGeral += $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_total + ($faturamentoContrato->FaturamentoContratoEmpresaDados->valor_issqn ?? 0 );
-        @endphp
         @endif
     </div>
     @endforeach
@@ -324,8 +334,14 @@
     <div class="linha-rodape">
         <div class="total-geral">
             <div class="titulo">TOTAL GERAL</div>
-            <div class="valor">R$ {{ Helper::converte_valor_real($totalGeral) }}</div>
+            <div class="valor">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
         </div>
+        @if(isset($faturamento->credito->id))                 
+        <div class="total-credito" title="{{ $faturamento->credito->descricao_credito }}">
+            <div class="titulo">TOTAL CRÉDITO</div>
+            <div class="valor">R$ {{ Helper::converte_valor_real($faturamento->credito->valor_credito) }}</div>
+        </div>
+        @endif
         <div class="total-contratos">
             <div class="titulo">TOTAL DE CONTRATOS</div>
             <div class="valor">{{ $faturamento->faturamentoContratos->count() }}</div>

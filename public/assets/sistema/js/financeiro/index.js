@@ -812,3 +812,27 @@ $(document).on('click', '.EnviarEmailFaturamento', function (e) {
     $('#ModalInformarPagamento').modal('show');
     
   });
+
+  $(document).on('click', '.InformarCredito', function (e) {
+
+    e.preventDefault();
+    var id = $(this).data('id');
+    $("#ModalCreditoFaturamento_id").val(id);
+    $('#ModalInformarCredito').modal('show');
+    
+  });
+
+  $(document).on('click', '.AlterarCredito', function (e) {
+
+    e.preventDefault();
+    var id = $(this).data('id');
+    var idCredito = $(this).data('credito-id');
+    var valorCredito = $(this).data('valor-credito');
+    var descricaoCredito = $(this).data('descricao-credito');
+    $("#ModalCreditoFaturamento_id").val(id);
+    $("#Credito_id").val(idCredito);
+    $("#valor_credito").val(valorCredito);
+    $("#descricao_credito").val(descricaoCredito);
+    $('#ModalInformarCredito').modal('show');
+    
+  });

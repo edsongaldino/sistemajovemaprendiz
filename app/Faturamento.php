@@ -39,6 +39,11 @@ class Faturamento extends Model
         return $this->hasOne(InformePagamento::class)->orderBy('id', 'DESC');
     }
 
+    public function credito()
+    {
+        return $this->hasOne(FaturamentoCredito::class)->orderBy('id', 'DESC');
+    }
+
     public function notaFiscal()
     {
         return $this->hasOne(FaturamentoNF::class)->whereNull('deleted_at');

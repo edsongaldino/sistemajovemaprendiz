@@ -12,6 +12,7 @@ use App\FaturamentoBoleto;
 use App\FaturamentoContrato;
 use App\FaturamentoContratoEmpresaDados;
 use App\FaturamentoContratoInstituicaoDados;
+use App\FaturamentoCredito;
 use App\FaturamentoNF;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
@@ -300,6 +301,37 @@ class FaturamentoController extends Controller
         else:
             return redirect()->back()->with('error', 'Erro ao informar dados!');
         endif;
+    }
+
+    public function InformarCredito(Request $request)
+    {
+        if($request->Credito_id <> null){
+
+            $FaturamentoCredito = FaturamentoCredito::find($request->Credito_id);
+            $FaturamentoCredito->valor_credito = Helper::converte_reais_to_mysql($request->valor_credito);
+            $FaturamentoCredito->descricao_credito = $request->descricao_credito;
+
+            if($FaturamentoCredito->update()):
+                return redirect()->back()->with('success', 'O crédito foi atualizado!');
+            else:
+                return redirect()->back()->with('error', 'Erro ao atualizar crédito!');
+            endif;
+
+        }else{
+            
+            $FaturamentoCredito = new FaturamentoCredito();
+            $FaturamentoCredito->user_id = Auth::user()->id;
+            $FaturamentoCredito->faturamento_id = $request->ModalCreditoFaturamento_id;
+            $FaturamentoCredito->valor_credito = Helper::converte_reais_to_mysql($request->valor_credito);
+            $FaturamentoCredito->descricao_credito = $request->descricao_credito;
+
+            if($FaturamentoCredito->save()):
+                return redirect()->back()->with('success', 'O crédito foi informado!');
+            else:
+                return redirect()->back()->with('error', 'Erro ao informar crédito!');
+            endif;
+        }
+        
     }
 
     public function InformarPagamento(Request $request)
