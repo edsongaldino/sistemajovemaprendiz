@@ -412,12 +412,19 @@ ul.social li{
                             <div class="text" style="padding: 0 2.5em; text-align: center;">
 
 								<h2>Olá, </h2>
-								<h2>Encaminhamos a nota fiscal referente ao repasse do mês de ({{ strtoupper(Helper::ParteData($faturamento->data_final,'mes')).'/'.Helper::ParteData($faturamento->data_final,'ano') }}) do <b>Programa Jovem Aprendiz: Lar Maria de Lourdes</b>, com vencimento para o dia ({{ Helper::data_br($faturamento->boleto->data_vencimento) }})</h2>
-								<h3>Abaixo é possível visualizar o boleto, bem como a NF e o relatório:</h3>
+								<h2>
+									Encaminhamos a nota fiscal referente ao repasse do mês de ({{ strtoupper(Helper::ParteData($faturamento->data_final,'mes')).'/'.Helper::ParteData($faturamento->data_final,'ano') }}) do <b>Programa Jovem Aprendiz: Lar Maria de Lourdes</b>
+									@if(isset($faturamento->boleto))
+									, com vencimento para o dia ({{ Helper::data_br($faturamento->boleto->data_vencimento) }})
+									@endif
+								</h2>
+								<h3>Abaixo é possível visualizar os links para:</h3>
 
 							</div>
 
+							@if(isset($faturamento->boleto))
                             <a href="{{ env('APP_URL')}}/sistema/faturamento/boleto/{{ $faturamento->boleto->id }}/visualizar"><div class="boleto"><i class="fa fa-print"></i> Boleto</div></a>
+							@endif
                             <a href="{{ $faturamento->notaFiscal->link_pdf }}"><div class="nota-fiscal"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Nota Fiscal</div></a>
                             <a href="{{ $faturamento->notaFiscal->link_xml }}"><div class="xml-nota"><i class="fa fa-file-o" aria-hidden="true"></i> XML Nota</div></a>
                             <a href="{{ env('APP_URL')}}/sistema/faturamento/{{ $faturamento->id }}/visualizar-relatorio"><div class="relatorio"><i class="fa fa-eye" aria-hidden="true"></i> Relatório do Faturamento</div></a>
