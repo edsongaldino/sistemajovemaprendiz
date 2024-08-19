@@ -90,7 +90,7 @@ $("#cnpjBusca").focusout(function(){
                     $("#convenio_id").val(resposta.convenio_id);
                     $("#numero_convenio").val(resposta.numero_convenio);
 
-                    $("#ceiBusca").val('');
+                    $("#cpfEmpresaBusca").val('');
 
                     $.ajax({
                         method: 'get',
@@ -116,7 +116,7 @@ $("#cnpjBusca").focusout(function(){
 
 });
 
-$("#ceiBusca").focusout(function(){
+$("#cpfEmpresaBusca").focusout(function(){
 
     // isset helper function
     var isset = function(variable){
@@ -124,13 +124,13 @@ $("#ceiBusca").focusout(function(){
     }
 
     //Início do Comando AJAX
-    cei = $(this).val().replace(/[^\d]+/g,'');
+    cpf = $(this).val().replace(/[^\d]+/g,'');
 
     //Início do Comando AJAX
     $.ajax({
         //O campo URL diz o caminho de onde virá os dados
         //É importante concatenar o valor digitado no CNPJ
-        url: '/sistema/empresa/consulta-empresa/cei/'+cei,
+        url: '/sistema/empresa/consulta-empresa/cpf/'+cpf,
         //Atualização: caso use java, use cnpj.jsp, usando o outro exemplo.
         //Aqui você deve preencher o tipo de dados que será lido,
         //no caso, estamos lendo JSON.
@@ -149,7 +149,7 @@ $("#ceiBusca").focusout(function(){
 
                     //Agora basta definir os valores que você deseja preencher
                     //automaticamente nos campos acima.
-                    $("#nome_fantasia_CEI").val(resposta.nome_fantasia);
+                    $("#nome_fantasia_cpf").val(resposta.nome_fantasia);
                     $("#empresa_id").val(resposta.id);
                     $("#convenio_id").val(resposta.convenio_id);
                     $("#numero_convenio").val(resposta.numero_convenio);
@@ -173,7 +173,7 @@ $("#ceiBusca").focusout(function(){
                     });
 
                 }else{
-                    swal("Ops!", "Não encontramos nenhuma empresa cadastrada com esse CEI!", "error");
+                    swal("Ops!", "Não encontramos nenhuma empresa cadastrada com esse CPF!", "error");
                 }
         }
     });

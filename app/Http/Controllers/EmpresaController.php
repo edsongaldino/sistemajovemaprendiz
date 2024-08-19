@@ -68,13 +68,15 @@ class EmpresaController extends Controller
         $empresa->tipo_empresa = $request->tipo_empresa;
         $empresa->tipo_cadastro = $request->tipo_cadastro;
 
-        if($request->tipo_cadastro == 'CEI'){
-            $empresa->cei = Helper::limpa_campo($request->cei);
-            $empresa->nome_fantasia = $request->nome_fantasia_CEI;
+        if($request->tipo_cadastro == 'CPF'){
+            $empresa->cpf = Helper::limpa_campo($request->cpf);
+            $empresa->nome_fantasia = $request->nome_fantasia_cpf;
         }else{
             $empresa->cnpj = Helper::limpa_campo($request->cnpj);
             $empresa->nome_fantasia = $request->nome_fantasia;
         }
+
+        $empresa->cei = Helper::limpa_campo($request->cei);
 
         if($request->tipo_empresa == 'Filial'){
             $empresa->cnpj_matriz = Helper::limpa_campo($request->cnpj_matriz);
@@ -155,13 +157,15 @@ class EmpresaController extends Controller
         $empresa->tipo_empresa = $request->tipo_empresa;
         $empresa->tipo_cadastro = $request->tipo_cadastro;
 
-        if($request->tipo_cadastro == 'CEI'){
-            $empresa->cei = Helper::limpa_campo($request->cei);
-            $empresa->nome_fantasia = $request->nome_fantasia_CEI;
+        if($request->tipo_cadastro == 'CPF'){
+            $empresa->cpf = Helper::limpa_campo($request->cpf);
+            $empresa->nome_fantasia = $request->nome_fantasia_cpf;
         }else{
             $empresa->cnpj = Helper::limpa_campo($request->cnpj);
             $empresa->nome_fantasia = $request->nome_fantasia;
         }
+
+        $empresa->cei = Helper::limpa_campo($request->cei);
 
         if($request->tipo_empresa == 'Filial'){
             $empresa->cnpj_matriz = Helper::limpa_campo($request->cnpj_matriz);
@@ -246,6 +250,9 @@ class EmpresaController extends Controller
         switch($tipo){
             case 'cnpj':
                 $empresa = Empresa::where('cnpj','=', $valor)->first();
+            break;
+            case 'cpf':
+                $empresa = Empresa::where('cpf','=', $valor)->first();
             break;
             case 'cei':
                 $empresa = Empresa::where('cei','=', $valor)->first();

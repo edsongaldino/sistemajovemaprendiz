@@ -17,11 +17,11 @@ $('#tipo_cadastro').change(function (){
 
   if(tipo_cadastro == "CNPJ"){
       $(".CnpjE").css("display", "block");
-      $(".CeiE").css("display", "none");
+      $(".cpfE").css("display", "none");
   }else {
-    if(tipo_cadastro == "CEI"){
+    if(tipo_cadastro == "CPF"){
       $(".CnpjE").css("display", "none");
-      $(".CeiE").css("display", "block");
+      $(".cpfE").css("display", "block");
     }
   }
 });

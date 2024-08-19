@@ -17,20 +17,27 @@
         <select class="form-control" name="tipo_cadastro" id="tipo_cadastro" data-placeholder="Selecione o tipo do cadastro" required>
             <option label="Selecione o tipo da empresa"></option>
             <option value="CNPJ" @if(($empresa->tipo_cadastro ?? '') == 'CNPJ') selected @endif>CNPJ</option>
-            <option value="CEI" @if(($empresa->tipo_cadastro ?? '') == 'CEI') selected @endif>CEI</option>
+            <option value="CPF" @if(($empresa->tipo_cadastro ?? '') == 'CPF') selected @endif>CPF</option>
         </select>
         </div>
     </div><!-- col-4 -->
 
 
-    <div class="col-md-3 CnpjE" @if(($empresa->tipo_cadastro ?? '') == 'CEI') style="display: none;" @endif>
+    <div class="col-md-3 CnpjE" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: none;" @endif>
         <div class="form-group">
         <label class="form-control-label">CNPJ: <span class="tx-danger">*</span></label>
         <input class="form-control" type="text" id="cnpj" name="cnpj" value="{{ $empresa->cnpj ?? '' }}" placeholder="CNPJ da empresa">
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3 CeiE" id="CeiE" @if(($empresa->tipo_cadastro ?? '') == 'CEI') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-3 cpfE" id="CPF" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
+        <div class="form-group">
+        <label class="form-control-label">CPF: <span class="tx-danger">*</span></label>
+        <input class="form-control cpf" type="text" name="cpf" value="{{ $empresa->cpf ?? '' }}" maxlength="12" placeholder="Cadastro Pessoa Física">
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-3">
         <div class="form-group">
         <label class="form-control-label">CEI: <span class="tx-danger">*</span></label>
         <input class="form-control" type="text" name="cei" value="{{ $empresa->cei ?? '' }}" maxlength="12" placeholder="Cadastro Específico do INSS">
@@ -46,10 +53,10 @@
     </div><!-- col-4 -->
 
 
-    <div class="col-md-12 CeiE" @if(($empresa->tipo_cadastro ?? '') == 'CEI') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-9 cpfE" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
-        <label class="form-control-label">Nome Fantasia (Empresa CEI/CPF): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" id="nome_fantasia_CEI" name="nome_fantasia_CEI" value="{{ $empresa->nome_fantasia ?? '' }}" placeholder="Nome Fantasia" required>
+        <label class="form-control-label">Nome Fantasia (Empresa CPF): <span class="tx-danger">*</span></label>
+        <input class="form-control" type="text" id="nome_fantasia_cpf" name="nome_fantasia_cpf" value="{{ $empresa->nome_fantasia ?? '' }}" placeholder="Nome Fantasia" required>
         </div>
     </div><!-- col-4 -->
 
@@ -67,7 +74,7 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3 mg-t--1 mg-md-t-0 CnpjE" @if(($empresa->tipo_cadastro ?? '') == 'CNPJ') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-4 mg-t--1 mg-md-t-0 CnpjE" @if(($empresa->tipo_cadastro ?? '') == 'CNPJ') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group mg-md-l--1">
         <label class="form-control-label">Telefone: <span class="tx-danger">*</span></label>
         <input class="form-control" type="text" id="telefone" name="telefone" value="{{ $empresa->telefone ?? '' }}" placeholder="Telefone" required>

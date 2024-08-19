@@ -330,7 +330,11 @@
     <div class="bloco">
         <div class="titulo">ESTABELECIMENTO VINCULADO À COTA DE APRENDIZAGEM E CONTRATANTE</div>
         <div class="item">RAZÃO SOCIAL: <strong>{{ $contrato->empresa->razao_social }}</strong></div>
+        @if($contrato->tipo_contrato == 'CNPJ')
         <div class="item">CNPJ: <strong>{{ $contrato->empresa->cnpj }}</strong></div>
+        @else
+        <div class="item">CPF: <strong>{{ $contrato->empresa->cpf }}</strong></div>
+        @endif
         <div class="item">INSCRIÇÃO ESTADUAL: <strong>{{ $contrato->empresa->inscricao_estadual ?? '' }}</strong></div>
         <div class="item">ENDEREÇO: <strong>{{ $contrato->empresa->endereco->logradouro_endereco }} - {{ $contrato->empresa->endereco->numero_endereco }} - {{ $contrato->empresa->endereco->bairro_endereco }}</strong></div>
         <div class="item">CIDADE: <strong>{{ $contrato->empresa->endereco->cidade->nome_cidade }}/{{ $contrato->empresa->endereco->cidade->estado->uf_estado }}</strong></div>

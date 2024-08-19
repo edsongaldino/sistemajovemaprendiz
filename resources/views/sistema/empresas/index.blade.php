@@ -67,7 +67,7 @@
               <tr>
                 <th>ID</th>
                 <th>Tipo</th>
-                <th>CNPJ/CEI</th>
+                <th>CNPJ/CPF</th>
                 <th>Nome/Razão</th>
                 <th>Cidade</th>
                 <th>Ações</th>
@@ -79,10 +79,10 @@
                 <th scope="row">{{ $empresa->id }}</th>
                 <td>{{ $empresa->tipo_empresa ?? '' }}</td>
                 @if($empresa->tipo_cadastro == 'CNPJ')
-                <td>{{ $empresa->cnpj ?? '' }}</td>
+                <td>{{ Helper::mask($empresa->cnpj,'##.###.###/####-##') ?? '' }}</td>
                 <td>{{ $empresa->razao_social ?? '' }}</td>
                 @else
-                <td>{{ $empresa->cei ?? '' }}</td>
+                <td>{{ Helper::mask($empresa->cpf,'###.###.###-##') ?? '' }}</td>
                 <td>{{ $empresa->nome_fantasia ?? $empresa->nome_responsavel }}</td>
                 @endif
                 <td>{{ $empresa->endereco->cidade->nome_cidade ?? '' }} - {{ $empresa->endereco->cidade->estado->uf_estado ?? ''}}</td>

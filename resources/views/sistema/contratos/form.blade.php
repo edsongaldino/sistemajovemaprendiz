@@ -43,7 +43,7 @@
         <select class="form-control" id="tipo_cadastro" name="tipo_cadastro" data-placeholder="Selecione o tipo" required>
             <option label="Selecione o tipo do contrato"></option>
             <option value="CNPJ" @if(($empresa->tipo_cadastro ?? '') == 'CNPJ') selected @endif>CNPJ</option>
-            <option value="CEI" @if(($empresa->tipo_cadastro ?? '') == 'CEI') selected @endif>CEI</option>
+            <option value="CPF" @if(($empresa->tipo_cadastro ?? '') == 'CPF') selected @endif>CPF</option>
         </select>
         </div>
     </div><!-- col-4 -->
@@ -55,17 +55,17 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-2 CeiE" @if(($empresa->tipo_cadastro ?? '') == 'CEI') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-2 cpfE" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
-        <label class="form-control-label">CEI (Empresa): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" name="cei" id="ceiBusca" value="{{ $empresa->cei ?? '' }}" placeholder="CEI da Empresa">
+        <label class="form-control-label">CPF (Empresa): <span class="tx-danger">*</span></label>
+        <input class="form-control" type="text" name="cpf" id="cpfEmpresaBusca" value="{{ $empresa->cpf ?? '' }}" placeholder="CPF da Empresa">
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-5 CeiE" @if(($empresa->tipo_cadastro ?? '') == 'CEI') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-5 cpfE" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
-        <label class="form-control-label">Nome Fantasia (Empresa CEI/CPF): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" id="nome_fantasia_CEI" name="nome_fantasia_CEI" value="{{ $empresa->nome_fantasia ?? '' }}" placeholder="Nome Fantasia" required>
+        <label class="form-control-label">Nome Fantasia (Empresa CPF): <span class="tx-danger">*</span></label>
+        <input class="form-control" type="text" id="nome_fantasia_cpf" name="nome_fantasia_cpf" value="{{ $empresa->nome_fantasia ?? '' }}" placeholder="Nome Fantasia" required>
         </div>
     </div><!-- col-4 -->
 
@@ -91,7 +91,7 @@
         <select class="form-control" id="tipo_cadastro" name="tipo_cadastro" data-placeholder="Selecione o tipo" required>
             <option label="Selecione o tipo do cadastro"></option>
             <option value="CNPJ" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CNPJ') selected @endif>CNPJ</option>
-            <option value="CEI" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CEI') selected @endif>CEI</option>
+            <option value="CPF" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CPF') selected @endif>CPF</option>
         </select>
         </div>
     </div><!-- col-4 -->
@@ -103,17 +103,17 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3 CeiE" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CEI') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-3 cpfE" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
-        <label class="form-control-label">CEI (Empresa): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" name="cei" id="ceiBusca" value="{{ $contrato->empresa->cei ?? '' }}" placeholder="CEI da Empresa">
+        <label class="form-control-label">CPF (Empresa): <span class="tx-danger">*</span></label>
+        <input class="form-control cpf" type="text" name="cpf" id="cpfEmpresaBusca" value="{{ $contrato->empresa->cpf ?? '' }}" placeholder="CPF da Empresa">
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-5 CeiE" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CEI') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-5 cpfE" @if(($contrato->empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
-        <label class="form-control-label">Nome Fantasia (Empresa CEI/CPF): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" id="nome_fantasia_CEI" name="nome_fantasia_CEI" value="{{ $contrato->empresa->nome_fantasia ?? '' }}" placeholder="Nome Fantasia" required>
+        <label class="form-control-label">Nome Fantasia (Empresa CPF): <span class="tx-danger">*</span></label>
+        <input class="form-control" type="text" id="nome_fantasia_cpf" name="nome_fantasia_cpf" value="{{ $contrato->empresa->nome_fantasia ?? '' }}" placeholder="Nome Fantasia" required>
         </div>
     </div><!-- col-4 -->
 
