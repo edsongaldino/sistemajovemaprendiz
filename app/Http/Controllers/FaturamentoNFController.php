@@ -141,7 +141,13 @@ class FaturamentoNFController extends Controller
 
         if(isset($faturamento->dados_bancarios)){
             $texto_dadosbancarios = " " . $faturamento->dados_bancarios;
-        }       
+        }   
+        
+        if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
+            $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+        }else{
+            $cpfCnpj = $faturamento->convenio->empresa->cpf;
+        }
 
         try
         {
@@ -152,7 +158,7 @@ class FaturamentoNFController extends Controller
                 'cliente' => array(
                     'nome' => $faturamento->convenio->empresa->razao_social,
                     'email' => $faturamento->convenio->empresa->email_responsavel,
-                    'cpfCnpj' => $faturamento->convenio->empresa->cnpj,
+                    'cpfCnpj' => $cpfCnpj,
                     'tipoPessoa' => 'J', //F - pessoa física | J - pessoa jurídica
                     'endereco' => array(
                         'uf' => $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado,
