@@ -164,7 +164,7 @@ Route::post('sistema/faturamento/emitir-nf', 'FaturamentoNFController@EmitirNota
 Route::get('sistema/faturamento/nota-fiscal/{id}/visualizar', 'FaturamentoNFController@VisualizarNotaFiscal')->name('sistema.faturamento.visualizar-nf');
 Route::post('sistema/faturamento/cancelar-nf', 'FaturamentoNFController@CancelarNotaFiscal')->name('sistema.faturamento.cancelar-nf')->middleware('auth');
 Route::get('sistema/faturamento/nota-fiscal/{id}/consultar', 'FaturamentoNFController@ConsultarNotaFiscal')->name('sistema.faturamento.consultar-nf');
-Route::get('/sistema/faturamento/atualizar-nf', 'FaturamentoNFController@AtualizarNotaFiscal')->name('sistema.faturamento.atualizar-notas');
+Route::get('/sistema/faturamento/atualizar-nf', 'FaturamentoNFController@AtualizarNotaFiscal');
 
 
 //Rotas Cobranças
