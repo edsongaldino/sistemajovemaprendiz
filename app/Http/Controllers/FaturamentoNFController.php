@@ -145,9 +145,11 @@ class FaturamentoNFController extends Controller
         
         if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
             $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+            $nome = $faturamento->convenio->empresa->razao_social;
             $tipoPessoa = 'J';
         }else{
             $cpfCnpj = $faturamento->convenio->empresa->cpf;
+            $nome = $faturamento->convenio->empresa->nome_fantasia;
             $tipoPessoa = 'F';
         }
 
@@ -158,7 +160,7 @@ class FaturamentoNFController extends Controller
                 'idExterno' => $idExterno,
                 'ambienteEmissao' => 'Producao', //'Homologacao' ou 'Producao'
                 'cliente' => array(
-                    'nome' => $faturamento->convenio->empresa->razao_social,
+                    'nome' => $nome,
                     'email' => $faturamento->convenio->empresa->email_responsavel,
                     'cpfCnpj' => $cpfCnpj,
                     'tipoPessoa' => $tipoPessoa, //F - pessoa física | J - pessoa jurídica

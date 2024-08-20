@@ -212,8 +212,10 @@ class FaturamentoBoletoController extends Controller
 
         if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
             $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+            $nome = $faturamento->convenio->empresa->razao_social;
         }else{
             $cpfCnpj = $faturamento->convenio->empresa->cpf;
+            $nome = $faturamento->convenio->empresa->nome_fantasia;
         }
 
         #Dados do boleto
@@ -224,7 +226,7 @@ class FaturamentoBoletoController extends Controller
             'boleto.documento'=> $faturamento->id,
             'boleto.titulo'=> 'DM',
             'boleto.valor'=> Helper::converte_reais_to_mysql(Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id))),
-            'boleto.pagador.nome'=> $faturamento->convenio->empresa->razao_social ?? '',
+            'boleto.pagador.nome'=> $nome,
             'boleto.pagador.cprf'=> $cpfCnpj,
             'boleto.pagador.endereco.cep'=> substr($faturamento->convenio->empresa->endereco->cep_endereco ?? '', 0, 5) . '-' . substr($faturamento->convenio->empresa->endereco->cep_endereco ?? '', 5, 3),
             'boleto.pagador.endereco.uf'=> $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado ?? '',
