@@ -93,6 +93,10 @@ class FaturamentoController extends Controller
             $buscaFaturamento->where('empresas.cnpj', Helper::limpa_campo($request->cnpj));
         }
 
+        if($request->cpf){
+            $buscaFaturamento->where('empresas.cpf', Helper::limpa_campo($request->cpf));
+        }
+
         if($request->nome_fantasia){
             $buscaFaturamento->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
         }

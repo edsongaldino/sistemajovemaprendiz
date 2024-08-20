@@ -163,7 +163,7 @@
 
     </div><!-- br-pagebody -->
 
-    <script src="{{ asset('assets/sistema/js/financeiro/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/financeiro/index.js?v=1') }}"></script>
 
     <div class="modal" id="ModalFaltas" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">

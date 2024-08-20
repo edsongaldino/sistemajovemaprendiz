@@ -117,6 +117,8 @@ $("#cnpjEmpresa").focusout(function(){
   //Início do Comando AJAX
   cnpj = $(this).val().replace(/[^\d]+/g,'');
 
+  alert(cnpj);
+
   //Início do Comando AJAX
   $.ajax({
 
@@ -143,6 +145,83 @@ $("#cnpjEmpresa").focusout(function(){
 
             }else{
               swal("Ops!", "Não encontramos nenhuma empresa cadastrada com esse CNPJ!", "info");
+            }
+      }
+  });
+
+});
+
+$("#cnpjEmpresaBusca").focusout(function(){
+
+  //Início do Comando AJAX
+  cnpj = $(this).val().replace(/[^\d]+/g,'');
+
+  //Início do Comando AJAX
+  $.ajax({
+
+      //O campo URL diz o caminho de onde virá os dados
+      //É importante concatenar o valor digitado no CNPJ
+      url: '/sistema/empresa/consulta-empresa/cnpj/'+cnpj,
+      //Atualização: caso use java, use cnpj.jsp, usando o outro exemplo.
+      //Aqui você deve preencher o tipo de dados que será lido,
+      //no caso, estamos lendo JSON.
+      dataType: 'json',
+      //SUCESS é referente a função que será executada caso
+      //ele consiga ler a fonte de dados com sucesso.
+      //O parâmetro dentro da função se refere ao nome da variável
+      //que você vai dar para ler esse objeto.
+      success: function(resposta){
+
+            if(resposta.razao_social){
+              //Agora basta definir os valores que você deseja preencher
+              //automaticamente nos campos acima.
+              $("#nome_fantasia").val(resposta.nome_fantasia);
+              $("#cidade").val(resposta.cidade);
+              $("#codigoEmpresa").val(resposta.id);
+              $("#cpfEmpresaBusca").val('');
+              $("#data_inicial").focus().select();
+
+
+            }else{
+              swal("Ops!", "Não encontramos nenhuma empresa cadastrada com esse CNPJ!", "info");
+            }
+      }
+  });
+
+});
+
+$("#cpfEmpresaBusca").focusout(function(){
+
+  //Início do Comando AJAX
+  cpf = $(this).val().replace(/[^\d]+/g,'');
+
+  //Início do Comando AJAX
+  $.ajax({
+
+      //O campo URL diz o caminho de onde virá os dados
+      //É importante concatenar o valor digitado no CNPJ
+      url: '/sistema/empresa/consulta-empresa/cpf/'+cpf,
+      //Atualização: caso use java, use cnpj.jsp, usando o outro exemplo.
+      //Aqui você deve preencher o tipo de dados que será lido,
+      //no caso, estamos lendo JSON.
+      dataType: 'json',
+      //SUCESS é referente a função que será executada caso
+      //ele consiga ler a fonte de dados com sucesso.
+      //O parâmetro dentro da função se refere ao nome da variável
+      //que você vai dar para ler esse objeto.
+      success: function(resposta){
+
+            if(resposta.razao_social){
+              //Agora basta definir os valores que você deseja preencher
+              //automaticamente nos campos acima.
+              $("#nome_fantasia").val(resposta.nome_fantasia);
+              $("#cidade").val(resposta.cidade);
+              $("#codigoEmpresa").val(resposta.id);
+              $("#cnpjEmpresaBusca").val('');
+              $("#data_inicial").focus().select();
+
+            }else{
+              swal("Ops!", "Não encontramos nenhuma empresa cadastrada com esse CPF!", "info");
             }
       }
   });

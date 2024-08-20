@@ -242,7 +242,15 @@
         <div class="titulo">FECHAMENTO DETALHES DA COBRANCA POR EMPRESA JOVEM APRENDIZ</div>
         <div class="data">Data: {{ $data_atual }}</div>
         <div class="usuario">Período Faturado: <b>{{ Helper::data_br($faturamento->data_inicial) }} à {{ Helper::data_br($faturamento->data_final) }}</b></div>
-        <div class="Empresa">Empresa: {{ $faturamento->convenio->empresa->razao_social}} - CNPJ: <b>{{ Helper::mask($faturamento->convenio->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b></div>
+        <div class="Empresa">Empresa: {{ $faturamento->convenio->empresa->razao_social}} - 
+            
+            @if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ')
+            CNPJ: <b>{{ Helper::mask($faturamento->convenio->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b>
+            @else
+            CPF: <b>{{ Helper::mask($faturamento->convenio->empresa->cpf, '###.###.###-##') ?? '' }}</b>
+            @endif
+                    
+        </div>
         <div class="usuario">Usuário: {{ $faturamento->usuario->nome}}</div>
     </div>
 

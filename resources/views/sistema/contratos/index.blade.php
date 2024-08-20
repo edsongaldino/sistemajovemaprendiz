@@ -124,7 +124,7 @@
         </div>
         </div>
     </div>
-    <script src="{{ asset('assets/sistema/js/contratos/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/contratos/index.js?v=1') }}"></script>
 
 
 @endsection

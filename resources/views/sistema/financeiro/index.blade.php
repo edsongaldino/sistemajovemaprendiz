@@ -85,7 +85,7 @@
             @csrf
             <div class="row">
 
-              <div class="col-md-2">
+              <div class="col-md-1">
                   <div class="form-group">
                   <label class="form-control-label">Cód. Empresa:</label>
                   <input class="form-control" type="text" name="codigoEmpresa" id="codigoEmpresa" value="@if(isset($contratos)) {{ $contratos->first()->empresa->id ?? '' }} @endif" placeholder="Código">
@@ -95,11 +95,18 @@
               <div class="col-md-3 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">CNPJ: </label>
-                <input class="form-control cnpj" type="text" name="cnpj" id="cnpjEmpresa" value="@if(isset($contratos)) {{ $contratos->first()->empresa->cnpj ?? '' }} @endif">
+                <input class="form-control cnpj" type="text" name="cnpj" id="cnpjEmpresaBusca" value="@if(isset($contratos)) {{ $contratos->first()->empresa->cnpj ?? '' }} @endif">
                 </div>
               </div><!-- col-4 -->
 
-              <div class="col-md-5 mg-t--1 mg-md-t-0">
+              <div class="col-md-2 mg-t--1 mg-md-t-0">
+                <div class="form-group mg-md-l--1">
+                <label class="form-control-label">CPF: </label>
+                <input class="form-control cpf" type="text" name="cpf" id="cpfEmpresaBusca" value="@if(isset($contratos)) {{ $contratos->first()->empresa->cpf ?? '' }} @endif">
+                </div>
+              </div><!-- col-4 -->
+
+              <div class="col-md-4 mg-t--1 mg-md-t-0">
                   <div class="form-group mg-md-l--1">
                   <label class="form-control-label">Nome Fantasia (Empresa): </label>
                   <input class="form-control" type="text" name="nome_fantasia" id="nome_fantasia" value="@if(isset($contratos)) {{ $contratos->first()->empresa->nome_fantasia ?? '' }} @endif">
@@ -185,7 +192,14 @@
             <tr>
                 <th>{{ $faturamento->id }}</th>
                 <td class="text-center">{{ Helper::datetime_br($faturamento->data) ?? '' }}<br/>{{ $faturamento->usuario->nome ?? '' }}<br/><b>{{ Helper::data_br($faturamento->data_inicial) }} à {{ Helper::data_br($faturamento->data_final) }}</b></td>
-                <td>CNPJ: <b>{{ Helper::mask($faturamento->convenio->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b><br/>{{ $faturamento->convenio->empresa->razao_social ?? $faturamento->convenio->empresa->nome_fantasia }}<br/>{{ $faturamento->convenio->empresa->endereco->cidade->nome_cidade ?? '' }} ({{ $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado ?? '' }})</td>
+                <td>
+                  @if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ')
+                  CNPJ: <b>{{ Helper::mask($faturamento->convenio->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b>
+                  @else
+                  CPF: <b>{{ Helper::mask($faturamento->convenio->empresa->cpf, '###.###.###-##') ?? '' }}</b>
+                  @endif
+                  
+                  <br/>{{ $faturamento->convenio->empresa->razao_social ?? $faturamento->convenio->empresa->nome_fantasia }}<br/>{{ $faturamento->convenio->empresa->endereco->cidade->nome_cidade ?? '' }} ({{ $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado ?? '' }})</td>
                 @if(isset($faturamento->convenio->contratos))
                 <td class="ver-contratos">
                   <span class="qtd">{{ $faturamento->faturamentoContratos->count() ?? '' }}</span><br/>
@@ -322,7 +336,7 @@
 
     </div><!-- br-pagebody -->
 
-    <script src="{{ asset('assets/sistema/js/financeiro/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/financeiro/index.js?v=1') }}"></script>
 
     <div class="modal fade" id="ModalRetorno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

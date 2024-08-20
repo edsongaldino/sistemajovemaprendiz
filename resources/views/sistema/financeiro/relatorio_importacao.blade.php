@@ -142,6 +142,6 @@
         </div>
       </div>
 
-    <script src="{{ asset('assets/sistema/js/financeiro/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/financeiro/index.js?v=1') }}"></script>
 
 @endsection

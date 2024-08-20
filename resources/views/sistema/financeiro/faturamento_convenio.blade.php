@@ -145,7 +145,7 @@
 
     </div><!-- br-pagebody -->
 
-    <script src="{{ asset('assets/sistema/js/financeiro/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/financeiro/index.js?v=1') }}"></script>
 
     <div class="modal fade" id="ModalRetorno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

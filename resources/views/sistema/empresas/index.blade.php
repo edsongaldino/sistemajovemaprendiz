@@ -101,7 +101,7 @@
         </div>
         </div>
     </div>
-    <script src="{{ asset('assets/sistema/js/empresas/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/empresas/index.js?v=1') }}"></script>
 
 
 @endsection

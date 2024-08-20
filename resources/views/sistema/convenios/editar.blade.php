@@ -30,6 +30,6 @@
 
         </div><!-- br-section-wrapper -->
     </div><!-- br-pagebody -->
-    <script src="{{ asset('assets/sistema/js/convenios/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/convenios/index.js?v=1') }}"></script>
 
 @endsection
