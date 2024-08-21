@@ -124,6 +124,14 @@ class FaturamentoController extends Controller
             $buscaFaturamento->where('dia_faturamento', $request->dia_faturamento);
         }
 
+        if($request->cnpj){
+            $buscaFaturamento->where('empresas.cnpj', Helper::limpa_campo($request->cnpj));
+        }
+
+        if($request->cpf){
+            $buscaFaturamento->where('empresas.cpf', Helper::limpa_campo($request->cpf));
+        }
+
         $convenios = $buscaFaturamento->paginate(20);
         return view('sistema.financeiro.faturamento', compact('convenios', 'request'));
 
@@ -262,7 +270,7 @@ class FaturamentoController extends Controller
                 $dados->valor_descontos = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Falta Trabalho');
                 $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Demissional');
                 $dados->valor_uniforme = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Entrega de Uniforme');
-                
+
                 $dados->valor_total = ($txAdm+$dados->valor_beneficios+$dados->valor_exames+$dados->valor_uniforme)-($dados->valor_descontos);
                 // Calcular ISSQN
                 $dados->valor_issqn = $this->CalculaISSQN($dados->valor_total, $contrato->convenio->percentual_issqn);
@@ -322,7 +330,7 @@ class FaturamentoController extends Controller
             endif;
 
         }else{
-            
+
             $FaturamentoCredito = new FaturamentoCredito();
             $FaturamentoCredito->user_id = Auth::user()->id;
             $FaturamentoCredito->faturamento_id = $request->ModalCreditoFaturamento_id;
@@ -335,7 +343,7 @@ class FaturamentoController extends Controller
                 return redirect()->back()->with('error', 'Erro ao informar crédito!');
             endif;
         }
-        
+
     }
 
     public function InformarPagamento(Request $request)
@@ -488,15 +496,23 @@ class FaturamentoController extends Controller
         if($EmailDestinatario->count() < 1){
             return response()->json(array('status'=>'error', 'msg'=>"Nenhum e-mail cadastrado para esse cliente!"), 200);
         }
-        
-        $assunto = "RELATÓRIO DE FATURAMENTO - " . strtoupper($faturamento->convenio->empresa->razao_social) . " - " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
+
+        if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
+            $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+            $nome = $faturamento->convenio->empresa->razao_social;
+        }else{
+            $cpfCnpj = $faturamento->convenio->empresa->cpf;
+            $nome = $faturamento->convenio->empresa->nome_fantasia;
+        }
+
+        $assunto = "RELATÓRIO DE FATURAMENTO - " . strtoupper($nome) . " - " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
 
         if($request->tipo == "boleto-nf"){
-            $assunto = "NFS E BOLETO - " . strtoupper($faturamento->convenio->empresa->razao_social) . " " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
-        }     
+            $assunto = "NFS E BOLETO - " . strtoupper($nome) . " " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
+        }
 
         $i = 1;
-        foreach($EmailDestinatario as $destinatario){  
+        foreach($EmailDestinatario as $destinatario){
             if($i == 1){
                 $EmailTo = $destinatario->email;
             }else{
@@ -504,13 +520,13 @@ class FaturamentoController extends Controller
             }
             $i++;
         }
-        
+
         if($i > 2){
             $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $request->tipo, $assunto));
         }else{
             $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $request->tipo, $assunto));
         }
-        
+
         return response()->json(array('status'=>'success', 'msg'=>"E-mail Enviado com Sucesso!"), 200);
 
     }

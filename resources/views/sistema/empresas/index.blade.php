@@ -25,7 +25,7 @@
           <form action="{{ route('sistema.empresas.buscar') }}" method="POST" name="BuscaEmpresa" id="BuscaEmpresa">
             @csrf
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                 <label class="form-control-label">Nome Fantasia: <span class="tx-danger">*</span></label>
                 <input class="form-control" type="text" name="nome_fantasia" value="" placeholder="Nome fantasia da empresa">
@@ -35,11 +35,18 @@
               <div class="col-md-3 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">CNPJ: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="cnpj" id="cnpj" value="">
+                <input class="form-control cnpj" type="text" name="cnpj" id="cnpj" value="">
                 </div>
               </div><!-- col-4 -->
 
-              <div class="col-md-3">
+              <div class="col-md-2 mg-t--1 mg-md-t-0">
+                <div class="form-group mg-md-l--1">
+                <label class="form-control-label">CPF: <span class="tx-danger">*</span></label>
+                <input class="form-control cpf" type="text" name="cpf" id="cpf" value="">
+                </div>
+              </div><!-- col-4 -->
+
+              <div class="col-md-2">
                   <div class="form-group">
                   <label class="form-control-label">Tipo: <span class="tx-danger">*</span></label>
                   <select class="form-control" name="tipo_empresa" data-placeholder="Selecione o tipo">

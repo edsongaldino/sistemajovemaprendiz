@@ -58,6 +58,7 @@ class ConvenioController extends Controller
         $convenio->data_inicial = Helper::data_mysql($request->data_inicial);
         $convenio->dia_faturamento = $request->dia_faturamento;
         $convenio->vencimento_boleto = $request->vencimento_boleto;
+        $convenio->forma_pagamento = $request->forma_pagamento;
         $convenio->qtde_jovens = $request->qtde_jovens;
         $convenio->tipo_convenio = $request->tipo_convenio;
         $convenio->situacao = $request->situacao;
@@ -110,6 +111,7 @@ class ConvenioController extends Controller
         $convenio->data_inicial = Helper::data_mysql($request->data_inicial);
         $convenio->dia_faturamento = $request->dia_faturamento;
         $convenio->vencimento_boleto = $request->vencimento_boleto;
+        $convenio->forma_pagamento = $request->forma_pagamento;
         $convenio->qtde_jovens = $request->qtde_jovens;
         $convenio->tipo_convenio = $request->tipo_convenio;
         $convenio->situacao = $request->situacao;
@@ -170,6 +172,10 @@ class ConvenioController extends Controller
 
         if($request->cnpj){
             $buscaConvenios->where('empresas.cnpj', Helper::limpa_campo($request->cnpj));
+        }
+
+        if($request->cpf){
+            $buscaConvenios->where('empresas.cpf', Helper::limpa_campo($request->cpf));
         }
 
         if($request->nome_fantasia){

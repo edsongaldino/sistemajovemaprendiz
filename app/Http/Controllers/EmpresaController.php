@@ -183,7 +183,7 @@ class EmpresaController extends Controller
         $empresa->cpf_responsavel = Helper::limpa_campo($request->cpf_responsavel);
         $empresa->rg_responsavel = $request->rg_responsavel;
         $empresa->emissor_rg_responsavel = $request->emissor_rg_responsavel;
-        
+
 
         $endereco = (new EnderecoController())->updateEndereco($request, $request->endereco_id);
         $empresa->endereco_id = $endereco->id;
@@ -351,6 +351,11 @@ class EmpresaController extends Controller
         if($request->cnpj){
             $cnpj = Helper::limpa_campo($request->cnpj);
             $buscaEmpresas->where('cnpj', $cnpj);
+        }
+
+        if($request->cpf){
+            $cpf = Helper::limpa_campo($request->cpf);
+            $buscaEmpresas->where('cpf', $cpf);
         }
 
         $empresas = $buscaEmpresas->orderBy('id','desc')->paginate(20);

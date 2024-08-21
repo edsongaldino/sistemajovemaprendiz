@@ -36,16 +36,22 @@
               <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">CNPJ: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="cnpj" id="cnpj" value="">
+                <input class="form-control cnpj" type="text" name="cnpj" id="cnpj" value="">
                 </div>
               </div><!-- col-4 -->
-              <div class="col-md-4">
+              <div class="col-md-2 mg-t--1 mg-md-t-0">
+                <div class="form-group mg-md-l--1">
+                <label class="form-control-label">CPF(Empresa): <span class="tx-danger">*</span></label>
+                <input class="form-control cpf" type="text" name="cpfEmpresa" id="cpfEmpresa" value="">
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
                 <div class="form-group">
                 <label class="form-control-label">Nome do Jovem: <span class="tx-danger">*</span></label>
                 <input class="form-control" type="text" name="nome_aluno" value="" placeholder="Nome do Jovem">
                 </div>
               </div><!-- col-4 -->
-              <div class="col-md-3 mg-t--1 mg-md-t-0">
+              <div class="col-md-2 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">CPF (Jovem): <span class="tx-danger">*</span></label>
                 <input class="form-control cpf" type="text" name="cpf" id="cpf" value="">

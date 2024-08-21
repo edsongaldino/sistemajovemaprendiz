@@ -1,7 +1,7 @@
 <div class="row no-gutters">
     <input type="hidden" name="empresa_id" id="empresa_id" value="{{ $convenio->empresa->id ?? '' }}">
 
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="form-group">
         <label class="form-control-label">Tipo do cadastro (Empresa): <span class="tx-danger">*</span></label>
         <select class="form-control" id="tipo_cadastro" name="tipo_cadastro" data-placeholder="Selecione o tipo" required>
@@ -12,14 +12,14 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3 CnpjE" @if(($convenio->empresa->tipo_cadastro ?? '') == 'CPF') style="display: none;" @else style="display: block;" @endif>
+    <div class="col-md-4 CnpjE" @if(($convenio->empresa->tipo_cadastro ?? '') == 'CPF') style="display: none;" @else style="display: block;" @endif>
         <div class="form-group">
         <label class="form-control-label">CNPJ (Empresa): <span class="tx-danger">*</span></label>
         <input class="form-control cnpj" type="text" name="cnpj" id="cnpjBusca" value="{{ $convenio->empresa->cnpj ?? '' }}" placeholder="CNPJ da Empresa" required @if(($acao ?? '') == 'editar') readonly @endif>
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3 cpfE" @if(($convenio->empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
+    <div class="col-md-4 cpfE" @if(($convenio->empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
         <label class="form-control-label">CPF (Empresa): <span class="tx-danger">*</span></label>
         <input class="form-control cpf" type="text" name="cpf" id="cpfEmpresaBusca" value="{{ $convenio->empresa->cpf ?? '' }}" placeholder="CPF da Empresa">
@@ -90,14 +90,25 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-2">
+    <div class="col-md-3">
+        <div class="form-group">
+        <label class="form-control-label">Forma de Pagamento: <span class="tx-danger">*</span></label>
+        <select class="form-control" id="forma_pagamento" name="forma_pagamento" data-placeholder="Selecione" required>
+            <option label="Selecione"></option>
+            <option value="Boleto" @if(($convenio->forma_pagamento ?? '') == 'Boleto') selected @endif>Boleto</option>
+            <option value="Depósito" @if(($convenio->forma_pagamento ?? '') == 'Depósito') selected @endif>Depósito</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-3">
         <div class="form-group">
         <label class="form-control-label">Quantidade de Jovens: <span class="tx-danger">*</span></label>
         <input class="form-control" type="number" name="qtde_jovens" value="{{ $convenio->qtde_jovens ?? '' }}" placeholder="Quantidade de Jovens" required>
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Tabela R$ (Capacitação): <span class="tx-danger">*</span></label>
         <select class="form-control" id="tabela_id" name="tabela_id" data-placeholder="Selecione">
@@ -109,19 +120,7 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-4">
-        <div class="form-group">
-        <label class="form-control-label">Selecione o pólo das atividades teóricas: <span class="tx-danger">*</span></label>
-        <select class="form-control" id="polo_id" name="polo_id" data-placeholder="Selecione">
-            <option label="Selecione"></option>
-            @foreach ($polos as $polo)
-            <option value="{{ $polo->id }}" @if(($polo->id ?? '') == ($convenio->polo_id ?? '')) selected @endif>{{ $polo->nome }}</option>
-            @endforeach
-        </select>
-        </div>
-    </div><!-- col-4 -->
-
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="form-group">
         <label class="form-control-label">Selecione o tipo: <span class="tx-danger">*</span></label>
         <select class="form-control" id="tipo_convenio" name="tipo_convenio" data-placeholder="Selecione o tipo">
@@ -130,6 +129,18 @@
             <option value="Supermercado" @if(($convenio->tipo_convenio ?? '') == 'Supermercado') selected @endif>Supermercado</option>
             <option value="Frentista" @if(($convenio->tipo_convenio ?? '') == 'Frentista') selected @endif>Frentista</option>
             <option value="Produção" @if(($convenio->tipo_convenio ?? '') == 'Produção') selected @endif>Produção</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-8">
+        <div class="form-group">
+        <label class="form-control-label">Selecione o pólo das atividades teóricas: <span class="tx-danger">*</span></label>
+        <select class="form-control" id="polo_id" name="polo_id" data-placeholder="Selecione">
+            <option label="Selecione"></option>
+            @foreach ($polos as $polo)
+            <option value="{{ $polo->id }}" @if(($polo->id ?? '') == ($convenio->polo_id ?? '')) selected @endif>{{ $polo->nome }}</option>
+            @endforeach
         </select>
         </div>
     </div><!-- col-4 -->

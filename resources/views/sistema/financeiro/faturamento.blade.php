@@ -32,18 +32,25 @@
             <div class="col-md-3 mg-t--1 mg-md-t-0">
               <div class="form-group mg-md-l--1">
               <label class="form-control-label">CNPJ: <span class="tx-danger">*</span></label>
-              <input class="form-control cnpj" type="text" name="cnpjEmpresa" id="cnpjEmpresa" value="@if(isset($contratos)) {{ $contratos->first()->empresa->cnpj ?? '' }} @endif">
+              <input class="form-control cnpj" type="text" name="cnpjEmpresa" id="cnpjEmpresaBusca" value="@if(isset($contratos)) {{ $contratos->first()->empresa->cnpj ?? '' }} @endif">
               </div>
             </div><!-- col-4 -->
 
-            <div class="col-md-4 mg-t--1 mg-md-t-0">
+            <div class="col-md-2 mg-t--1 mg-md-t-0">
+                <div class="form-group mg-md-l--1">
+                <label class="form-control-label">CPF: </label>
+                <input class="form-control cpf" type="text" name="cpf" id="cpfEmpresaBusca" value="@if(isset($contratos)) {{ $contratos->first()->empresa->cpf ?? '' }} @endif">
+                </div>
+              </div><!-- col-4 -->
+
+            <div class="col-md-3 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">Nome Fantasia (Empresa): <span class="tx-danger">*</span></label>
                 <input class="form-control" type="text" name="nome_fantasia" id="nome_fantasia" value="@if(isset($contratos)) {{ $contratos->first()->empresa->nome_fantasia ?? '' }} @endif" readonly>
                 </div>
             </div><!-- col-4 -->
 
-            <div class="col-md-3 mg-t--1 mg-md-t-0">
+            <div class="col-md-2 mg-t--1 mg-md-t-0">
               <div class="form-group mg-md-l--1">
               <label class="form-control-label">Cidade/UF: <span class="tx-danger">*</span></label>
               <input class="form-control" type="text" name="cidade" id="cidade" value="@if(isset($contratos)) {{ $contratos->first()->empresa->endereco->cidade->nome_cidade ?? '' }}/{{ $contratos->first()->empresa->endereco->cidade->estado->uf_estado ?? '' }} @endif" readonly>
