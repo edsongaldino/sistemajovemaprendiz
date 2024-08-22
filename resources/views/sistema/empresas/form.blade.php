@@ -26,7 +26,7 @@
     <div class="col-md-3 CnpjE" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: none;" @endif>
         <div class="form-group">
         <label class="form-control-label">CNPJ: <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" id="cnpj" name="cnpj" value="{{ $empresa->cnpj ?? '' }}" placeholder="CNPJ da empresa">
+        <input class="form-control cnpj" type="text" id="cnpj" name="cnpj" value="{{ $empresa->cnpj ?? '' }}" placeholder="CNPJ da empresa">
         </div>
     </div><!-- col-4 -->
 
@@ -107,7 +107,7 @@
     <div class="col-md-3">
         <div class="form-group">
         <label class="form-control-label">CPF do Responsável: <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" id="cpf" name="cpf_responsavel" value="{{ $empresa->cpf_responsavel ?? '' }}" placeholder="CPF do Responsável" required>
+        <input class="form-control cpf" type="text" id="cpf" name="cpf_responsavel" value="{{ $empresa->cpf_responsavel ?? '' }}" placeholder="CPF do Responsável" required>
         </div>
     </div><!-- col-4 -->
 

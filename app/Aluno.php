@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -58,7 +60,7 @@ class Aluno extends Model
 
     public function verificaDuplicidade($campo, $valor){
 
-        $dup = $this::where($campo, $valor)->first();
+        $dup = $this::where($campo, Helper::limpa_campo($valor))->first();
 
         if(isset($dup)){
             return $dup;

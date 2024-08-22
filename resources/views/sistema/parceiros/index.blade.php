@@ -49,7 +49,7 @@
               <div class="col-md-3 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">CPF: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="cpf" id="cpf" value="">
+                <input class="form-control cpf" type="text" name="cpf" id="cpf" value="">
                 </div>
               </div><!-- col-4 -->
 

@@ -75,6 +75,7 @@ function EnviarFormEmpresa() {
     var inscricao_estadual = FormEmpresa.inscricao_estadual.value;
     var cnpj = FormEmpresa.cnpj.value;
     var cei = FormEmpresa.cei.value;
+    var cpf = FormEmpresa.cpf.value;
     var telefone = FormEmpresa.telefone.value;
     var cep_endereco = FormEmpresa.cep_endereco.value;
     var logradouro_endereco = FormEmpresa.logradouro_endereco.value;
@@ -82,6 +83,8 @@ function EnviarFormEmpresa() {
     var cidade_endereco = FormEmpresa.cidade_endereco.value;
     var nome_responsavel = FormEmpresa.nome_responsavel.value;
     var cpf_responsavel = FormEmpresa.cpf_responsavel.value;
+
+    alert(cnpj);
 
     if (tipo_empresa == "") {
         swal({title: "Ops", text: "O campo tipo_empresa deve ser preenchido!", type: "error"});
@@ -119,10 +122,10 @@ function EnviarFormEmpresa() {
 
     }
 
-    if (tipo_cadastro == "CEI") {
-      if (cei == "") {
-          swal({title: "Ops", text: "O campo CEI deve ser preenchido!", type: "error"});
-          FormEmpresa.cei.focus();
+    if (tipo_cadastro == "CPF") {
+      if (cpf == "") {
+          swal({title: "Ops", text: "O campo CPF deve ser preenchido!", type: "error"});
+          FormEmpresa.cpf.focus();
           return false;
       }
     }

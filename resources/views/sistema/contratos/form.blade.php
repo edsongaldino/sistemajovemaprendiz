@@ -58,7 +58,7 @@
     <div class="col-md-2 cpfE" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
         <label class="form-control-label">CPF (Empresa): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" name="cpf" id="cpfEmpresaBusca" value="{{ $empresa->cpf ?? '' }}" placeholder="CPF da Empresa">
+        <input class="form-control cpf" type="text" name="cpf" id="cpfEmpresaBusca" value="{{ $empresa->cpf ?? '' }}" placeholder="CPF da Empresa">
         </div>
     </div><!-- col-4 -->
 

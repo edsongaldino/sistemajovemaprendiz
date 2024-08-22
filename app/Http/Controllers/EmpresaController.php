@@ -51,8 +51,8 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
 
-        if($request->tipo_cadastro == 'CEI'){
-            if((New Empresa())->verificaDuplicidade('cei', $request->cei)){
+        if($request->tipo_cadastro == 'CPF'){
+            if((New Empresa())->verificaDuplicidade('cpf', $request->cpf)){
                 return redirect()->back()->with('warning', 'Este CPF já consta em nosso banco de dados! Verifique.');
             }
         }else{
@@ -148,9 +148,17 @@ class EmpresaController extends Controller
 
         $empresa = Empresa::findOrFail($request->id);
 
-        if($request->cnpj <> $empresa->cnpj){
-            if((New Empresa())->verificaDuplicidade('cnpj', $request->cnpj)){
-                return redirect()->back()->with('warning', 'Este CNPJ já consta em nosso banco de dados! Verifique.');
+        if($request->tipo_cadastro == 'CPF'){
+            if(Helper::limpa_campo($request->cpf) <> $empresa->cpf){
+                if((New Empresa())->verificaDuplicidade('cpf', $request->cpf)){
+                    return redirect()->back()->with('warning', 'Este CPF já consta em nosso banco de dados! Verifique.');
+                }
+            }
+        }else{
+            if(Helper::limpa_campo($request->cnpj) <> $empresa->cnpj){
+                if((New Empresa())->verificaDuplicidade('cnpj', $request->cnpj)){
+                    return redirect()->back()->with('warning', 'Este CNPJ já consta em nosso banco de dados! Verifique.');
+                }
             }
         }
 
