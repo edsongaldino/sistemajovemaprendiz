@@ -114,7 +114,10 @@ class FaturamentoController extends Controller
 
     public function FaturamentoBusca(Request $request)
     {
-        $buscaFaturamento = Convenio::where('situacao','=', 'Ativo');
+        $buscaFaturamento = Convenio::select('convenios.*')
+                        ->join('empresas', 'empresas.id', '=', 'convenios.empresa_id')
+                        ->join('enderecos', 'enderecos.id', '=', 'empresas.endereco_id')
+                        ->where('convenios.deleted_at', null);
 
         if($request->codigoEmpresa){
             $buscaFaturamento->where('empresa_id', $request->codigoEmpresa);
@@ -130,6 +133,10 @@ class FaturamentoController extends Controller
 
         if($request->cpf){
             $buscaFaturamento->where('empresas.cpf', Helper::limpa_campo($request->cpf));
+        }
+
+        if($request->nome_fantasia){
+            $buscaFaturamento->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
         }
 
         $convenios = $buscaFaturamento->paginate(20);
