@@ -93,7 +93,7 @@
                 </select>
                 </div>
               </div><!-- col-4 -->
-              
+
               <div class="col-md-2">
                 <div class="form-group">
                 <label class="form-control-label">Banco: <span class="tx-danger">*</span></label>
@@ -171,7 +171,7 @@
                 <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
                 <td>{{ $faturamento->boleto->status ?? '' }}</td>
                 <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
-                <td>R$ {{ Helper::converte_valor_real($faturamento->boleto->valor) }}</td>
+                <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
                 <td>{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</td>
                 @else
 
