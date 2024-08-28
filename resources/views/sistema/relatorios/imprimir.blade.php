@@ -290,7 +290,7 @@
         <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</div>
         <div class="col-8">{{ $faturamento->boleto->status ?? '' }}</div>
         <div class="col-8">{{ $faturamento->forma_pagamento ?? '' }}</div>
-        <div class="col-8">R$ {{ Helper::converte_valor_real($faturamento->boleto->valor) }}</div>
+        <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
         <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</div>
     </div>
     @php $polo = $faturamento->convenio->polo_id;  @endphp

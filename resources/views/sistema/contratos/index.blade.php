@@ -109,8 +109,14 @@
               <tr>
                 <th scope="row">{{ $contrato->id }}</th>
                 <td><b>{{ $contrato->situacao }}</b></td>
-                <td>{{ $contrato->empresa->nome_fantasia ?? '' }}</td>
-                <td>{{ $contrato->aluno->nome ?? '' }}</td>
+                <td>{{ $contrato->empresa->nome_fantasia ?? $contrato->empresa->razao_social }}<br/>
+                    @if($contrato->empresa->tipo_cadastro == 'CNPJ')
+                        CNPJ: <b>{{ Helper::mask($contrato->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b>
+                    @else
+                        CPF: <b>{{ Helper::mask($contrato->empresa->cpf, '###.###.###-##') ?? '' }}</b>
+                    @endif
+                </td>
+                <td>{{ $contrato->aluno->nome ?? '' }}<br/>CPF: <b>{{ Helper::mask($contrato->aluno->cpf, '###.###.###-##') ?? '' }}</b></td>
                 <td>{{ $contrato->polo->nome ?? '' }}</td>
                 <td>
                   <a href="{{ url('sistema/contrato/'.$contrato->id.'/atualizacoes') }}" target="_blank"><div class="btn btn-info" title="Atualizações de Contrato"><i class="fa fa-check" aria-hidden="true"></i> Atualizações</div></a>
