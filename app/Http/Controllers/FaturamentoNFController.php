@@ -132,7 +132,7 @@ class FaturamentoNFController extends Controller
         ));
 
         $empresaId = '76D51A32-28E4-4B24-B416-7D1159FA0800';
-        $idExterno = "'".uniqid($faturamento->id)."'";
+        $idExterno = uniqid($faturamento->id);
         $texto_pedido = "";
         $texto_dadosbancarios= "";
 
