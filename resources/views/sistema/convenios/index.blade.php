@@ -94,7 +94,13 @@
                 <th scope="row">{{ $convenio->id }}</th>
                 <td>{{ $convenio->numero ?? '' }}</td>
                 <td>{{ $convenio->tipo_convenio ?? '' }}</td>
-                <td>{{ $convenio->empresa->nome_fantasia ?? '' }}</td>
+                <td>{{ $convenio->empresa->nome_fantasia ?? $convenio->empresa->razao_social }}<br/>
+                    @if($convenio->empresa->tipo_cadastro == 'CNPJ')
+                        CNPJ: <b>{{ Helper::mask($convenio->empresa->cnpj, '##.###.###/####-##') ?? '' }}</b>
+                    @else
+                        CPF: <b>{{ Helper::mask($convenio->empresa->cpf, '###.###.###-##') ?? '' }}</b>
+                    @endif
+                </td>
                 <td>{{ $convenio->dia_faturamento ?? '' }}</td>
                 <td>{{ $convenio->qtde_jovens ?? '' }}</td>
                 <td>
