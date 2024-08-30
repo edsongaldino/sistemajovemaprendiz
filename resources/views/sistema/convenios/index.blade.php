@@ -83,7 +83,7 @@
                 <th>Tipo</th>
                 <th>Empresa</th>
                 <th>Data de Faturamento</th>
-                <th>Qtde de Jovens</th>
+                <th>Qtde de Contratos (Ativos)</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -102,7 +102,7 @@
                     @endif
                 </td>
                 <td>{{ $convenio->dia_faturamento ?? '' }}</td>
-                <td>{{ $convenio->qtde_jovens ?? '' }}</td>
+                <td>{{ Helper::GetTotalContratosAtivos($convenio->id) }}</td>
                 <td>
                   <a href="{{ url('sistema/convenio/'.$convenio->id.'/imprimir') }}" target="_blank"><div class="btn btn-warning" title="Imprimir Contrato de Convênio"><i class="fa fa-print" aria-hidden="true"></i></div></a>
                   <a href="{{ url('sistema/convenio/'.$convenio->id.'/contratos') }}" target="_blank"><div class="btn btn-success" title="Listas Contratos desse convênio"><i class="fa fa-user" aria-hidden="true"></i></div></a>

@@ -137,6 +137,11 @@ class Helper{
         return $total;
 	}
 
+	public static function GetTotalContratosAtivos($convenio_id){
+		$total = Contrato::where('convenio_id', $convenio_id)->where('situacao', 'Ativo')->count();
+        return $total;
+	}
+
 	public static function dataExtenso($data) {
 
 

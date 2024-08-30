@@ -120,7 +120,7 @@
                     <th>Tipo de Faturamento</th>
                     <th class="text-center">Dia de Faturamento</th>
                     <th>Nome da Empresa</th>
-                    <th>Total de Contratos</th>
+                    <th>Total de Contratos (Ativos)</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
@@ -133,7 +133,7 @@
                     <td>{{ $convenio->tipo_convenio }}</td>
                     <td class="text-center">{{ $convenio->dia_faturamento ?? '' }}</td>
                     <td>ID: {{ $convenio->empresa->id }} - {{ $convenio->empresa->nome_fantasia }}<br/>{{ $convenio->empresa->endereco->cidade->nome_cidade }} ({{ $convenio->empresa->endereco->cidade->estado->uf_estado }})</td>
-                    <td class="ver-contratos"><span class="qtd">{{ $convenio->contratos->count() ?? '' }}</span></td>
+                    <td class="ver-contratos"><span class="qtd">{{ Helper::GetTotalContratosAtivos($convenio->id) }}</span></td>
                     <td>
                         @if(Helper::getFaturamentoConvenio($convenio->id, $request->data_inicial ?? $data_inicial, $request->data_final ?? $data_final)->count() > 0)
                             <a href="#" class="btn btn-success"><i class="fa fa-dollar" aria-hidden="true"></i> Período Faturado</a>
