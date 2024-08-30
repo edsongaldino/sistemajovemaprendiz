@@ -46,6 +46,7 @@ class FaturamentoNFController extends Controller
         $nf = new FaturamentoNF();
         $nf->faturamento_id = $faturamento->id;
         $nf->codigo_nf = $dadosNF['id'];
+        $nf->chave_interna = $dadosNF['chave_interna'];
         $nf->status = $dadosNF['status'];
 
         if($nf->save()):
@@ -131,7 +132,7 @@ class FaturamentoNFController extends Controller
         ));
 
         $empresaId = '76D51A32-28E4-4B24-B416-7D1159FA0800';
-        $idExterno = "'".$faturamento->id."'";
+        $idExterno = "'".uniqid($faturamento->id)."'";
         $texto_pedido = "";
         $texto_dadosbancarios= "";
 
@@ -200,6 +201,7 @@ class FaturamentoNFController extends Controller
             ));
 
             $dadosNF['id'] = $nfeId;
+            $dadosNF['chave_interna'] = $idExterno;
             $dadosNF['status'] = 'Aguardando Emissão';
             $this->create($dadosNF, $faturamento);
 
