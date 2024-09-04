@@ -33,6 +33,14 @@ class ArquivoController extends Controller
 
             $string = "";
 
+            if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
+                $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+                $nome = $faturamento->convenio->empresa->razao_social;
+            }else{
+                $cpfCnpj = $faturamento->convenio->empresa->cpf;
+                $nome = $faturamento->convenio->empresa->nome_fantasia;
+            }
+
             foreach($FaturamentoPeriodo as $faturamento){
 
                 if(isset($faturamento->notaFiscal->numero_nf)){
@@ -51,9 +59,9 @@ class ArquivoController extends Controller
                     //Complemento 2
                     $string .= str_pad('TITULO - ' . $faturamento->id, 30);
                     //Complemento 3
-                    $string .= str_pad(substr($faturamento->convenio->empresa->razao_social, 0, 30), 30);
+                    $string .= str_pad(substr($nome, 0, 30), 30);
                     //Complemento 4
-                    $string .= str_pad($faturamento->convenio->empresa->cnpj, 30);
+                    $string .= str_pad($cpfCnpj, 30);
                     //Conta Crédito
                     $string .= str_pad('21100501010001', 14);
                     //Conta Débito
@@ -120,9 +128,9 @@ class ArquivoController extends Controller
                                 //Complemento 2
                                 $string .= str_pad('TITULO - ' . $faturamento->id, 30);
                                 //Complemento 3
-                                $string .= str_pad(substr($faturamento->convenio->empresa->razao_social, 0, 30), 30);
+                                $string .= str_pad(substr($nome, 0, 30), 30);
                                 //Complemento 4
-                                $string .= str_pad($faturamento->convenio->empresa->cnpj, 30);
+                                $string .= str_pad($cpfCnpj, 30);
                                 //Conta Crédito
                                 $string .= str_pad($faturamento->convenio->empresa->conta_contabil, 14);
                                 //Conta Débito
@@ -173,9 +181,9 @@ class ArquivoController extends Controller
                                     //Complemento 2
                                     $string .= str_pad('TITULO - ' . $faturamento->id, 30);
                                     //Complemento 3
-                                    $string .= str_pad(substr($faturamento->convenio->empresa->razao_social, 0, 30), 30);
+                                    $string .= str_pad(substr($nome, 0, 30), 30);
                                     //Complemento 4
-                                    $string .= str_pad($faturamento->convenio->empresa->cnpj, 30);
+                                    $string .= str_pad($cpfCnpj, 30);
                                     //Conta Crédito
                                     $string .= str_pad('32010108010002', 14);
                                     //Conta Débito
@@ -228,9 +236,9 @@ class ArquivoController extends Controller
                         //Complemento 2
                         $string .= str_pad('TITULO - ' . $faturamento->id, 30);
                         //Complemento 3
-                        $string .= str_pad(substr($faturamento->convenio->empresa->razao_social, 0, 30), 30);
+                        $string .= str_pad(substr($nome, 0, 30), 30);
                         //Complemento 4
-                        $string .= str_pad($faturamento->convenio->empresa->cnpj, 30);
+                        $string .= str_pad($cpfCnpj, 30);
                         //Conta Crédito
                         $string .= str_pad($faturamento->convenio->empresa->conta_contabil, 14);
                         //Conta Débito
