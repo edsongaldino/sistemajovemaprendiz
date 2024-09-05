@@ -37,10 +37,10 @@ class ArquivoController extends Controller
 
                 if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
                     $cpfCnpj = $faturamento->convenio->empresa->cnpj;
-                    $nome = $faturamento->convenio->empresa->razao_social;
+                    $nome = Helper::removeAcentos($faturamento->convenio->empresa->razao_social);
                 }else{
                     $cpfCnpj = $faturamento->convenio->empresa->cpf;
-                    $nome = $faturamento->convenio->empresa->nome_fantasia;
+                    $nome = Helper::removeAcentos($faturamento->convenio->empresa->nome_fantasia);
                 }
 
                 if(isset($faturamento->notaFiscal->numero_nf)){
@@ -108,10 +108,10 @@ class ArquivoController extends Controller
 
                 if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
                     $cpfCnpj = $faturamento->convenio->empresa->cnpj;
-                    $nome = $faturamento->convenio->empresa->razao_social;
+                    $nome = Helper::removeAcentos($faturamento->convenio->empresa->razao_social);
                 }else{
                     $cpfCnpj = $faturamento->convenio->empresa->cpf;
-                    $nome = $faturamento->convenio->empresa->nome_fantasia;
+                    $nome = Helper::removeAcentos($faturamento->convenio->empresa->nome_fantasia);
                 }
 
                 if($faturamento->forma_pagamento == 'Boleto'){
