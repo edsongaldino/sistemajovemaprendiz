@@ -89,7 +89,7 @@ class ArquivoController extends Controller
         }else{
 
             $FaturamentoPeriodo = Faturamento::where('situacao_pagamento', 'Liquidado')->whereBetween('data_pagamento', [$request->data_inicial, $request->data_final])->get();
-
+            
             $nomeArquivo = $request->tipo.Carbon::now()->format('mY');
             $urlArquivo = "/uploads/recebimentos/".$nomeArquivo.".txt";
             $arquivo = fopen(base_path() . "/public/uploads/recebimentos/".$nomeArquivo.".txt","w");

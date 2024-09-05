@@ -8,7 +8,7 @@ class Faturamento extends Model
 {
     protected $table = 'faturamentos';
 
-    public static function informarPagamento($faturamento_id, $forma_pagamento, $data_pagamento){
+    public static function informarPagamento($faturamento_id, $data_pagamento, $forma_pagamento){
 
         $Faturamento = Faturamento::find($faturamento_id);
         $Faturamento->forma_pagamento = $forma_pagamento;

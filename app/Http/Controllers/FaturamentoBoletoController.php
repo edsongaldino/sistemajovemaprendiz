@@ -824,8 +824,10 @@ class FaturamentoBoletoController extends Controller
 
                             echo $ocorrencia->situacao."<br/>";
                             echo $ocorrencia->info->valorPago ?? null;
+                            echo "<br/>".$titulo->token."<br/><br/>";
+                            echo $ocorrencia->info->dataDeCredito;
                             
-                            $data_pagamento = strtotime($ocorrencia->info->dataDeCredito ?? null);
+                            $data_pagamento = $ocorrencia->info->dataDeCredito;
 
                             if(isset($titulo->token)){
 
@@ -835,7 +837,7 @@ class FaturamentoBoletoController extends Controller
                                 $boleto->status = $ocorrencia->situacao;
                                 $boleto->valor_pago = $ocorrencia->info->valorPago ?? null;
                                 $boleto->valor_juros = $ocorrencia->info->jurosMora ?? null;
-                                $boleto->data_pagamento = date('Y-m-d', $data_pagamento ?? null);
+                                $boleto->data_pagamento = $data_pagamento;
                                 $boleto->save();
 
                                 if($ocorrencia->situacao == 'LIQUIDACAO'){
@@ -844,7 +846,6 @@ class FaturamentoBoletoController extends Controller
                                 }
 
                             }
-
                             
                         }
                     }
