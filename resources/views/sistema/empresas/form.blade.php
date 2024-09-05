@@ -33,14 +33,14 @@
     <div class="col-md-3 cpfE" id="CPF" @if(($empresa->tipo_cadastro ?? '') == 'CPF') style="display: block;" @else style="display: none;" @endif>
         <div class="form-group">
         <label class="form-control-label">CPF: <span class="tx-danger">*</span></label>
-        <input class="form-control cpf" type="text" name="cpf" value="{{ $empresa->cpf ?? '' }}" maxlength="12" placeholder="Cadastro Pessoa Física">
+        <input class="form-control cpf" type="text" id="cpf" name="cpf" value="{{ $empresa->cpf ?? '' }}" maxlength="12" placeholder="Cadastro Pessoa Física">
         </div>
     </div><!-- col-4 -->
 
     <div class="col-md-3">
         <div class="form-group">
         <label class="form-control-label">CEI: <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" name="cei" value="{{ $empresa->cei ?? '' }}" maxlength="12" placeholder="Cadastro Específico do INSS">
+        <input class="form-control" type="text" id="cei" name="cei" value="{{ $empresa->cei ?? '' }}" maxlength="12" placeholder="Cadastro Específico do INSS">
         </div>
     </div><!-- col-4 -->
 
@@ -107,7 +107,7 @@
     <div class="col-md-3">
         <div class="form-group">
         <label class="form-control-label">CPF do Responsável: <span class="tx-danger">*</span></label>
-        <input class="form-control cpf" type="text" id="cpf" name="cpf_responsavel" value="{{ $empresa->cpf_responsavel ?? '' }}" placeholder="CPF do Responsável" required>
+        <input class="form-control cpf" type="text" id="cpf_responsavel" name="cpf_responsavel" value="{{ $empresa->cpf_responsavel ?? '' }}" placeholder="CPF do Responsável" required>
         </div>
     </div><!-- col-4 -->
 
