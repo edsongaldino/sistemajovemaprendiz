@@ -825,9 +825,9 @@ class FaturamentoBoletoController extends Controller
                             echo $ocorrencia->situacao."<br/>";
                             echo $ocorrencia->info->valorPago ?? null;
                             echo "<br/>".$titulo->token."<br/><br/>";
-                            echo $ocorrencia->info->dataDeCredito;
+                            echo $ocorrencia->info->dataDeCredito ?? null;
                             
-                            $data_pagamento = $ocorrencia->info->dataDeCredito;
+                            $data_pagamento = $ocorrencia->info->dataDeCredito ?? null;
 
                             if(isset($titulo->token)){
 
