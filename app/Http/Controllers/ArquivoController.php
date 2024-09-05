@@ -33,15 +33,15 @@ class ArquivoController extends Controller
 
             $string = "";
 
-            if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
-                $cpfCnpj = $faturamento->convenio->empresa->cnpj;
-                $nome = $faturamento->convenio->empresa->razao_social;
-            }else{
-                $cpfCnpj = $faturamento->convenio->empresa->cpf;
-                $nome = $faturamento->convenio->empresa->nome_fantasia;
-            }
-
             foreach($FaturamentoPeriodo as $faturamento){
+
+                if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
+                    $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+                    $nome = $faturamento->convenio->empresa->razao_social;
+                }else{
+                    $cpfCnpj = $faturamento->convenio->empresa->cpf;
+                    $nome = $faturamento->convenio->empresa->nome_fantasia;
+                }
 
                 if(isset($faturamento->notaFiscal->numero_nf)){
                     //Ano
@@ -105,6 +105,14 @@ class ArquivoController extends Controller
             $string = "";
 
             foreach($FaturamentoPeriodo as $faturamento){
+
+                if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
+                    $cpfCnpj = $faturamento->convenio->empresa->cnpj;
+                    $nome = $faturamento->convenio->empresa->razao_social;
+                }else{
+                    $cpfCnpj = $faturamento->convenio->empresa->cpf;
+                    $nome = $faturamento->convenio->empresa->nome_fantasia;
+                }
 
                 if($faturamento->forma_pagamento == 'Boleto'){
 
