@@ -131,7 +131,7 @@ class ArquivoController extends Controller
                                 //Histórico
                                 $string .= str_pad('0007', 3);
                                 //Valor
-                                $string .= str_pad(Helper::converte_valor_real($faturamento->boleto->valor ?? '0'), 12, " ", STR_PAD_LEFT);
+                                $string .= str_pad(Helper::converte_valor_real($faturamento->boleto->valor_pago ?? '0'), 12, " ", STR_PAD_LEFT);
                                 //Branco
                                 $string .= str_pad('', 1);
                                 //Complemento 1 (Ver qual informação vai aqui)
