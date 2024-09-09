@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Arquivo;
 use App\Faturamento;
+use App\FaturamentoNF;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -25,7 +26,7 @@ class ArquivoController extends Controller
 
         if($request->tipo == 'FATURAMENTO'){
 
-            $FaturamentoPeriodo = Faturamento::whereBetween('data', [$request->data_inicial, $request->data_final])->get();
+            $FaturamentoNF = FaturamentoNF::whereBetween('created_at', [$request->data_inicial, $request->data_final])->get();
 
             $nomeArquivo = $request->tipo.Carbon::now()->format('mY');
             $urlArquivo = "/uploads/faturamentos/".$nomeArquivo.".txt";
@@ -33,7 +34,9 @@ class ArquivoController extends Controller
 
             $string = "";
 
-            foreach($FaturamentoPeriodo as $faturamento){
+            foreach($FaturamentoNF as $nf){
+
+                $faturamento = Faturamento::find($nf->faturamento_id);
 
                 if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
                     $cpfCnpj = $faturamento->convenio->empresa->cnpj;
@@ -45,9 +48,9 @@ class ArquivoController extends Controller
 
                 if(isset($faturamento->notaFiscal->numero_nf)){
                     //Ano
-                    $string .= str_pad(Carbon::parse($faturamento->data)->format('Y'), 4);
+                    $string .= str_pad(Carbon::parse($faturamento->notaFiscal->created_at)->format('Y'), 4);
                     //Data
-                    $string .= str_pad(Carbon::parse($faturamento->data)->format('d/m/Y'), 10);
+                    $string .= str_pad(Carbon::parse($faturamento->notaFiscal->created_at)->format('d/m/Y'), 10);
                     //Histórico
                     $string .= str_pad('0179', 3);
                     //Valor
@@ -122,7 +125,7 @@ class ArquivoController extends Controller
 
                             if(isset($request->recebimento)){
                                 //Ano
-                                $string .= str_pad(Carbon::parse($faturamento->data)->format('Y'), 4);
+                                $string .= str_pad(Carbon::parse($faturamento->boleto->data_pagamento)->format('Y'), 4);
                                 //Data
                                 $string .= str_pad(Carbon::parse($faturamento->boleto->data_pagamento)->format('d/m/Y'), 10);
                                 //Histórico
@@ -175,7 +178,7 @@ class ArquivoController extends Controller
                                 //Monta inha com os juros
                                 if(isset($request->juros)){
                                     //Ano
-                                    $string .= str_pad(Carbon::parse($faturamento->data)->format('Y'), 4);
+                                    $string .= str_pad(Carbon::parse($faturamento->boleto->data_pagamento)->format('Y'), 4);
                                     //Data
                                     $string .= str_pad(Carbon::parse($faturamento->boleto->data_pagamento)->format('d/m/Y'), 10);
                                     //Histórico
@@ -230,7 +233,7 @@ class ArquivoController extends Controller
                 }else{
                     if(isset($faturamento->informePagamento)){
                         //Ano
-                        $string .= str_pad(Carbon::parse($faturamento->data)->format('Y'), 4);
+                        $string .= str_pad(Carbon::parse($faturamento->informePagamento->data_pagamento)->format('Y'), 4);
                         //Data
                         $string .= str_pad(Carbon::parse($faturamento->informePagamento->data_pagamento)->format('d/m/Y'), 10);
                         //Histórico
