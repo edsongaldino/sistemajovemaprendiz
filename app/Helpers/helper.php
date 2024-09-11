@@ -272,6 +272,7 @@ class Helper{
             case "Benefícios":
                 return $atualizacoes->count();
             break;
+			
         }
 
     }

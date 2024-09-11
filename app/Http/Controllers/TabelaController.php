@@ -84,7 +84,7 @@ class TabelaController extends Controller
     {
         $tabela = Tabela::findOrFail($request->id);
         $tabela->nome = $request->nome;
-        $tabela->valor = Helper::converte_reais_to_mysql($request->valor);
+        //$tabela->valor = Helper::converte_reais_to_mysql($request->valor);
         $tabela->validade = Helper::data_mysql($request->validade);
         $tabela->descricao = $request->descricao;
         $tabela->save();  

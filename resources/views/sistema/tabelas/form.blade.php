@@ -17,7 +17,7 @@
     <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Valor: <span class="tx-danger">*</span></label>
-        <input class="form-control moeda" type="text" name="valor" value="{{ Helper::converte_valor_real(Helper::GetUltimaAtualizacaoValorTabela($tabela)) }}" placeholder="Valor da Tabela" @if($atualizacoesTabela->count() > 0) readonly @endif  required>   
+        <input class="form-control moeda" type="text" name="valor" value="{{ Helper::converte_valor_real(Helper::GetUltimaAtualizacaoValorTabela($tabela)) }}" placeholder="Valor da Tabela" @if($tabela) readonly @endif  required>   
         </div>
     </div><!-- col-4 -->
 
@@ -26,6 +26,6 @@
         <label class="form-control-label">Descrição da tabela: <span class="tx-danger">*</span></label>
         <textarea class="form-control" name="descricao" id="descricao" cols="30" rows="10" placeholder="Descrição da Tabela (Informações Adicionais)">{{ $tabela->descricao ?? '' }}</textarea>
         </div>
-    </div><!-- col-4 -->    
+    </div><!-- col-4 -->
 
 </div><!-- row -->
