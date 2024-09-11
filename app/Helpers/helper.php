@@ -250,7 +250,11 @@ class Helper{
         switch($tipo){
 
             case "Falta Trabalho":
-                return $atualizacoes->count()*($contrato->valor_bolsa/Helper::getDiasEntreDatas($data_inicial, $data_final));
+				if($atualizacoes->count() > 0){
+					return $atualizacoes->count()*($contrato->valor_bolsa/Helper::getDiasEntreDatas($data_inicial, $data_final));
+				}else{
+					return 0;
+				}
             break;
 
             case "Entrega de Uniforme":

@@ -117,6 +117,9 @@ class ArquivoController extends Controller
                     $nome = Helper::removeAcentos($faturamento->convenio->empresa->nome_fantasia);
                 }
 
+                $data_inicial = Carbon::parse($faturamento->data_pagamento)->startOfMonth()->format('d/m/Y');
+                $data_final = Carbon::parse($faturamento->data_pagamento)->endOfMonth()->format('d/m/Y');
+          
                 if($faturamento->forma_pagamento == 'Boleto'){
 
                     if(isset($faturamento->boleto)){
@@ -161,9 +164,9 @@ class ArquivoController extends Controller
                                 //Branco
                                 $string .= str_pad('', 3);
                                 //Data Inicial
-                                $string .= str_pad(Carbon::parse($faturamento->data_inicial)->format('d/m/Y'), 10);
+                                $string .= str_pad($data_inicial, 10);
                                 //Data Final
-                                $string .= str_pad(Carbon::parse($faturamento->data_final)->format('d/m/Y'), 10);
+                                $string .= str_pad($data_final, 10);
                                 //Centro Custo Crédito
                                 $string .= str_pad('', 4);
                                 //Centro Custo Débito
@@ -214,9 +217,9 @@ class ArquivoController extends Controller
                                     //Branco
                                     $string .= str_pad('', 3);
                                     //Data Inicial
-                                    $string .= str_pad(Carbon::parse($faturamento->data_inicial)->format('d/m/Y'), 10);
+                                    $string .= str_pad($data_inicial, 10);
                                     //Data Final
-                                    $string .= str_pad(Carbon::parse($faturamento->data_final)->format('d/m/Y'), 10);
+                                    $string .= str_pad($data_final, 10);
                                     //Centro Custo Crédito
                                     $string .= str_pad('', 4);
                                     //Centro Custo Débito
@@ -269,9 +272,9 @@ class ArquivoController extends Controller
                         //Branco
                         $string .= str_pad('', 3);
                         //Data Inicial
-                        $string .= str_pad(Carbon::parse($faturamento->data_inicial)->format('d/m/Y'), 10);
+                        $string .= str_pad($data_inicial, 10);
                         //Data Final
-                        $string .= str_pad(Carbon::parse($faturamento->data_final)->format('d/m/Y'), 10);
+                        $string .= str_pad($data_final, 10);
                         //Centro Custo Crédito
                         $string .= str_pad('', 4);
                         //Centro Custo Débito
