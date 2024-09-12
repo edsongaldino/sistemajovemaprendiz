@@ -268,8 +268,8 @@ class ContratoController extends Controller
                             ->join('contratos', 'alunos.id', '=', 'contratos.aluno_id')
                             ->where('contratos.empresa_id', $empresa)
                             ->where('contratos.situacao','Encerrado')
-                            ->whereNotIn('contratos.id', DB::table('reposicao')->pluck('reposicao.contrato_id')->toArray())
-                            ->groupBy('alunos.id')->get();                
+                            ->whereNotIn('contratos.id', DB::table('reposicao')->pluck('reposicao.aluno_id')->toArray())
+                            ->groupBy('alunos.id')->get();              
         return view('global.getAlunosReposicao', compact('alunos'));
     }
 
