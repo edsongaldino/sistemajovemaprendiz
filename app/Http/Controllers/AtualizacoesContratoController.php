@@ -76,6 +76,7 @@ class AtualizacoesContratoController extends Controller
                     $contrato->situacao = 'Ativo';
                 }else{
                     $contrato->situacao = 'Encerrado';
+                    $contrato->data_final = $request->data;
                 }
                 
                 $contrato->save();
