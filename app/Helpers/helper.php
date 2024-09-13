@@ -238,14 +238,19 @@ class Helper{
         return CalendarioAluno::where('contrato_id', $contrato)->where('aluno_id', $aluno)->whereBetween('data', [$data_inicial, $data_final])->get();
     }
 
-    public static function getAtualizacaoContrato($data_inicial, $data_final, $contrato, $tipo){
+    public static function getAtualizacaoContrato($data_inicial, $data_final, $contrato_id, $tipo){
 
-        $data_inicial = Carbon::parse($data_inicial)->subMonths(1);
-        $data_final = Carbon::parse($data_final)->subMonths(1);
+        $contrato = Contrato::find($contrato_id);
 
-        $atualizacoes = AtualizacoesContrato::where('contrato_id',$contrato)->where('tipo', $tipo)->whereBetween('data', [$data_inicial, $data_final])->get();
+        $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato)->OrderBy('id','desc')->first();
+        //Se já houver um faturamento anterior para o contrato, pega á partir da data até hoje
 
-        $contrato = Contrato::find($contrato);
+        if(isset($ultimoFaturamento)){
+            $data_inicial = Carbon::createFromFormat("Y-m-d", $ultimoFaturamento->data_final)->addDays(1);
+            $data_final = Carbon::now()->format('Y-m-d');
+        }
+
+        $atualizacoes = AtualizacoesContrato::where('contrato_id',$contrato_id)->where('tipo', $tipo)->whereBetween('data', [$data_inicial, $data_final])->get();
 
         switch($tipo){
 
@@ -272,7 +277,7 @@ class Helper{
             case "Benefícios":
                 return $atualizacoes->count();
             break;
-			
+
         }
 
     }
@@ -394,7 +399,7 @@ class Helper{
 	}
 
     public static function GetValorTotalFaturado($faturamento_id){
-		
+
         $faturamentos = FaturamentoContrato::where('faturamento_id', $faturamento_id)->whereNull('deleted_at')->get();
 		$credito = FaturamentoCredito::where('faturamento_id', $faturamento_id)->first();
         $totalGeral = 0;
@@ -417,13 +422,13 @@ class Helper{
     }
 
 	public static function GetUltimaAtualizacaoValorTabela(Tabela $tabela){
-		
+
 		$UltimaAtualizacao = AtualizacoesTabela::where('tabela_id', $tabela->id)->orderBy('id','desc')->first();
 
 		if(!$UltimaAtualizacao){
 			return $tabela->valor;
 		}
-		
+
 		if($UltimaAtualizacao->atualizacao->data_atualizacao <= date('Y-m-d')){
 			return $UltimaAtualizacao->novo_valor;
 		}else{
@@ -470,39 +475,39 @@ class Helper{
 	public static function verificarFeriado($data, $boolean = false) {
 
 		$param = array();
-	
+
 		// Sua chave (exigida após 01/08/2016!), leia no final dessa postagem!
 		$param['key'] = '3d2a446b-29b9-438c-8779-af3d941844a4';
-	
+
 		// Listas de países suportados!
 		$paisesSuportados = array('BE', 'BG', 'BR', 'CA', 'CZ', 'DE', 'ES', 'FR', 'GB', 'GT', 'HR', 'HU', 'ID', 'IN', 'IT', 'NL', 'NO', 'PL', 'PR', 'SI', 'SK', 'US');
-	
+
 		// Define o pais para buscar feriados
 		$param['country'] = $paisesSuportados[2];
-	
+
 		// Quebra a string em partes (em ano, mes e dia)
 		list($param['year'], $param['month'], $param['day']) = explode('-', $data);
-	
+
 		// Converte a array em parâmetros de URL
 		$param = http_build_query($param);
-	
+
 		// Conecta na API
 		$curl = curl_init('https://holidayapi.com/v1/holidays?'.$param);
-	
+
 		// Permite retorno
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	
+
 		// Obtem dados da API
 		$dados = json_decode(curl_exec($curl), true);
-	
+
 		// Encerra curl
-		curl_close($curl); 
-	
+		curl_close($curl);
+
 		// Retorna true/false se houver $boolean ou Nome_Do_Feriado/false se não houve $boolean
 		return isset($dados['holidays']['0']) ? $boolean ? true : $dados['holidays']['0']['name'] : false;
-	
+
 	}
-	
+
 
 	public static function ValorTotalRecebido($faturamentos){
 		$valorTotal = 0;
@@ -510,7 +515,7 @@ class Helper{
 			if(isset($faturamento->boleto)){
 				if($faturamento->boleto->status == "LIQUIDACAO"){
 					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
-				}	
+				}
 			}
 		}
 		return $valorTotal;
@@ -522,7 +527,7 @@ class Helper{
 			if(isset($faturamento->boleto)){
 				if($faturamento->boleto->status == "Emitido"){
 					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
-				}	
+				}
 			}
 		}
 		return $valorTotal;
@@ -534,14 +539,14 @@ class Helper{
 			if(isset($faturamento->boleto)){
 				if($faturamento->boleto->status == "VENCIDO"){
 					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
-				}	
+				}
 			}
 		}
 		return $valorTotal;
 	}
 
 	public static function GetTipoRelatorioByID($id){
-        
+
 		switch($id){
 			case 1:
 				$tipo = "À Receber";
@@ -564,7 +569,7 @@ class Helper{
 	public static function removeAcentos($string){
     	return strtr(utf8_decode(html_entity_decode($string)),utf8_decode('ÀÁÃÂÉÊÍÓÕÔÚÜÇÑàáãâéêíóõôúüçñ'),'AAAAEEIOOOUUCNaaaaeeiooouucn');
 	}
-	
+
 
 }
 
