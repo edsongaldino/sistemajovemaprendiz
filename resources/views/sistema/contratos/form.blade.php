@@ -356,10 +356,12 @@
     </div><!-- col-4 -->
 
     <div class="col-md-2">
+        @if(!isset($contrato) || $contrato->faturamento->count() == 0)
         <div class="form-group">
         <label class="form-control-label">Último dia faturado: </label>
         <input class="form-control data" type="text" name="data_ultimo_faturamento" value="{{ Helper::data_br($contrato->data_ultimo_faturamento ?? '') }}" placeholder="Data">
         </div>
+        @endif
     </div><!-- col-4 -->
 
 
