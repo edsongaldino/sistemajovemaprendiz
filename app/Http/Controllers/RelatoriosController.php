@@ -34,7 +34,7 @@ class RelatoriosController extends Controller
                         ->join('convenios', 'convenios.id', '=', 'faturamentos.convenio_id')
                         ->join('empresas', 'empresas.id', '=', 'convenios.empresa_id')
                         ->join('enderecos', 'enderecos.id', '=', 'empresas.endereco_id')
-                        ->leftjoin('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id')
+                        ->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id')
                         ->leftjoin('faturamento_boletos', 'faturamentos.id', '=', 'faturamento_boletos.faturamento_id')
                         ->where('faturamentos.deleted_at', null)->where('faturamento_boletos.deleted_at', null);
 
@@ -47,7 +47,7 @@ class RelatoriosController extends Controller
         }
 
         if($request->data_inicial && $request->data_final){
-            $buscaFaturamento->whereBetween('faturamentos.data', [$request->data_inicial, $request->data_final]);
+            $buscaFaturamento->whereBetween('faturamento_nf.created_at', [$request->data_inicial, $request->data_final]);
         }
 
         if($request->nome_fantasia){
@@ -60,7 +60,7 @@ class RelatoriosController extends Controller
                     $buscaFaturamento->where('faturamento_boletos.status', 'Emitido');
                 break;
                     case "2":
-                        $buscaFaturamento->where('faturamento_boletos.status', 'LIQUIDACAO')->where('faturamento_boletos.data_pagamento','<>', '0000-00-00');
+                        $buscaFaturamento->where('faturamentos.situacao_pagamento', 'Liquidado')->whereBetween('faturamentos.data_pagamento',[$request->data_inicial, $request->data_final]);
                     break;
                         case "3":
                             $buscaFaturamento->where('faturamento_boletos.status', 'VENCIDO');

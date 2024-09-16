@@ -244,16 +244,43 @@
             font-size: 20px;
         }
 
-        .topo-polo{
+        .total-polo{
             width: 100%;
             height: 40px;
             line-height: 40px;
             font-size: 20px;
-            background-color: #4090af;
-            color: #FFF;
             text-align: center;
             float: left;
             text-transform: uppercase;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #022e3f;
+        }
+
+        .total-polo .texto-totalizador{
+            width: 80%;
+            float: left;
+            text-align: right;
+            font-size: 16px;
+            background-color: aliceblue;
+            color: #022e3f;
+            font-weight: bold;
+            padding-right: 2%;
+        }
+        .total-polo .total{
+            width: 10%;
+            float: left;
+            text-align: center;
+            font-size: 16px;
+            background-color: #4090af;
+            color: #FFF;
+        }
+        .total-polo .total-juros{
+            width: 8%;
+            float: left;
+            text-align: center;
+            font-size: 14px;
+            background-color: #022e3f;
+            color: #FFF;
         }
     </style>
 </head>
@@ -277,24 +304,52 @@
         <div class="col-8">Valor NF</div>
         <div class="col-8">Juros/Multa</div>
     </div>
-    @php $polo = 0;  @endphp
+    @php $polo = 0; $i = 0; @endphp
     @foreach ($faturamentos as $faturamento)
-    @if($polo <> $faturamento->convenio->polo_id)
-    <div class="topo-polo">{{ $faturamento->convenio->polo->nome}} - {{ $faturamento->convenio->polo->endereco->cidade->nome_cidade}} ({{ $faturamento->convenio->polo->endereco->cidade->estado->uf_estado}})</div>
-    @endif
-    <div class="linha-relatorio">
-        <div class="col-8">{{ Helper::datetime_br($faturamento->data) ?? '' }}</div>
-        <div class="col-10">{{ $faturamento->notaFiscal->numero_nf ?? '' }}</div>
-        <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? '' }}</div>
-        <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? '' }}</div>
-        <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</div>
-        <div class="col-8">{{ $faturamento->boleto->status ?? '' }}</div>
-        <div class="col-8">{{ $faturamento->forma_pagamento ?? '' }}</div>
-        <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
-        <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</div>
-    </div>
-    @php $polo = $faturamento->convenio->polo_id;  @endphp
+        
+        @if($polo <> $faturamento->convenio->polo_id)
+
+            @if($polo <> 0)
+            <div class="total-polo">
+                <div class="texto-totalizador">Total Geral</div>
+                <div class="total">{{ Helper::converte_valor_real($valorTotal) }}</div>
+                <div class="total-juros">{{ Helper::converte_valor_real($totalJuros) }}</div>
+            </div>
+            @endif
+
+            @php 
+                $poloAtual = $faturamento->convenio->polo_id; 
+                $valorTotal=0;
+                $totalJuros=0;  
+                $mostrarTotalizadorPolo = 'Sim';
+            @endphp
+            <div class="topo-polo">{{ $faturamento->convenio->polo->nome}} - {{ $faturamento->convenio->polo->endereco->cidade->nome_cidade}} ({{ $faturamento->convenio->polo->endereco->cidade->estado->uf_estado}})</div>
+        @endif
+        <div class="linha-relatorio">
+            <div class="col-8">{{ Helper::datetime_br($faturamento->data) ?? '' }}</div>
+            <div class="col-10">{{ $faturamento->notaFiscal->numero_nf ?? '' }}</div>
+            <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? '' }}</div>
+            <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? '' }}</div>
+            <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_vencimento ?? '')}}</div>
+            <div class="col-8">{{ $faturamento->boleto->status ?? '' }}</div>
+            <div class="col-8">{{ $faturamento->forma_pagamento ?? '' }}</div>
+            <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
+            <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros ?? '') }}</div>
+        </div>
+        @php 
+        $valorTotal = $valorTotal + Helper::GetValorTotalFaturado($faturamento->id);
+        $totalJuros = $totalJuros + $faturamento->boleto->valor_juros;
+        $polo = $faturamento->convenio->polo_id; 
+        $i++;
+        @endphp
+
     @endforeach
+
+    <div class="total-polo">
+        <div class="texto-totalizador">Total Geral</div>
+        <div class="total">{{ Helper::converte_valor_real($valorTotal) }}</div>
+        <div class="total-juros">{{ Helper::converte_valor_real($totalJuros) }}</div>
+    </div>
 
 </body>
 </html>
