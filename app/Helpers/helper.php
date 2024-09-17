@@ -311,6 +311,7 @@ class Helper{
     public static function calculaDecimo($Faturamento){
         //calculo
         $tempo_contrato = Helper::getDiasEntreDatas($Faturamento->data_inicial, $Faturamento->data_final);
+		$totalFaturamentos = FaturamentoContrato::where('contrato_id', $Faturamento->contrato_id)->count();
 
         switch ($tempo_contrato){
             case $tempo_contrato <= 14:
@@ -321,9 +322,13 @@ class Helper{
                 $valor = $Faturamento->contrato->valor_bolsa/12;
                 break;
 
-            default:
+			case $tempo_contrato > 44 && $totalFaturamentos == 1:
                 $valor = ($Faturamento->contrato->valor_bolsa/12)*2;
                 break;
+
+			default:
+				$valor = $Faturamento->contrato->valor_bolsa/12;
+				break;
         }
 
         return $valor;
@@ -333,6 +338,7 @@ class Helper{
     public static function calculaFerias($Faturamento){
         //calculo
         $tempo_contrato = Helper::getDiasEntreDatas($Faturamento->data_inicial, $Faturamento->data_final);
+		$totalFaturamentos = FaturamentoContrato::where('contrato_id', $Faturamento->contrato_id)->count();
 
         switch ($tempo_contrato){
             case $tempo_contrato <= 14:
@@ -343,9 +349,13 @@ class Helper{
                 $valor = $Faturamento->contrato->valor_bolsa/12;
                 break;
 
-            default:
+			case $tempo_contrato > 44 && $totalFaturamentos == 1:
                 $valor = ($Faturamento->contrato->valor_bolsa/12)*2;
                 break;
+
+			default:
+				$valor = $Faturamento->contrato->valor_bolsa/12;
+				break;
 
         }
 
