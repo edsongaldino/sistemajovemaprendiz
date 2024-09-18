@@ -292,13 +292,15 @@ class FaturamentoController extends Controller
 
     public function faturarConvenio(Request $request)
     {
+        $convenio = Convenio::find($request->id);
+
         $Faturamento = new Faturamento();
         $Faturamento->user_id = Auth::user()->id;
         $Faturamento->convenio_id = $request->id;
         $Faturamento->data = Carbon::now();
         $Faturamento->data_inicial = $request->data_inicial;
         $Faturamento->data_final = $request->data_final;
-        $Faturamento->forma_pagamento = $request->forma_pagamento;
+        $Faturamento->forma_pagamento = $convenio->forma_pagamento;
 
         if($Faturamento->save()):
             return true;
