@@ -783,7 +783,7 @@ $(document).on('click', '.NFAguardando', function (e) {
 
 $(document).on('click', '.NFCancelada', function () {
   swal({
-      title: "Esta NF consta como CANCELADA na prefeitura. Verifique junto a contabilidade!",
+      title: "Esta NF está sendo CANCELADA na prefeitura. Aguarde!",
       type: "info",
   }
 )}

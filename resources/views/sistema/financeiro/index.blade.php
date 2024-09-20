@@ -242,8 +242,10 @@
                     @if(isset($faturamento->notaFiscal->codigo_nf))
                         @if($faturamento->notaFiscal->status == 'Aguardando Emissão')
                         <a href="#" class="btn btn-warning NFAguardando" data-codigo_nf="{{ $faturamento->notaFiscal->codigo_nf }}" data-token="{{ csrf_token() }}" title="{{ $faturamento->notaFiscal->status }}"><i class="fa fa-eye" aria-hidden="true"></i> Nota Fiscal</a>
-                        @elseif($faturamento->notaFiscal->status == 'Cancelada' || $faturamento->notaFiscal->status == 'Cancelamento Solicitado')
+                        @elseif($faturamento->notaFiscal->status == 'Cancelada')
                         <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Reemitir NF</a>
+                        @elseif($faturamento->notaFiscal->status == 'Cancelamento Solicitado')
+                        <a href="#" class="btn btn-warning NFCancelada"><i class="fa fa-clock-o" aria-hidden="true"></i> Em Cancelamento</a>
                         @else
                         <a href="{{ $faturamento->notaFiscal->link_pdf }}" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Nota Fiscal</a>
                         <a href="#" class="btn btn-danger CancelarNF" data-id="{{ $faturamento->notaFiscal->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar NF</a>
@@ -336,7 +338,7 @@
 
     </div><!-- br-pagebody -->
 
-    <script src="{{ asset('assets/sistema/js/financeiro/index.js?v=1') }}"></script>
+    <script src="{{ asset('assets/sistema/js/financeiro/index.js?v=2') }}"></script>
 
     <div class="modal fade" id="ModalRetorno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
