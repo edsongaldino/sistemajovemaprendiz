@@ -485,15 +485,23 @@ $(document).on('click', '.CancelarNF', function (e) {
           },
 
         success: function(data) {
-          swal({title: "OK", text: "Solçicitação de Cancelamento Enviada à Prefeitura!", type: "success"},
-            function(){
-                location.reload();
-            }
-          );
+          if(data.status == 'success'){
+            swal({title: "OK", text: data.message, type: data.status},
+              function(){
+                  location.reload();
+              }
+            );
+          }else{
+            swal({title: "Ops", text: data.message, type: data.status},
+              function(){
+                  location.reload();
+              }
+            );
+          };
         },
 
         error: function(data) {
-          swal({title: "OPS", text: "Erro ao solicitar Cancelamento!", type: "warning"},
+          swal({title: "OPS", text: data.message, type: data.status},
             function(){
                 location.reload();
             }

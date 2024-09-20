@@ -338,35 +338,34 @@ class FaturamentoNFController extends Controller
 
             if($AtualizarNF){
                 $response_array['status'] = 'success';
+                $response_array['message'] = 'NF Cancelada com sucesso!';
                 echo json_encode($response_array);
             }else{
                 $response_array['status'] = 'error';
+                $response_array['message'] = $ex->getMessage();
                 echo json_encode($response_array);
             }
 
         }
         catch(Exceptions\invalidApiKeyException $ex) {
-            echo 'Erro de autenticação: </br></br>';
-            echo $ex->getMessage();
+            $response_array['status'] = 'error';
+            $response_array['message'] = 'Erro de autenticação: '.$ex->getMessage();
+            echo json_encode($response_array);
         }
         catch(Exceptions\unauthorizedException $ex) {
-            echo 'Acesso negado: </br></br>';
-            echo $ex->getMessage();
+            $response_array['status'] = 'error';
+            $response_array['message'] = 'Acesso negado: '.$ex->getMessage();
+            echo json_encode($response_array);
         }
         catch(Exceptions\apiException $ex) {
-            echo 'Erro de validação: </br></br>';
-            echo $ex->getMessage();
+            $response_array['status'] = 'error';
+            $response_array['message'] = 'Erro de validação:: '.$ex->getMessage();
+            echo json_encode($response_array);
         }
         catch(Exceptions\requestException $ex) {
-            echo 'Erro na requisição web: </br></br>';
-
-            echo 'Requested url: ' . $ex->requestedUrl;
-            echo '</br>';
-            echo 'Response Code: ' . $ex->getCode();
-            echo '</br>';
-            echo 'Message: ' . $ex->getMessage();
-            echo '</br>';
-            echo 'Response Body: ' . $ex->responseBody;
+            $response_array['status'] = 'error';
+            $response_array['message'] = 'Erro na requisição web: '.$ex->getMessage();
+            echo json_encode($response_array);
         }
 
     }
