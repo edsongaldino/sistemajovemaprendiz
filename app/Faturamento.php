@@ -46,7 +46,7 @@ class Faturamento extends Model
 
     public function notaFiscal()
     {
-        return $this->hasOne(FaturamentoNF::class)->whereNull('deleted_at');
+        return $this->hasOne(FaturamentoNF::class)->whereNull('deleted_at')->orderBy('id', 'DESC');
     }
 
     public function faturamentoContratos()
