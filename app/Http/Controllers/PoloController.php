@@ -157,7 +157,7 @@ class PoloController extends Controller
     public function equipe($id)
     {
         $polo = Polo::find($id);
-        $equipe = User::select('users.nome', 'users.email', 'polo_user.id', 'perfis.nome as nome_perfil')
+        $equipe = User::select('users.id','users.nome', 'users.email', 'polo_user.id', 'perfis.nome as nome_perfil')
             ->join('polo_user', 'users.id', '=', 'polo_user.user_id')
             ->join('perfis', 'users.perfil_id', '=', 'perfis.id')
             ->where('polo_user.polo_id', '=', $id)
@@ -165,7 +165,7 @@ class PoloController extends Controller
         
         $polo_users = PoloUser::where('polo_id', '=', $id)->select('user_id')->get()->toArray();
 
-        $colaboradores = User::select('users.nome', 'users.email', 'perfis.nome as nome_perfil')
+        $colaboradores = User::select('users.id', 'users.nome', 'users.email', 'perfis.nome as nome_perfil')
             ->join('perfis', 'users.perfil_id', '=', 'perfis.id')
             ->where('perfis.tipo_perfil', '=', 'Gestão')
             ->get();

@@ -29,6 +29,9 @@ function EnviarFormAluno() {
     var cep_endereco = FormAluno.cep_endereco.value;
     var logradouro_endereco = FormAluno.logradouro_endereco.value;
 
+    var email = FormAluno.email.value;
+    var polo_id = FormAluno.polo_id.value;
+
     if (nome == "") {
         swal({title: "Ops", text: "O campo nome deve ser preenchido!", type: "error"});
         FormAluno.nome.focus();
@@ -50,6 +53,18 @@ function EnviarFormAluno() {
     if (logradouro_endereco == "") {
         swal({title: "Ops", text: "O campo logradouro não pode ser vazio!", type: "error"});
         FormAluno.logradouro_endereco.focus();
+        return false;
+    }
+
+    if (email == "") {
+        swal({title: "Ops", text: "O campo e-mail é obrigatório!", type: "error"});
+        FormAluno.email.focus();
+        return false;
+    }
+
+    if (polo_id == "") {
+        swal({title: "Ops", text: "Selecione um pólo!", type: "error"});
+        FormAluno.polo_id.focus();
         return false;
     }
 

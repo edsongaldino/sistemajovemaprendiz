@@ -18,7 +18,7 @@
     <div class="col-md-3 mg-t--1 mg-md-t-0">
         <div class="form-group mg-md-l--1">
         <label class="form-control-label">CPF: <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" name="cpf" id="cpf" value="{{ $aluno->cpf ?? '' }}" required>
+        <input class="form-control cpf" type="text" name="cpf" id="cpf" value="{{ $aluno->cpf ?? '' }}" required>
         </div>
     </div><!-- col-4 -->
 
@@ -46,7 +46,7 @@
     <div class="col-md-3 mg-t--1 mg-md-t-0">
         <div class="form-group mg-md-l--1">
         <label class="form-control-label">Telefone (Residencial): <span class="tx-danger">*</span></label>
-        <input class="form-control" id="phoneMask" type="text" name="telefone" value="{{ $aluno->telefone ?? '' }}" placeholder="Telefone" required>
+        <input class="form-control telefone" id="phoneMask" type="text" name="telefone" value="{{ $aluno->telefone ?? '' }}" placeholder="Telefone" required>
         </div>
     </div><!-- col-4 -->
 
