@@ -334,11 +334,11 @@
             <div class="col-8">{{ $faturamento->boleto->status ?? '' }}</div>
             <div class="col-8">{{ $faturamento->forma_pagamento ?? '' }}</div>
             <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
-            <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros ?? '') }}</div>
+            <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros ?? 0) }}</div>
         </div>
         @php 
         $valorTotal = $valorTotal + Helper::GetValorTotalFaturado($faturamento->id);
-        $totalJuros = $totalJuros + $faturamento->boleto->valor_juros;
+        $totalJuros = $totalJuros + ($faturamento->boleto->valor_juros ?? 0);
         $polo = $faturamento->convenio->polo_id; 
         $i++;
         @endphp
