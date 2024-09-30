@@ -24,7 +24,7 @@ class AlunoController extends Controller
     public function index()
     {
         $polos = Polo::all();
-        $alunos = Aluno::where('tipo_cadastro','=', 'Jovem Aprendiz')->paginate(20);
+        $alunos = Aluno::where('tipo_cadastro','=', 'Jovem Aprendiz')->simplePaginate(20);
         return view('sistema.alunos.index', compact('alunos', 'polos'));
     }
 
