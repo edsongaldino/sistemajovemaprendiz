@@ -326,7 +326,7 @@
             <div class="topo-polo">{{ $faturamento->convenio->polo->nome}} - {{ $faturamento->convenio->polo->endereco->cidade->nome_cidade}} ({{ $faturamento->convenio->polo->endereco->cidade->estado->uf_estado}})</div>
         @endif
         <div class="linha-relatorio">
-            <div class="col-8">{{ Helper::datetime_br($faturamento->data) ?? '' }}</div>
+            <div class="col-8">{{ Helper::datetime_br($faturamento->notaFiscal->created_at) ?? '' }}</div>
             <div class="col-10">{{ $faturamento->notaFiscal->numero_nf ?? '' }}</div>
             <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? '' }}</div>
             <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? '' }}</div>
