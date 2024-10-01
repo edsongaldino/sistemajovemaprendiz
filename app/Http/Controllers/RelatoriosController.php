@@ -46,10 +46,6 @@ class RelatoriosController extends Controller
             $buscaFaturamento->where('enderecos.cidade_id', $request->cidade_endereco);
         }
 
-        if($request->data_inicial && $request->data_final){
-            $buscaFaturamento->whereBetween('faturamento_nf.created_at', [$request->data_inicial, $request->data_final]);
-        }
-
         if($request->nome_fantasia){
             $buscaFaturamento->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
         }
@@ -57,13 +53,16 @@ class RelatoriosController extends Controller
         if($request->tipo_relatorio){
             switch($request->tipo_relatorio){
                 case "1":
+                    if($request->data_inicial && $request->data_final){
+                        $buscaFaturamento->whereBetween('faturamento_nf.created_at', [$request->data_inicial, $request->data_final]);
+                    }
                     $buscaFaturamento->where('faturamento_boletos.status', 'Emitido');
                 break;
                     case "2":
                         $buscaFaturamento->where('faturamentos.situacao_pagamento', 'Liquidado')->whereBetween('faturamentos.data_pagamento',[$request->data_inicial, $request->data_final]);
                     break;
                         case "3":
-                            $buscaFaturamento->where('faturamento_boletos.status', 'VENCIDO');
+                            $buscaFaturamento->where('faturamentos.situacao_pagamento','!=', 'Liquidado')->where('faturamento_boletos.data_vencimento','<', Carbon::now()->format('Y-m-d'));
                         break;
 
             }
