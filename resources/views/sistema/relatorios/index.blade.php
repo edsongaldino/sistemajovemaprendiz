@@ -154,6 +154,9 @@
                 <th>Razão Social</th>
                 <th>Vencimento</th>
                 <th>Situação</th>
+                @if($request->tipo_relatorio == "2")
+                <th>Data Pagamento</th>
+                @endif
                 <th>Tipo</th>
                 <th>Valor NF</th>
                 <th>Juros/Multa</th>
@@ -169,12 +172,22 @@
                 <td>{{ $faturamento->convenio->empresa->razao_social ?? '' }}</td>
                 @if(isset($faturamento->boleto->codigo_boleto))
                 <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
-                <td>{{ $faturamento->boleto->status ?? '' }}</td>
+                <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->boleto->status ?? '' )}}</td>
+                @if($request->tipo_relatorio == "2")
+                <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->boleto->data_pagamento) ?? '' }}</td>
+                @endif
                 <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
                 <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
                 <td>{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</td>
                 @else
-
+                <td>-</td>
+                <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->situacao_pagamento ?? '') }}</td>
+                @if($request->tipo_relatorio == "2")
+                <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->data_pagamento) ?? '' }}</td>
+                @endif
+                <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
+                <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
+                <td></td>
                 @endif
               </tr>
               @endforeach

@@ -330,11 +330,22 @@
             <div class="col-10">{{ $faturamento->notaFiscal->numero_nf ?? '' }}</div>
             <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? '' }}</div>
             <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? '' }}</div>
+
+            @if(isset($faturamento->boleto->codigo_boleto))
             <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_vencimento ?? '')}}</div>
-            <div class="col-8"><b>{{ Helper::getSituacaoByString($faturamento->boleto->status) }}</b><br/>{{ $faturamento->forma_pagamento ?? '' }}</div>
+            <div class="col-8"><b>{{ Helper::getSituacaoByString($faturamento->boleto->status ?? '') }}</b><br/>{{ $faturamento->forma_pagamento ?? '' }}</div>
             <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_pagamento ?? '')}}</div>
             <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
             <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros ?? 0) }}</div>
+            @else
+            <div class="col-8">-</div>
+            <div class="col-8"><b>{{ Helper::getSituacaoByString($faturamento->situacao_pagamento ?? '') }}</b><br/>{{ $faturamento->forma_pagamento ?? '' }}</div>
+            <div class="col-8">{{ Helper::data_br($faturamento->data_pagamento ?? '')}}</div>
+            <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
+            <div class="col-8">-</div>
+            @endif
+
+
         </div>
         @php 
         $valorTotal = $valorTotal + Helper::GetValorTotalFaturado($faturamento->id);

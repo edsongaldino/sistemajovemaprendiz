@@ -25,6 +25,17 @@
     text-align: center;
 }
 
+.situacaoP{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.dataP{
+    font-weight: bold;
+    text-align: center;
+    color: #04a848;
+}
+
 .valor-pago{
     color: #04a848;
 }
