@@ -290,6 +290,22 @@ class Helper{
 
     }
 
+	public static function getSituacaoByString($situacao){
+
+        switch($situacao){
+
+            case "LIQUIDACAO":
+                return "LIQUIDADO";
+            break;
+
+			default:
+                return $situacao;
+            break;
+
+        }
+
+    }
+
     public static function calcularDesconto(float $valor, float $p_desconto): float
     {
         $resultado = $valor - ($valor * $p_desconto / 100);

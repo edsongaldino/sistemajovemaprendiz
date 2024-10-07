@@ -25,7 +25,20 @@ class RelatoriosController extends Controller
     public function ImprimirRelatorio(Request $request){
         $faturamentos = $this->GetFaturamentos($request);
         $data_atual = Carbon::now()->format('d/m/Y H:i');
-        return view('sistema.relatorios.imprimir', compact('faturamentos', 'data_atual', 'request'));
+
+        switch($request->tipo_relatorio){
+            case "1":
+                $view = 'sistema.relatorios.imprimir';
+            break;
+                case "2":
+                    $view = 'sistema.relatorios.recebidos';
+                break;
+                    case "3":
+                        $view = 'sistema.relatorios.imprimir';
+                    break;
+        }
+
+        return view($view, compact('faturamentos', 'data_atual', 'request'));
     }
 
     public function GetFaturamentos(Request $request){
