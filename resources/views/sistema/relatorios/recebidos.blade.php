@@ -357,7 +357,7 @@
     @endforeach
 
     <div class="total-polo">
-        <div class="texto-totalizador">Total Geral</div>
+        <div class="texto-totalizador">Total Geral Por Cidade</div>
         <div class="total">{{ Helper::converte_valor_real($valorTotal) }}</div>
         <div class="total-juros">{{ Helper::converte_valor_real($totalJuros) }}</div>
     </div>
