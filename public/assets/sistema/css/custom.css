@@ -36,6 +36,13 @@
     color: #04a848;
 }
 
+.dataP .contaP{
+    font-weight: bold;
+    text-align: center;
+    color: #595c5a;
+    font-size: 11px;
+}
+
 .valor-pago{
     color: #04a848;
 }

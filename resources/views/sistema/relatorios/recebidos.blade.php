@@ -311,7 +311,7 @@
 
             @if($polo <> 0)
             <div class="total-polo">
-                <div class="texto-totalizador">Total Geral</div>
+                <div class="texto-totalizador">Total Geral Por Cidade</div>
                 <div class="total">{{ Helper::converte_valor_real($valorTotal) }}</div>
                 <div class="total-juros">{{ Helper::converte_valor_real($totalJuros) }}</div>
             </div>
@@ -328,8 +328,8 @@
         <div class="linha-relatorio">
             <div class="col-8">{{ Helper::datetime_br($faturamento->notaFiscal->created_at) ?? '' }}</div>
             <div class="col-10">{{ $faturamento->notaFiscal->numero_nf ?? '' }}</div>
-            <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? '' }}</div>
-            <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? '' }}</div>
+            <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? $faturamento->convenio->empresa->cpf }}</div>
+            <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? $faturamento->convenio->empresa->nome_fantasia }}</div>
 
             @if(isset($faturamento->boleto->codigo_boleto))
             <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_vencimento ?? '')}}</div>

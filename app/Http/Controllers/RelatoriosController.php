@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ContaBancaria;
 use App\Estado;
 use App\Faturamento;
 use App\Helpers\Helper;
@@ -18,8 +19,9 @@ class RelatoriosController extends Controller
 
         $polos = Polo::all();
         $estados = Estado::all();
+        $contas = ContaBancaria::all();
 
-        return view('sistema.relatorios.index', compact('faturamentos', 'polos', 'estados', 'request'));
+        return view('sistema.relatorios.index', compact('faturamentos', 'polos', 'estados', 'contas', 'request'));
     }
 
     public function ImprimirRelatorio(Request $request){
@@ -49,7 +51,8 @@ class RelatoriosController extends Controller
                         ->join('enderecos', 'enderecos.id', '=', 'empresas.endereco_id')
                         ->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id')
                         ->leftjoin('faturamento_boletos', 'faturamentos.id', '=', 'faturamento_boletos.faturamento_id')
-                        ->where('faturamentos.deleted_at', null)->where('faturamento_boletos.deleted_at', null);
+                        ->leftjoin('informe_pagamento', 'faturamentos.id', '=', 'informe_pagamento.faturamento_id')
+                        ->where('faturamentos.deleted_at', null);
 
         if($request->polo){
             $buscaFaturamento->where('convenios.polo_id', $request->polo);
@@ -61,6 +64,10 @@ class RelatoriosController extends Controller
 
         if($request->nome_fantasia){
             $buscaFaturamento->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
+        }
+
+        if($request->banco){
+            $buscaFaturamento->where('informe_pagamento.conta_id', $request->banco);
         }
 
         if($request->tipo_relatorio){

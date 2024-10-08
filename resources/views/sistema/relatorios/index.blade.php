@@ -100,8 +100,9 @@
                 <select class="form-control" name="banco" data-placeholder="Selecione o Banco">
                     <option label="Selecione o banco"></option>
                     <option value="">Todos</option>
-                    <option value="1" @if($request->banco == "1") selected="selected" @endif>Sicredi</option>
-                    <option value="2" @if($request->banco == "2") selected="selected" @endif>Bradesco</option>
+                    @foreach ($contas as $conta)
+                    <option value="{{ $conta->id }}"  @if($request->banco == $conta->id) selected="selected" @endif>{{ $conta->banco }} - ({{ $conta->conta_corrente }})</option>
+                    @endforeach
                 </select>
                 </div>
               </div><!-- col-4 -->
@@ -171,23 +172,23 @@
                 <td>{{ $faturamento->convenio->empresa->cnpj ?? '' }}</td>
                 <td>{{ $faturamento->convenio->empresa->razao_social ?? '' }}</td>
                 @if(isset($faturamento->boleto->codigo_boleto))
-                <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
-                <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->boleto->status ?? '' )}}</td>
-                @if($request->tipo_relatorio == "2")
-                <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->boleto->data_pagamento) ?? '' }}</td>
-                @endif
-                <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
-                <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
-                <td>{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</td>
+                  <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
+                  <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->boleto->status ?? '' )}}</td>
+                  @if($request->tipo_relatorio == "2")
+                  <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->boleto->data_pagamento) ?? '' }}</td>
+                  @endif
+                  <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
+                  <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
+                  <td>{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</td>
                 @else
-                <td>-</td>
-                <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->situacao_pagamento ?? '') }}</td>
-                @if($request->tipo_relatorio == "2")
-                <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->data_pagamento) ?? '' }}</td>
-                @endif
-                <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
-                <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
-                <td></td>
+                  <td>-</td>
+                  <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->situacao_pagamento ?? '') }}</td>
+                  @if($request->tipo_relatorio == "2")
+                  <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->data_pagamento) ?? '' }}<br><span class="contaP">{{ $faturamento->informePagamento->conta->banco ?? '' }} ({{ $faturamento->informePagamento->conta->conta_corrente ?? '' }})</span></td>
+                  @endif
+                  <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
+                  <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
+                  <td></td>
                 @endif
               </tr>
               @endforeach

@@ -543,6 +543,9 @@ class Helper{
 					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
 				}
 			}
+			elseif(isset($faturamento->informePagamento)){
+				$valorTotal += $faturamento->informePagamento->valor_pago;
+			}
 		}
 		return $valorTotal;
 	}
@@ -550,10 +553,8 @@ class Helper{
 	public static function ValorTotalReceber($faturamentos){
 		$valorTotal = 0;
 		foreach($faturamentos as $faturamento){
-			if(isset($faturamento->boleto)){
-				if($faturamento->boleto->status == "Emitido"){
-					$valorTotal += $faturamento->boleto->valor+$faturamento->boleto->valor_juros;
-				}
+			if(($faturamento->situacao <> "Liquidado") && (!$faturamento->informePagamento)){
+				$valorTotal += Helper::GetValorTotalFaturado($faturamento->id);
 			}
 		}
 		return $valorTotal;

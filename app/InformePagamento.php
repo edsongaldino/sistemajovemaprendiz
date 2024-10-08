@@ -9,4 +9,9 @@ class InformePagamento extends Model
 {
     use HasFactory;
     protected $table = 'informe_pagamento';
+
+    public function conta()
+    {
+        return $this->belongsTo(ContaBancaria::class);
+    }
 }
