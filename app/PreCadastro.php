@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PreCadastro extends Model
 {
-    //
+    protected $table = 'pre_cadastros';
 }

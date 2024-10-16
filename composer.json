@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0.2",
         "codephix/asaas-sdk": "^2.0",
+        "darkaonline/l5-swagger": "^8.6",
         "doctrine/dbal": "^2.12.1",
         "enotas/php-client": "^1.0",
         "fruitcake/laravel-cors": "^2.0",

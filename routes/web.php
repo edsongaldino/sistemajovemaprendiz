@@ -27,7 +27,6 @@ Route::get('/gravar-pre-cadastro', 'PreCadastroController@edit')->name('gravar-p
 Route::get('/cadastro-jovem-aprendiz', 'PreCadastroController@cadastroAluno')->name('cadastro-jovem-aprendiz');
 Route::post('/gravar-cadastro-completo', 'PreCadastroController@SalvarDadosAluno')->name('gravar-cadastro-completo');
 
-
 Route::get('/login', 'AppController@login')->name('login');
 Route::get('/sistema', 'AppController@sistema')->name('sistema')->middleware('auth');
 Route::get('/sistema/alunos', 'AlunoController@index')->name('alunos')->middleware('auth');
@@ -327,8 +326,8 @@ Route::get('/importar-alunos', 'AppController@importarAlunos');
 Route::get('/testes-feriados', 'AppController@GetFeriado');
 
 Route::get('/testes', function() {
-    $valor = FaturamentoController::GetFaturamentoMesAnterior('484', '2024-07-01');
-    return $valor;
+    //$valor = FaturamentoController::GetFaturamentoMesAnterior('484', '2024-07-01');
+    //return $valor;
 });
 
 Route::get('/atualiza-boletos', function() {

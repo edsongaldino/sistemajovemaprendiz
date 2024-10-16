@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/lista-pre-cadastro', 'PreCadastroController@listaCadastros')->name('lista-pre-cadastro');
+Route::post('/gravar-pre-cadastro', 'PreCadastroController@preCadastroAluno')->name('gravar-pre-cadastro');
