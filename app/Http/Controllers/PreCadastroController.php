@@ -10,6 +10,7 @@ use App\Helpers\Helper;
 use App\Aluno;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailUser;
+use App\PreCadastroJovem;
 use Exception;
 
 use OpenApi\Annotations as OA;
@@ -20,88 +21,6 @@ use OpenApi\Annotations as OA;
 class PreCadastroController extends Controller
 {
    
-    /**
-    *  @OA\GET(
-    *      path="/api/lista-pre-cadastro",
-    *      summary="Lista todos os jovens cadastrados",
-    *      description="Lista todos os jovens cadastrados",
-    *      tags={"Pre Cadastros"},
-    *      @OA\Parameter(
-    *         name="name",
-    *         in="query",
-    *         description="name",
-    *         required=false,
-    *      ),
-    *     @OA\Parameter(
-    *         name="email",
-    *         in="query",
-    *         description="email",
-    *         required=false,
-    *      ),
-    *     @OA\Parameter(
-    *         name="page",
-    *         in="query",
-    *         description="Page Number",
-    *         required=false,
-    *      ),
-    *      @OA\Response(
-    *          response=200,
-    *          description="OK",
-    *          @OA\MediaType(
-    *              mediaType="application/json",
-    *          )
-    *      ),
-    *
-    *  )
-    */
-    public function listaCadastros()
-    {
-        $preCadastros = PreCadastro::get()->take(50);
-        return response()->json(['data' => $preCadastros]);
-    }
-
-
-    /**
-    *  @OA\POST(
-    *      path="/api/gravar-pre-cadastro",
-    *      summary="Grava dados do jovem aprendiz",
-    *      description="Grava dados do jovem aprendiz",
-    *      tags={"Pre Cadastros"},
-    *      @OA\Parameter(
-    *         name="name",
-    *         in="query",
-    *         description="name",
-    *         required=false,
-    *      ),
-    *     @OA\Parameter(
-    *         name="email",
-    *         in="query",
-    *         description="email",
-    *         required=false,
-    *      ),
-    *     @OA\Parameter(
-    *         name="page",
-    *         in="query",
-    *         description="Page Number",
-    *         required=false,
-    *      ),
-    *      @OA\Response(
-    *          response=200,
-    *          description="OK",
-    *          @OA\MediaType(
-    *              mediaType="application/json",
-    *          )
-    *      ),
-    *
-    *  )
-    */
-    public function preCadastroAluno(Request $request){
-        return response()->json([
-            'Nome' => $request->name,
-            'E-mail' => $request->email
-          ]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *

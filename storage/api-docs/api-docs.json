@@ -31,27 +31,7 @@
                 ],
                 "summary": "Lista todos os jovens cadastrados",
                 "description": "Lista todos os jovens cadastrados",
-                "operationId": "eaed7ef09fef0e2bfc94608b11d02cfa",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "name",
-                        "required": false
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "email",
-                        "required": false
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page Number",
-                        "required": false
-                    }
-                ],
+                "operationId": "b228c4473039481cec4b379cdcf58942",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -69,27 +49,59 @@
                 ],
                 "summary": "Grava dados do jovem aprendiz",
                 "description": "Grava dados do jovem aprendiz",
-                "operationId": "c94cd7f56952cdfa9b17532e8b9746a8",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "name",
-                        "required": false
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "email",
-                        "required": false
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page Number",
-                        "required": false
+                "operationId": "fccd88906caa1477e1eb52e32dcf1139",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "nomeCompleto",
+                                    "dataNascimento",
+                                    "email",
+                                    "periodoEstudo",
+                                    "whatsapp",
+                                    "cidade",
+                                    "estado"
+                                ],
+                                "properties": {
+                                    "nomeCompleto": {
+                                        "type": "string"
+                                    },
+                                    "dataNascimento": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "periodoEstudo": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string"
+                                    },
+                                    "sexo": {
+                                        "type": "string"
+                                    },
+                                    "cep": {
+                                        "type": "string"
+                                    },
+                                    "estado": {
+                                        "type": "string"
+                                    },
+                                    "cidade": {
+                                        "type": "string"
+                                    },
+                                    "bairro": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -103,7 +115,8 @@
     },
     "components": {
         "schemas": {
-            "PreCadastroController": {}
+            "PreCadastroController": {},
+            "PreCadastroJovensController": {}
         }
     },
     "tags": [
