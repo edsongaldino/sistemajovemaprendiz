@@ -246,7 +246,7 @@ class Helper{
         //Se já houver um faturamento anterior para o contrato, pega á partir da data até hoje
 
         if(isset($ultimoFaturamento)){
-            $data_inicial = Carbon::createFromFormat("Y-m-d", $ultimoFaturamento->data)->addDays(1);
+            $data_inicial = Helper::data_mysql($ultimoFaturamento->data);
             $data_final = Carbon::now()->format('Y-m-d');
         }
 
