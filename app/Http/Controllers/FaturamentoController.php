@@ -557,7 +557,7 @@ class FaturamentoController extends Controller
 
     public function CronAtualizarNF(){
 
-        $notas = FaturamentoNF::where('status', '<>', 'Autorizada')->where('status', '<>', 'Cancelada')->get();
+        $notas = FaturamentoNF::where('status', '<>', 'Autorizada')->where('status', '<>', 'Cancelada')->orderByRandom()->limit(5)->get();
 
         foreach($notas as $notafiscal){
             header('Content-Type: text/html; charset=utf-8');
