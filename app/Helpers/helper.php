@@ -256,7 +256,7 @@ class Helper{
 
             case "Falta Trabalho":
 				if($atualizacoes->count() > 0){
-					return $atualizacoes->count()*($contrato->valor_bolsa/Helper::getDiasEntreDatas($data_inicial, $data_final));
+					return $atualizacoes->count()*($contrato->valor_bolsa/30);
 				}else{
 					return 0;
 				}
