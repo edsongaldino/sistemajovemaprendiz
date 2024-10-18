@@ -242,7 +242,7 @@ class Helper{
 
         $contrato = Contrato::find($contrato_id);
 
-        $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato)->OrderBy('id','desc')->first();
+        $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato_id)->OrderBy('id','desc')->first();
         //Se já houver um faturamento anterior para o contrato, pega á partir da data até hoje
 
         if(isset($ultimoFaturamento)){
