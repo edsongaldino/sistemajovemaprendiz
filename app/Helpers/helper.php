@@ -242,11 +242,11 @@ class Helper{
 
         $contrato = Contrato::find($contrato_id);
 
-        $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato_id)->OrderBy('id','desc')->first();
+        $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato->id)->OrderBy('id','desc')->skip(1)->take(1)->first();
         //Se já houver um faturamento anterior para o contrato, pega á partir da data até hoje
 
         if(isset($ultimoFaturamento)){
-            $data_inicial = Helper::data_mysql($ultimoFaturamento->data);
+            $data_inicial = Carbon::parse($ultimoFaturamento->data)->addDay(1)->format('Y-m-d');
             $data_final = Carbon::now()->format('Y-m-d');
         }
 
