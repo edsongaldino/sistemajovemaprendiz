@@ -45,7 +45,7 @@ class FaturamentoController extends Controller
         $FaturamentosTotal = Faturamento::orderBy('created_at', 'desc')->get();
         $polos = Polo::all();
         $estados = Estado::all();
-        $faturamentos = Faturamento::orderBy('created_at', 'desc')->paginate(20);
+        $faturamentos = Faturamento::orderBy('created_at', 'desc')->paginate(10);
         $contas = ContaBancaria::all();
         return view('sistema.financeiro.index', compact('faturamentos', 'polos', 'estados', 'FaturamentosTotal', 'contas'));
     }
