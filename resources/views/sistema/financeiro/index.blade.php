@@ -296,9 +296,9 @@
 
                         @if($faturamento->forma_pagamento == 'Depósito')
                           <a href="#" class="dropdown-item InformarPagamento" data-id="{{ $faturamento->id }}">Informar Pagamento</a>
-                        @elseif($faturamento->forma_pagamento == 'Depósito')
-                          @if(isset($faturamento->boleto->codigo_boleto))
-                            @if($faturamento->boleto->status != 'LIQUIDACAO')
+                        @elseif($faturamento->forma_pagamento == 'Boleto')
+                          @if($faturamento->boleto == null)
+                            @if(isset($faturamento->notaFiscal->codigo_nf))
                             <a href="#" class="dropdown-item InformarPagamento" data-id="{{ $faturamento->id }}">Informar Pagamento</a>
                             @endif
                           @endif
