@@ -16,7 +16,7 @@ class ArquivoController extends Controller
 
     public function index(){
 
-        $arquivos = Arquivo::orderBy('created_at', 'desc')->simplePaginate(15);
+        $arquivos = Arquivo::orderBy('created_at', 'desc')->paginate(15);
         return view('sistema.financeiro.relatorio_importacao', compact('arquivos'));
 
     }
