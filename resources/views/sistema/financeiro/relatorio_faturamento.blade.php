@@ -285,7 +285,8 @@
     @foreach ($faturamento->faturamentoContratos as $faturamentoContrato)
 
     @php
-        $salario = ($faturamentoContrato->contrato->valor_bolsa/30)*$faturamentoContrato->quantidade_dias;
+        $qtdFaltas = Helper::getLancamentosFaturamento($faturamentoContrato->id, 'Qtde Falta Trabalho');
+        $salario = ($faturamentoContrato->contrato->valor_bolsa/30)*($faturamentoContrato->quantidade_dias - $qtdFaltas);
         $txAdm = $faturamentoContrato->taxa_administrativa;
     @endphp
 
@@ -295,7 +296,7 @@
         @if($faturamentoContrato->contrato->tipo_faturamento == 'Instituição')
 
         <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
-        <div class="col-5">{{ Helper::getLancamentosFaturamento($faturamentoContrato->id, 'Qtde Falta Trabalho') }}</div>
+        <div class="col-5">{{ $qtdFaltas }}</div>
         <div class="col-5">{{ Helper::converte_valor_real($salario) }}</div>
         <div class="col-5">{{ Helper::calcularDesconto($salario, '7.5') }}</div>
         <div class="col-5">{{ Helper::converte_valor_real($txAdm) }}</div>
@@ -316,7 +317,7 @@
         <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_total ?? 0) }}</div>
         @else
         <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
-        <div class="col-5">{{ Helper::getLancamentosFaturamento($faturamentoContrato->id, 'Qtde Falta Trabalho') }}</div>
+        <div class="col-5">{{ $qtdFaltas }}</div>
         <div class="col-5">{{ Helper::converte_valor_real($salario) }}</div>
         <div class="col-5">-</div>
         <div class="col-5">{{ Helper::converte_valor_real($txAdm) }}</div>
