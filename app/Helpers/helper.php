@@ -291,6 +291,26 @@ class Helper{
 
     }
 
+	public static function getLancamentosFaturamento($faturamento_contrato_id, $tipo){
+
+
+		$atualizacoes =	AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->get();
+
+
+        switch($tipo){
+
+            case "Qtde Falta Trabalho":
+                return $atualizacoes->count();
+            break;
+
+            case "Benefícios":
+                return $atualizacoes->count();
+            break;
+
+        }
+
+    }
+
     public static function getDiasEntreDatas($data_inicial, $data_final){
 
         $diferenca = strtotime($data_final) - strtotime($data_inicial);
