@@ -149,4 +149,21 @@ class AtualizacoesContratoController extends Controller
             echo json_encode($response_array);
         endif;
     }
+
+    public static function incluiAtualizacaoNoFaturamento($atualizacoes, $faturamento_contrato_id)
+    {
+        foreach ($atualizacoes as $atualizacao){
+            $atualizacao->faturamento_contrato_id = $faturamento_contrato_id;
+            $atualizacao->save();
+        }
+    }
+
+    public static function removeIdfaturamentodaAtualizacao($faturamento_contrato_id)
+    {
+        $atualizacoes = AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->get();
+        foreach ($atualizacoes as $atualizacao){
+            $atualizacao->faturamento_contrato_id = null;
+            $atualizacao->save();
+        }
+    }
 }

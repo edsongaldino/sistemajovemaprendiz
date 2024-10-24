@@ -2,6 +2,8 @@
 
 use App\Faturamento;
 use App\FaturamentoBoleto;
+use App\FaturamentoContrato;
+use App\Helpers\Helper;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\FaturamentoBoletoController;
 use Illuminate\Support\Facades\Artisan;
@@ -350,4 +352,16 @@ Route::get('/atualiza-pagamentos', function() {
         $i++;
     }
     echo "Foram atualizados " . $i . " Pagamentos";
+});
+
+Route::get('/atualiza-atualizacoes-faturamentos', function() {
+    $faturamentos = FaturamentoContrato::all();
+    foreach($faturamentos as $faturamento){
+        Helper::getAtualizacaoContrato($faturamento->data_inicial, $faturamento->data_final, $faturamento->contrato_id, 'Benefícios');
+        Helper::getAtualizacaoContrato($faturamento->data_inicial, $faturamento->data_final, $faturamento->contrato_id, 'Falta Trabalho');
+        Helper::getAtualizacaoContrato($faturamento->data_inicial, $faturamento->data_final, $faturamento->contrato_id, 'Exame Admissional');
+        Helper::getAtualizacaoContrato($faturamento->data_inicial, $faturamento->data_final, $faturamento->contrato_id, 'Exame Demissional');
+        Helper::getAtualizacaoContrato($faturamento->data_inicial, $faturamento->data_final, $faturamento->contrato_id, 'Entrega de Uniforme');
+    }
+    return $faturamentos->count()." atualizados";
 });

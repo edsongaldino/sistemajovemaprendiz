@@ -11,6 +11,7 @@ use App\Convenio;
 use App\Faturamento;
 use App\FaturamentoContrato;
 use App\FaturamentoCredito;
+use App\Http\Controllers\AtualizacoesContratoController;
 use App\Tabela;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Carbon;
@@ -250,7 +251,15 @@ class Helper{
             $data_final = Carbon::now()->format('Y-m-d');
         }
 
-        $atualizacoes = AtualizacoesContrato::where('contrato_id',$contrato_id)->where('tipo', $tipo)->whereBetween('data', [$data_inicial, $data_final])->get();
+		$atualizacoes =	AtualizacoesContrato::where(function ($query) use ($contrato_id,$tipo) {
+												$query->where('contrato_id',$contrato_id)->where('tipo', $tipo);
+												})->where(function ($query) use ($data_inicial,$data_final){
+													$query->whereBetween('data', [$data_inicial, $data_final])->orWhere('faturamento_contrato_id', null);
+												})->get();
+
+
+		$FaturamentoAtual = FaturamentoContrato::where('contrato_id',$contrato->id)->OrderBy('id','desc')->first();
+		(new AtualizacoesContratoController())->incluiAtualizacaoNoFaturamento($atualizacoes, $FaturamentoAtual->id);
 
         switch($tipo){
 

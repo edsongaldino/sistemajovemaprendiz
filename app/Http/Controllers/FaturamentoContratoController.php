@@ -15,7 +15,6 @@ class FaturamentoContratoController extends Controller
     {
         $faturamento = FaturamentoContrato::find($request->id);
 
-
         if($faturamento->FaturamentoContratoInstituicaoDados){
             $faturamento_dados_instituicao = $faturamento->FaturamentoContratoInstituicaoDados->first();
             $faturamento_dados = FaturamentoContratoInstituicaoDados::find($faturamento_dados_instituicao->id);
@@ -27,6 +26,7 @@ class FaturamentoContratoController extends Controller
         }
 
         if($faturamento->delete()):
+            (new AtualizacoesContratoController())->removeIdfaturamentodaAtualizacao($faturamento->id);
             return true;
         else:
             $response_array['status'] = 'success';
