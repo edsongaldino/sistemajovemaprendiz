@@ -372,16 +372,16 @@ Route::get('/teste-api-post', function() {
     $data = [
         'nomeCompleto' => 'Edson Galdino',
         'dataNascimento' => '2024-10-25',
-        'email' => '',
-        'periodoEstudo' => '',
-        'whatsapp' => '',
-        'sexo' => '',
-        'cep' => '',
-        'estado' => '',
-        'cidade' => '',
-        'bairro' => ''
+        'email' => 'edsongaldino@outlook.com',
+        'periodoEstudo' => 'manhã',
+        'whatsapp' => '65996030422',
+        'sexo' => 'Masculino',
+        'cep' => '78144901',
+        'estado' => 'MT',
+        'cidade' => 'Várzea Grande',
+        'bairro' => 'Jd Petrópolis'
     ];
-    $ch   = curl_init();
+    $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, 1);
