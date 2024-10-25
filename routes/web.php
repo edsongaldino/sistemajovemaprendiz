@@ -365,3 +365,31 @@ Route::get('/atualiza-atualizacoes-faturamentos', function() {
     }
     return $faturamentos->count()." atualizados";
 });
+
+Route::get('/teste-api-post', function() {
+
+    $url  = 'https://sistema.larjovemaprendiz.ong.br/api/gravar-pre-cadastro';
+    $data = [
+        'nomeCompleto' => 'Edson Galdino',
+        'dataNascimento' => '2024-10-25',
+        'email' => '',
+        'periodoEstudo' => '',
+        'whatsapp' => '',
+        'sexo' => '',
+        'cep' => '',
+        'estado' => '',
+        'cidade' => '',
+        'bairro' => ''
+    ];
+    $ch   = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+    $result = curl_exec($ch);
+
+    dd($result);
+
+    curl_close($ch);
+});
