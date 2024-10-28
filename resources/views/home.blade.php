@@ -88,7 +88,7 @@
                                 <li class="nav-item active"><a class="page-scroll" href="#home">home</a></li>
                                 <li class="nav-item"><a class="page-scroll" href="#about">Conheça o programa</a></li>
                                 <!--<li class="nav-item"><a class="page-scroll" href="#portfolio">Onde estamos</a></li>-->
-                                <li class="nav-item"><a href="http://www.intelecto.com.br/holerith/empresa/?id=2142" target="_blank">Holerite Online</a></li>
+                                <li class="nav-item"><a href="https://larmariadelourdes.intelecto.com.br/" target="_blank">Holerite Online</a></li>
                                 <!--<li class="nav-item"><a class="page-scroll" href="#contact">Contato</a></li>-->
                             </ul>
                         </div>
