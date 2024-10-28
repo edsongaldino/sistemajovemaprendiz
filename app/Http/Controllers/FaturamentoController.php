@@ -221,10 +221,13 @@ class FaturamentoController extends Controller
         }
 
         //Caso seja um faturamento padrão e quantidade de dias do mês seja maior que 30 parametriza o padrão de 30 dias
+
+        $qtdFaltas = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Qtde Falta Trabalho');
+
         if($faturamentoPadrao){
-            $qtdDias = 30;
+            $qtdDias = 30-$qtdFaltas;
         }else{
-            $qtdDias = Helper::getDiasEntreDatas($Faturamento->data_inicial,$Faturamento->data_final);
+            $qtdDias = Helper::getDiasEntreDatas($Faturamento->data_inicial,$Faturamento->data_final)-$qtdFaltas;
         }
 
         $valorTabela = Helper::GetUltimaAtualizacaoValorTabela($contrato->tabela);
