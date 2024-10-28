@@ -239,9 +239,11 @@ class Helper{
         return CalendarioAluno::where('contrato_id', $contrato)->where('aluno_id', $aluno)->whereBetween('data', [$data_inicial, $data_final])->get();
     }
 
-    public static function getAtualizacaoContrato($data_inicial, $data_final, $contrato_id, $tipo){
+	public static function getQtdeFaltas($data_inicial, $data_final, $contrato_id){
 
         $contrato = Contrato::find($contrato_id);
+
+		$tipoBusca = 'Falta Trabalho';
 
         $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato->id)->OrderBy('id','desc')->skip(1)->take(1)->first();
         //Se já houver um faturamento anterior para o contrato, pega á partir da data até hoje
@@ -251,8 +253,38 @@ class Helper{
             $data_final = Carbon::now()->format('Y-m-d');
         }
 
-		$atualizacoes =	AtualizacoesContrato::where(function ($query) use ($contrato_id,$tipo) {
-												$query->where('contrato_id',$contrato_id)->where('tipo', $tipo);
+		$atualizacoes =	AtualizacoesContrato::where(function ($query) use ($contrato_id,$tipoBusca) {
+												$query->where('contrato_id',$contrato_id)->where('tipo', $tipoBusca);
+												})->where(function ($query) use ($data_inicial,$data_final){
+													$query->whereBetween('data', [$data_inicial, $data_final])->orWhere('faturamento_contrato_id', null);
+												})->get();
+
+		return $atualizacoes->count();										
+
+    }
+
+
+
+    public static function getAtualizacaoContrato($data_inicial, $data_final, $contrato_id, $tipo){
+
+        $contrato = Contrato::find($contrato_id);
+
+		$tipoBusca = $tipo;
+
+		if($tipo == 'Qtde Falta Trabalho'){
+			$tipoBusca = 'Falta Trabalho';
+		}
+
+        $ultimoFaturamento = FaturamentoContrato::where('contrato_id',$contrato->id)->OrderBy('id','desc')->skip(1)->take(1)->first();
+        //Se já houver um faturamento anterior para o contrato, pega á partir da data até hoje
+
+        if(isset($ultimoFaturamento)){
+            $data_inicial = Carbon::parse($ultimoFaturamento->data)->addDay(1)->format('Y-m-d');
+            $data_final = Carbon::now()->format('Y-m-d');
+        }
+
+		$atualizacoes =	AtualizacoesContrato::where(function ($query) use ($contrato_id,$tipoBusca) {
+												$query->where('contrato_id',$contrato_id)->where('tipo', $tipoBusca);
 												})->where(function ($query) use ($data_inicial,$data_final){
 													$query->whereBetween('data', [$data_inicial, $data_final])->orWhere('faturamento_contrato_id', null);
 												})->get();

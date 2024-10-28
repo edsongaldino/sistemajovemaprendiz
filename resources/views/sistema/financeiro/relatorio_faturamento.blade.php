@@ -286,7 +286,7 @@
 
     @php
         $qtdFaltas = Helper::getLancamentosFaturamento($faturamentoContrato->id, 'Qtde Falta Trabalho');
-        $salario = ($faturamentoContrato->contrato->valor_bolsa/30)*($faturamentoContrato->quantidade_dias - $qtdFaltas);
+        $salario = ($faturamentoContrato->contrato->valor_bolsa/30)*($faturamentoContrato->quantidade_dias);
         $txAdm = $faturamentoContrato->taxa_administrativa;
     @endphp
 
