@@ -269,7 +269,7 @@ class FaturamentoController extends Controller
                 $dados->valor_total = ($dados->valor_salario_liquido+$txAdm+$dados->valor_decimo_terceiro+
                                         $dados->valor_ferias+$dados->valor_terco_ferias+$dados->valor_inss+
                                         $dados->valor_fgts+$dados->valor_inss_provisionamento+$dados->valor_fgts_provisionamento+$dados->valor_pis_provisionamento+
-                                        $dados->valor_beneficios+$dados->valor_exames+$dados->valor_uniforme)-($dados->valor_descontos);
+                                        $dados->valor_beneficios+$dados->valor_exames+$dados->valor_uniforme)/*-($dados->valor_descontos)*/;
                 // Calcular ISSQN
                 $dados->valor_issqn = $this->CalculaISSQN($dados->valor_total, $contrato->convenio->percentual_issqn);
                 $dados->save();
