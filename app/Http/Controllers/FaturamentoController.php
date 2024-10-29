@@ -225,17 +225,19 @@ class FaturamentoController extends Controller
         $qtdFaltas = Helper::getQtdeFaltas($Faturamento->data_inicial, $Faturamento->data_final, $request->id);
 
         if($faturamentoPadrao){
-            $qtdDias = 30-$qtdFaltas;
+            $qtdDias = 30;
         }else{
-            $qtdDias = Helper::getDiasEntreDatas($Faturamento->data_inicial,$Faturamento->data_final)-$qtdFaltas;
+            $qtdDias = Helper::getDiasEntreDatas($Faturamento->data_inicial,$Faturamento->data_final);
         }
+
+        $qtdDiasFaturamento = $qtdDias-$qtdFaltas;
 
         $valorTabela = Helper::GetUltimaAtualizacaoValorTabela($contrato->tabela);
 
         if($contrato->tipo_faturamento == 'Empresa'){
-            $Faturamento->valor = ($valorTabela/30)*$qtdDias;
+            $Faturamento->valor = ($valorTabela/30)*$qtdDiasFaturamento;
         }else{
-            $Faturamento->valor = ($contrato->valor_bolsa/30)*$qtdDias;
+            $Faturamento->valor = ($contrato->valor_bolsa/30)*$qtdDiasFaturamento;
         }
 
         $txAdm = ($valorTabela/30)*$qtdDias;
