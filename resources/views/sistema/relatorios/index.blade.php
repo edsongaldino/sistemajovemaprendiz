@@ -87,9 +87,12 @@
                 <label class="form-control-label">Tipo Relatório: <span class="tx-danger">*</span></label>
                 <select class="form-control" name="tipo_relatorio" data-placeholder="Selecione o tipo do relatório" required>
                     <option label="Selecione o tipo do relatório"></option>
-                    <option value="1" @if($request->tipo_relatorio == "1") selected="selected" @endif>À Receber</option>
+                    <option value="1" @if($request->tipo_relatorio == "1") selected="selected" @endif>À Receber (Geral)</option>
+                    <option value="4" @if($request->tipo_relatorio == "4") selected="selected" @endif>À Receber (Venc. Período)</option>
                     <option value="2" @if($request->tipo_relatorio == "2") selected="selected" @endif>Recebidos</option>
                     <option value="3" @if($request->tipo_relatorio == "3") selected="selected" @endif>Vencidos</option>
+                    <option value="5" @if($request->tipo_relatorio == "5") selected="selected" @endif>Faturados (Período)</option>
+                    <option value="6" @if($request->tipo_relatorio == "6") selected="selected" @endif>À Faturar (Período)</option>
                 </select>
                 </div>
               </div><!-- col-4 -->
@@ -167,13 +170,25 @@
 
               @foreach ($faturamentos as $faturamento)
               <tr class="item-faturamento">
-                <td>{{ Helper::datetime_br($faturamento->data) ?? '' }}</td>
+                <td>
+                  @if($request->tipo_relatorio != "6")
+                  {{ Helper::datetime_br($faturamento->notaFiscal->created_at) ?? '' }}
+                  @else
+                  -
+                  @endif
+                
+                </td>
                 <td>{{ $faturamento->notaFiscal->numero_nf ?? '' }}</td>
                 <td>{{ $faturamento->convenio->empresa->cnpj ?? '' }}</td>
                 <td>{{ $faturamento->convenio->empresa->razao_social ?? '' }}</td>
                 @if(isset($faturamento->boleto->codigo_boleto))
                   <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
-                  <td class="situacaoP">{{ Helper::getSituacaoByString($faturamento->boleto->status ?? '' )}}</td>
+                  <td class="situacaoP">
+                    {{ Helper::getSituacaoByString($faturamento->boleto->status ?? '' )}}<br/>
+                    @if($faturamento->boleto->status == "LIQUIDACAO" && $request->tipo_relatorio != "2")
+                    <span class="dataPbase"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->boleto->data_pagamento) ?? '' }}</span>
+                    @endif
+                  </td>
                   @if($request->tipo_relatorio == "2")
                   <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->boleto->data_pagamento) ?? '' }}</td>
                   @endif

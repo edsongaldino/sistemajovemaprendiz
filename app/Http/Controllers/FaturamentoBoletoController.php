@@ -39,7 +39,11 @@ class FaturamentoBoletoController extends Controller
         $boleto->valor = $faturamento->faturamentoContratos->sum('valor');
 
         if($boleto->save()):
+
+            $faturamento->data_vencimento = $boleto->data_vencimento;
+            $faturamento->update();
             return true;
+
         endif;
     }
 
@@ -515,7 +519,13 @@ class FaturamentoBoletoController extends Controller
 
         if($http_code == 200){
             $Boleto->data_vencimento = $request->nova_data;
-            $Boleto->update();
+
+            if($Boleto->update()){
+                $faturamento = Faturamento::find($Boleto->id);
+                $faturamento->data_vencimento = $Boleto->data_vencimento;
+                $faturamento->update();
+            }
+
             return redirect()->back()->with('success', 'Data de vencimento alterada com sucesso!');
         } else {
             return redirect()->back()->with('success', 'Não foi possível alterar a data de vencimento. Verifique os critérios para atualização.');

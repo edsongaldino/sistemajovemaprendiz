@@ -331,7 +331,7 @@
             <div class="col-12">{{ $faturamento->convenio->empresa->cnpj ?? $faturamento->convenio->empresa->cpf }}</div>
             <div class="col-30">{{ $faturamento->convenio->empresa->razao_social ?? $faturamento->convenio->empresa->nome_fantasia }}</div>
             <div class="col-8">{{ Helper::data_br($faturamento->boleto->data_vencimento ?? '')}}</div>
-            <div class="col-8">{{ $faturamento->boleto->status ?? '' }}</div>
+            <div class="col-8" style="text-transform: uppercase;">{{ Helper::getSituacaoByString($faturamento->situacao_pagamento ?? '') }}</div>
             <div class="col-8">{{ $faturamento->forma_pagamento ?? '' }}</div>
             <div class="col-8">R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</div>
             <div class="col-8">{{ Helper::converte_valor_real($faturamento->boleto->valor_juros ?? 0) }}</div>

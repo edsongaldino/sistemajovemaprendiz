@@ -36,6 +36,13 @@
     color: #04a848;
 }
 
+.dataPbase{
+    font-weight: bold;
+    text-align: center;
+    color: #04a848;
+    font-size: 11px;
+}
+
 .dataP .contaP{
     font-weight: bold;
     text-align: center;

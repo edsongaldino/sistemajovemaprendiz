@@ -359,6 +359,10 @@ class Helper{
                 return "LIQUIDADO";
             break;
 
+			case "":
+                return "EMITIDO";
+            break;
+
 			default:
                 return $situacao;
             break;
