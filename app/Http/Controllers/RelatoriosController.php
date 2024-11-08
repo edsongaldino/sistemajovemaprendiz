@@ -32,19 +32,31 @@ class RelatoriosController extends Controller
         switch($request->tipo_relatorio){
             case "1":
                 $view = 'sistema.relatorios.imprimir';
-            break;
+                $titulo_relatorio = "";
+                break;
                 case "2":
                     $view = 'sistema.relatorios.recebidos';
+                    $titulo_relatorio = "";
                 break;
                     case "3":
                         $view = 'sistema.relatorios.imprimir';
+                        $titulo_relatorio = "";
                     break;
                         case "4":
                             $view = 'sistema.relatorios.imprimir';
+                            $titulo_relatorio = "";
                         break;
+                            case "5":
+                                $view = 'sistema.relatorios.imprimir';
+                                $titulo_relatorio = "";
+                            break;
+                                case "6":
+                                    $view = 'sistema.relatorios.imprimir';
+                                    $titulo_relatorio = "";
+                                break;
         }
 
-        return view($view, compact('faturamentos', 'data_atual', 'request'));
+        return view($view, compact('faturamentos', 'data_atual', 'request', 'titulo_relatorio'));
     }
 
     public function GetFaturamentos(Request $request){

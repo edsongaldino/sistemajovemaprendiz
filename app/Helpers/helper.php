@@ -641,7 +641,7 @@ class Helper{
 
 		switch($id){
 			case 1:
-				$tipo = "À Receber";
+				$tipo = "À Receber (Geral)";
 				break;
 			case 2:
 				$tipo = "Recebidos";
@@ -649,6 +649,15 @@ class Helper{
 			case 3:
 				$tipo = "Vencidos";
 				break;
+				case 4:
+					$tipo = "À Receber (Venc. Período)";
+					break;
+					case 5:
+						$tipo = "Faturados (Período)";
+						break;
+						case 6:
+							$tipo = "À Faturar (Período)";
+							break;
 			default:
 				$tipo = "Á Receber";
 				break;
