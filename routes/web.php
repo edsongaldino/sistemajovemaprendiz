@@ -366,6 +366,16 @@ Route::get('/atualiza-atualizacoes-faturamentos', function() {
     return $faturamentos->count()." atualizados";
 });
 
+Route::get('/atualiza-vencimento-faturamentos', function() {
+    $boletos = FaturamentoBoleto::all();
+    foreach($boletos as $boleto){
+        $faturamento = Faturamento::find($boleto->faturamento_id);
+        $faturamento->data_vencimento = $boleto->data_vencimento;
+        $faturamento->update();
+    }
+    return $boletos->count()." atualizados";
+});
+
 Route::get('/teste-api-post', function() {
 
     $url  = 'https://sistema.larjovemaprendiz.ong.br/api/gravar-pre-cadastro';
