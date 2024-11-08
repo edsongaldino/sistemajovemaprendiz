@@ -175,7 +175,7 @@ $("#cnpjEmpresaBusca").focusout(function(){
             if(resposta.razao_social){
               //Agora basta definir os valores que você deseja preencher
               //automaticamente nos campos acima.
-              $("#nome_fantasia").val(resposta.nome_fantasia);
+              $("#razao_social").val(resposta.razao_social);
               $("#cidade").val(resposta.cidade);
               $("#codigoEmpresa").val(resposta.id);
               $("#cpfEmpresaBusca").val('');
@@ -214,7 +214,7 @@ $("#cpfEmpresaBusca").focusout(function(){
             if(resposta.razao_social){
               //Agora basta definir os valores que você deseja preencher
               //automaticamente nos campos acima.
-              $("#nome_fantasia").val(resposta.nome_fantasia);
+              $("#razao_social").val(resposta.razao_social);
               $("#cidade").val(resposta.cidade);
               $("#codigoEmpresa").val(resposta.id);
               $("#cnpjEmpresaBusca").val('');

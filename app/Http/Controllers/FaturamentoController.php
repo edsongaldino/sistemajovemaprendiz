@@ -135,8 +135,16 @@ class FaturamentoController extends Controller
             $buscaFaturamento->where('empresas.cpf', Helper::limpa_campo($request->cpf));
         }
 
-        if($request->nome_fantasia){
-            $buscaFaturamento->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
+        if($request->razao_social){
+            $buscaFaturamento->where('empresas.razao_social', 'like', '%' . $request->razao_social . '%');
+        }
+
+        if($request->cidade_endereco){
+            $buscaFaturamento->where('enderecos.cidade_id', $request->cidade_endereco);
+        }
+
+        if($request->polo){
+            $buscaFaturamento->where('convenios.polo_id', $request->polo);
         }
 
         $convenios = $buscaFaturamento->paginate(20);

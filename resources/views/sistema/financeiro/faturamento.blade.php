@@ -45,8 +45,8 @@
 
             <div class="col-md-3 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
-                <label class="form-control-label">Nome Fantasia (Empresa): <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="nome_fantasia" id="nome_fantasia" value="@if(isset($contratos)) {{ $contratos->first()->empresa->nome_fantasia ?? '' }} @endif">
+                <label class="form-control-label">Razão Social (Empresa): <span class="tx-danger">*</span></label>
+                <input class="form-control" type="text" name="razao_social" id="razao_social" value="@if(isset($contratos)) {{ $contratos->first()->empresa->razao_social ?? '' }} @endif">
                 </div>
             </div><!-- col-4 -->
 

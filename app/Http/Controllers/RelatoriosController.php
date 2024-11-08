@@ -114,13 +114,10 @@ class RelatoriosController extends Controller
                                 break;
                                 
                                     case "6":
+                                        $buscaFaturamento->leftjoin('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
                                         $buscaFaturamento
                                         ->whereBetween('faturamentos.data',[$request->data_inicial, $request->data_final])
-                                        ->whereNotExists(function($query) {
-                                            $query->select(DB::raw(1))
-                                                ->from('faturamento_nf')
-                                                ->where([['faturamento_id', '=', 'faturamentos.id']]);
-                                            });
+                                        ->where('faturamento_nf.id', null);
                                     break; 
 
             }

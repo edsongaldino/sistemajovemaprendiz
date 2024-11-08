@@ -28,8 +28,8 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                <label class="form-control-label">Nome Fantasia (Empresa): <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="nome_fantasia" value="" placeholder="Nome Fantasia (Empresa)">
+                <label class="form-control-label">Razão Social (Empresa): <span class="tx-danger">*</span></label>
+                <input class="form-control" type="text" name="razao_social" value="" placeholder="Razão Social (Empresa)">
                 </div>
               </div><!-- col-4 -->
               <div class="col-md-2 mg-t--1 mg-md-t-0">

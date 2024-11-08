@@ -178,8 +178,8 @@ class ConvenioController extends Controller
             $buscaConvenios->where('empresas.cpf', Helper::limpa_campo($request->cpf));
         }
 
-        if($request->nome_fantasia){
-            $buscaConvenios->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
+        if($request->razao_social){
+            $buscaConvenios->where('empresas.razao_social', 'like', '%' . $request->razao_social . '%');
         }
 
         $convenios = $buscaConvenios->orderBy('convenios.id','desc')->paginate(20);

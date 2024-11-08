@@ -172,11 +172,10 @@
               <tr class="item-faturamento">
                 <td>
                   @if($request->tipo_relatorio != "6")
-                  {{ Helper::datetime_br($faturamento->notaFiscal->created_at) ?? '' }}
+                  {{ Helper::datetime_br($faturamento->notaFiscal->created_at ?? '') }}
                   @else
                   -
-                  @endif
-                
+                  @endif                
                 </td>
                 <td>{{ $faturamento->notaFiscal->numero_nf ?? '' }}</td>
                 <td>{{ $faturamento->convenio->empresa->cnpj ?? '' }}</td>

@@ -230,8 +230,8 @@ class ContratoController extends Controller
             $buscaContratos->where('empresas.cnpj', Helper::limpa_campo($request->cnpj));
         }
 
-        if($request->nome_fantasia){
-            $buscaContratos->where('empresas.nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
+        if($request->razao_social){
+            $buscaContratos->where('empresas.razao_social', 'like', '%' . $request->razao_social . '%');
         }
 
         if($request->cpf){

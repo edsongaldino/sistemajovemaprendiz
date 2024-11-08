@@ -348,8 +348,8 @@ class EmpresaController extends Controller
         $polos = Polo::all();
         $buscaEmpresas = Empresa::where('tipo_empresa','<>', null);
 
-        if($request->nome_fantasia){
-            $buscaEmpresas->where('nome_fantasia', 'like', '%' . $request->nome_fantasia . '%');
+        if($request->razao_social){
+            $buscaEmpresas->where('razao_social', 'like', '%' . $request->razao_social . '%');
         }
 
         if($request->tipo_empresa){
