@@ -102,6 +102,7 @@ class FaturamentoNFController extends Controller
         $notafiscal->link_xml = $dadosNF['link_xml'];
         $notafiscal->numero_rps = $dadosNF['numero_rps'];
         $notafiscal->numero_nf = $dadosNF['numero_nf'];
+        $notafiscal->data_emissao = Helper::data_mysql(Helper::datetime_br($dadosNF['data_emissao']));
         if($notafiscal->save()):
             return true;
         endif;
@@ -393,6 +394,7 @@ class FaturamentoNFController extends Controller
                 $dadosNF['link_xml'] = $dadosNFe->linkDownloadXML ?? '';
                 $dadosNF['numero_rps'] = $dadosNFe->numeroRps ?? '';
                 $dadosNF['numero_nf'] = $dadosNFe->numero ?? '';
+                $dadosNF['data_emissao'] = $dadosNFe->dataAutorizacao ?? '';
                 $AtualizarNF = $this->update($notafiscal->id, $dadosNF);
 
                 if($AtualizarNF){
@@ -454,6 +456,7 @@ class FaturamentoNFController extends Controller
             $dadosNF['link_xml'] = $dadosNFe->linkDownloadXML ?? '';
             $dadosNF['numero_rps'] = $dadosNFe->numeroRps ?? '';
             $dadosNF['numero_nf'] = $dadosNFe->numero ?? '';
+            $dadosNF['data_emissao'] = $dadosNFe->dataAutorizacao ?? '';
             $AtualizarNF = $this->update($notafiscal->id, $dadosNF);
 
             if($AtualizarNF){

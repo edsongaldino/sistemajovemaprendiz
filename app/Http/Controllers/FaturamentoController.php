@@ -588,6 +588,7 @@ class FaturamentoController extends Controller
                 $dadosNF['link_xml'] = $dadosNFe->linkDownloadXML ?? '';
                 $dadosNF['numero_rps'] = $dadosNFe->numeroRps ?? '';
                 $dadosNF['numero_nf'] = $dadosNFe->numero ?? '';
+                $dadosNF['data_emissao'] = $dadosNFe->dataAutorizacao ?? '';
                 $AtualizarNF = (new FaturamentoNFController())->update($notafiscal->id, $dadosNF);
 
                 if($AtualizarNF){

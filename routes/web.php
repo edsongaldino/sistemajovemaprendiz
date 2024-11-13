@@ -3,6 +3,7 @@
 use App\Faturamento;
 use App\FaturamentoBoleto;
 use App\FaturamentoContrato;
+use App\FaturamentoNF;
 use App\Helpers\Helper;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\FaturamentoBoletoController;
@@ -374,6 +375,15 @@ Route::get('/atualiza-vencimento-faturamentos', function() {
         $faturamento->update();
     }
     return $boletos->count()." atualizados";
+});
+
+Route::get('/atualiza-emissao-notas', function() {
+    $notas = FaturamentoNF::all();
+    foreach($notas as $nota){
+        $nota->data_emissao = Helper::data_mysql(Helper::datetime_br($nota->created_at));
+        $nota->update();
+    }
+    return $notas->count()." atualizados";
 });
 
 Route::get('/teste-api-post', function() {

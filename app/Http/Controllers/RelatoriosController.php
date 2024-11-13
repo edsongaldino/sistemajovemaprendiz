@@ -89,9 +89,8 @@ class RelatoriosController extends Controller
                 case "1":
                     $buscaFaturamento->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
                     if($request->data_inicial && $request->data_final){
-                        $buscaFaturamento->whereBetween('faturamento_nf.created_at', [$request->data_inicial, $request->data_final]);
+                        $buscaFaturamento->whereBetween('faturamento_nf.data_emissao',[$request->data_inicial, $request->data_final]);
                     }
-                    $buscaFaturamento->where('faturamentos.situacao_pagamento','!=', 'Liquidado');
                 break;
                     case "2":
                         $buscaFaturamento->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
@@ -108,9 +107,9 @@ class RelatoriosController extends Controller
                                 $dataInicial = $request->data_inicial;
                                 $dataFinal = $request->data_final;
                                 $buscaFaturamento
-                                ->where('faturamentos.situacao_pagamento','Liquidado')
+                                //->where('faturamentos.situacao_pagamento','Liquidado')
                                 ->whereBetween('faturamentos.data_vencimento',[$request->data_inicial, $request->data_final])
-                                ->where('faturamentos.data_pagamento','>', $request->data_final)
+                                //->whereDate('faturamentos.data_pagamento','>', $request->data_final)
                                 ->orWhere(
                                     function($query) use ($dataInicial, $dataFinal) {
                                       return $query
@@ -122,7 +121,7 @@ class RelatoriosController extends Controller
                                 case "5":
                                     $buscaFaturamento->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
                                     $buscaFaturamento
-                                    ->whereBetween('faturamento_nf.created_at',[$request->data_inicial, $request->data_final]);
+                                    ->whereBetween('faturamento_nf.data_emissao',[$request->data_inicial, $request->data_final]);
                                 break;
                                 
                                     case "6":

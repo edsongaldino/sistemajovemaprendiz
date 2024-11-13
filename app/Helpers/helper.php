@@ -363,6 +363,10 @@ class Helper{
                 return "EMITIDO";
             break;
 
+			case "REGISTRO_CONFIRMADO":
+                return "EMITIDO";
+            break;
+
 			default:
                 return $situacao;
             break;
