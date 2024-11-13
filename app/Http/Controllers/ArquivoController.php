@@ -26,7 +26,10 @@ class ArquivoController extends Controller
 
         if($request->tipo == 'FATURAMENTO'){
 
-            $FaturamentoNF = FaturamentoNF::whereBetween('created_at', [$request->data_inicial, $request->data_final])->get();
+            $FaturamentoNF = FaturamentoNF::whereBetween('created_at', [$request->data_inicial, $request->data_final])
+                                            ->where('status', 'Autorizada')                                
+                                            ->groupBy('faturamento_id') 
+                                            ->get();
 
             $nomeArquivo = $request->tipo.Carbon::parse($request->data_inicial)->format('mY');
             $urlArquivo = "/uploads/faturamentos/".$nomeArquivo.".txt";
@@ -99,7 +102,10 @@ class ArquivoController extends Controller
             }
         }else{
 
-            $FaturamentoPeriodo = Faturamento::where('situacao_pagamento', 'Liquidado')->whereBetween('data_pagamento', [$request->data_inicial, $request->data_final])->get();
+            $FaturamentoPeriodo = Faturamento::where('situacao_pagamento', 'Liquidado')
+                                                ->whereBetween('data_pagamento', [$request->data_inicial, $request->data_final])
+                                                ->groupBy('faturamentos.id')
+                                                ->get();
             
             $nomeArquivo = $request->tipo.Carbon::parse($request->data_inicial)->format('mY');
             $urlArquivo = "/uploads/recebimentos/".$nomeArquivo.".txt";
