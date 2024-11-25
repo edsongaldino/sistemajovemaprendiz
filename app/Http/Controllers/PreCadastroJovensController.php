@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\PreCadastroJovem;
 use App\Http\Controllers\Controller;
+use App\Polo;
 use Illuminate\Http\Request;
 
 use OpenApi\Annotations as OA;
@@ -103,6 +104,58 @@ class PreCadastroJovensController extends Controller
               ]);
         }
 
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $cadastros = PreCadastroJovem::orderBy('id','Desc')->paginate(40);
+        $polos = Polo::all();
+        return view('sistema.cadastros.index', compact('cadastros', 'polos'));
+    }
+
+    public function CadastroBusca(Request $request)
+    {
+        $polos = Polo::all();
+        $buscaAlunos = PreCadastroJovem::where('tipo_cadastro','=', 'Jovem Aprendiz');
+
+        if($request->nome){
+            $buscaAlunos->where('nome', 'like', '%' . $request->nome . '%');
+        }
+
+        if($request->cpf){
+            $cpf = Helper::limpa_campo($request->cpf);
+            $buscaAlunos->where('cpf', $cpf);
+        }
+
+        if($request->cpf){
+            $cpf = Helper::limpa_campo($request->cpf);
+            $buscaAlunos->where('cpf', $cpf);
+        }
+
+        if($request->polo){
+            $buscaAlunos->where('polo_id', $request->polo);
+        }
+
+        $alunos = $buscaAlunos->paginate(20);
+        return view('sistema.cadastros.index', compact('alunos', 'polos'));
+    }
+
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Alunos  $alunos
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $cadastro = PreCadastroJovem::find($id);
+        return view('sistema.cadastros.editar', compact('cadastro'));
     }
 
 }

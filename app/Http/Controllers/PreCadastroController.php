@@ -10,6 +10,7 @@ use App\Helpers\Helper;
 use App\Aluno;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailUser;
+use App\Polo;
 use App\PreCadastroJovem;
 use Exception;
 
@@ -26,9 +27,38 @@ class PreCadastroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+        $cadastros = PreCadastroJovem::paginate(40);
+        $polos = Polo::all();
+        return view('sistema.cadastros.index', compact('cadastros', 'polos'));
+    }
+
+    public function CadastroBusca(Request $request)
+    {
+        $polos = Polo::all();
+        $buscaAlunos = Aluno::where('tipo_cadastro','=', 'Jovem Aprendiz');
+
+        if($request->nome){
+            $buscaAlunos->where('nome', 'like', '%' . $request->nome . '%');
+        }
+
+        if($request->cpf){
+            $cpf = Helper::limpa_campo($request->cpf);
+            $buscaAlunos->where('cpf', $cpf);
+        }
+
+        if($request->cpf){
+            $cpf = Helper::limpa_campo($request->cpf);
+            $buscaAlunos->where('cpf', $cpf);
+        }
+
+        if($request->polo){
+            $buscaAlunos->where('polo_id', $request->polo);
+        }
+
+        $alunos = $buscaAlunos->paginate(20);
+        return view('sistema.cadastros.index', compact('alunos', 'polos'));
     }
 
     /**

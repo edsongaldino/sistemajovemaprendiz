@@ -29,6 +29,14 @@
       @endif
 
       @if(Auth::user()->perfil_id == 1 || Auth::user()->perfil_id == 2)
+
+      <a href="{{ route('sistema.cadastros') }}" class="br-menu-link pre-cadastro">
+        <div class="br-menu-item">
+          <i class="fa fa-address-card" aria-hidden="true"></i>
+          <span class="menu-item-label">Pré-cadastros</span>
+        </div><!-- menu-item -->
+      </a><!-- br-menu-link -->
+
       <a href="{{ route('sistema.polos') }}" class="br-menu-link">
         <div class="br-menu-item">
           <i class="menu-item-icon fa fa-bank tx-20"></i>

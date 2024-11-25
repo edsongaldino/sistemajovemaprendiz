@@ -42,6 +42,13 @@ Route::get('/sistema/eventos', 'AppController@eventos')->name('eventos')->middle
 Route::post('/login/do', 'AuthController@Login')->name('login.do');
 Route::get('logout', 'AuthController@Logout')->name('logout')->middleware('auth');
 
+//PRE CADASTRO ROTAS
+Route::get('sistema/cadastros', 'PreCadastroJovensController@index')->name('sistema.cadastros')->middleware('auth');
+Route::match(['get', 'post'], 'sistema/cadastros/buscar', 'PreCadastroJovensController@CadastroBusca')->name('sistema.cadastros.buscar');
+Route::get('sistema/cadastro/{id}/editar', 'PreCadastroJovensController@edit')->name('sistema.cadastro.editar')->middleware('auth');
+Route::post('sistema/cadastro/update', 'PreCadastroJovensController@update')->name('sistema.cadastro.update')->middleware('auth');
+Route::post('sistema/cadastro/excluir', 'PreCadastroJovensController@destroy')->name('sistema.cadastro.excluir')->middleware('auth');
+
 //User Rotas
 Route::get('sistema/usuarios', 'UserController@index')->name('sistema.usuarios')->middleware('auth');
 Route::get('sistema/usuarios/adicionar', 'UserController@create')->name('sistema.usuarios.adicionar')->middleware('auth');

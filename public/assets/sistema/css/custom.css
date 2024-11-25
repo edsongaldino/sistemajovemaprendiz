@@ -4,6 +4,11 @@
     background-size: cover;
 }
 
+.br-menu-link.pre-cadastro {
+    background-color: #e49e06;
+    color: #fff;
+}
+
 .btn-incluir{
     height: 50px;
     width: auto;
