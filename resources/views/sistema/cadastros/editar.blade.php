@@ -29,6 +29,6 @@
 
         </div><!-- br-section-wrapper -->
     </div><!-- br-pagebody -->
-    <script src="{{ asset('assets/sistema/js/alunos/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/cadastros/index.js') }}"></script>
 
 @endsection

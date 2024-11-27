@@ -45,7 +45,7 @@
     <div class="col-md-3 mg-t--1 mg-md-t-0">
         <div class="form-group mg-md-l--1">
         <label class="form-control-label">CEP: <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" id="cep" name="cep" value="{{ $cadastro->cep ?? '' }}" placeholder="CEP" required>
+        <input class="form-control" type="text" id="cep_endereco" name="cep" value="{{ $cadastro->cep ?? '' }}" placeholder="CEP" required>
         </div>
     </div><!-- col-4 -->
     
@@ -67,6 +67,20 @@
         <div class="form-group">
         <label class="form-control-label">UF: <span class="tx-danger">*</span></label>
         <input class="form-control" type="text" id="estado" name="estado" value="{{ $cadastro->estado ?? '' }}" placeholder="UF" required>
+        </div>
+    </div><!-- col-4 -->
+
+    <h6 class="col-md-12 tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-20 mg-t-20"><i class="icon ion-check"></i> Validação do cadastro</h6>
+
+    <div class="col-md-4">
+        <div class="form-group">
+        <label class="form-control-label">Situação: <span class="tx-danger">*</span></label>
+        <select class="form-control" id="situacao" name="situacao" data-placeholder="Selecione a situacao" required>
+            <option label="Selecione a situacao"></option>
+            <option value="Aguardando" @if( ($cadastro->situacao ?? '') == 'Aguardando') selected @endif>Aguardando</option>
+            <option value="Recusado" @if( ($cadastro->situacao ?? '') == 'Recusado' ) selected @endif>Recusado</option>
+            <option value="Aprovado" @if( ($cadastro->situacao ?? '') == 'Aprovado' ) selected @endif>Aprovado</option>
+        </select>
         </div>
     </div><!-- col-4 -->
 
