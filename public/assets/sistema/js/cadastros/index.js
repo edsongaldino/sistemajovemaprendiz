@@ -31,3 +31,54 @@ function EnviarFormCadastro() {
 
     document.getElementById('FormCadastro').submit();
 }
+
+$(document).on('click', '.EnviarEmailCadastro', function (e) {
+
+    e.preventDefault();
+    var id = $(this).data('id');
+    var token = $(this).data('token');
+
+    swal({
+        title: "Confirma o envio do link para preenchimento do currículo?",
+        type: "info",
+        confirmButtonClass: "btn-info",
+        confirmButtonText: "Sim!",
+        cancelButtonText: "Não",
+        showCancelButton: true,
+    },
+    function() {
+        $.ajax({
+        url: '/sistema/cadastro/enviar-link-curriculo',
+        method: 'POST',
+        data: {
+            id: id,
+            "_token": token
+        },
+
+        success: function(response) {
+          if(response.status == "error"){
+            swal({title: "Ops", text: response.msg, type: "error"},
+              function(){
+                  location.reload();
+              }
+            );
+          }else{
+            swal({title: "OK", text: response.msg, type: "success"},
+              function(){
+                  location.reload();
+              }
+          );
+          }
+        },
+
+        error: function() {
+          swal({title: "OPS", text: "Erro ao enviar e-mail!", type: "warning"},
+              function(){
+                  location.reload();
+              }
+          );
+        }
+
+        });
+    });
+  });

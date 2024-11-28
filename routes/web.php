@@ -48,6 +48,11 @@ Route::match(['get', 'post'], 'sistema/cadastros/buscar', 'PreCadastroJovensCont
 Route::get('sistema/cadastro/{id}/editar', 'PreCadastroJovensController@edit')->name('sistema.cadastro.editar')->middleware('auth');
 Route::post('sistema/cadastro/update', 'PreCadastroJovensController@update')->name('sistema.cadastro.update')->middleware('auth');
 Route::post('sistema/cadastro/excluir', 'PreCadastroJovensController@destroy')->name('sistema.cadastro.excluir')->middleware('auth');
+Route::post('sistema/cadastro/enviar-link-curriculo', 'PreCadastroJovensController@EnviarLinkCurriculo')->name('sistema.cadastro.enviar-link-curriculo')->middleware('auth');
+
+Route::get('sistema/cadastro/{id}/preencher-curriculo', 'PreCadastroJovensController@PreencherCurriculo')->name('sistema.cadastro.preencher-curriculo');
+Route::post('sistema/cadastro/salvar-curriculo', 'PreCadastroJovensController@SalvarCurriculo')->name('sistema.cadastro.salvar-curriculo');
+
 
 //User Rotas
 Route::get('sistema/usuarios', 'UserController@index')->name('sistema.usuarios')->middleware('auth');

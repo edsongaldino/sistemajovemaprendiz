@@ -76,7 +76,7 @@ class PreCadastroJovensController extends Controller
     *  )
     */
     public function preCadastroAluno(Request $request){
-        
+
 
         $cadastro = new PreCadastroJovem();
 
@@ -156,6 +156,117 @@ class PreCadastroJovensController extends Controller
     {
         $cadastro = PreCadastroJovem::find($id);
         return view('sistema.cadastros.editar', compact('cadastro'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Alunos  $alunos
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $cadastro = PreCadastroJovem::findOrFail($request->id);
+        $cadastro->nome_completo = $request->nomeCompleto;
+        $cadastro->data_nascimento = $request->dataNascimento;
+        $cadastro->periodo_estudo = $request->periodoEstudo;
+        $cadastro->email = $request->email;
+        $cadastro->whatsapp = Helper::limpa_campo($request->whatsapp);
+        $cadastro->sexo = $request->sexo;
+        $cadastro->cep = $request->cep;
+        $cadastro->estado = $request->estado;
+        $cadastro->cidade = $request->cidade;
+        $cadastro->bairro = $request->bairro;
+        $cadastro->situacao = 'Aguardando';
+
+        if($cadastro->save()){
+            return response()->json([
+                'Status' => "Sucesso",
+                'Mensagem' => "O pré-cadastro do jovem foi atualizado com sucesso"
+              ]);
+        }else{
+            return response()->json([
+                'Status' => "Erro",
+                'Mensagem' => "Não foi possível atualizar o cadastro"
+              ]);
+        }
+
+    }
+
+    public function EnviarLinkCurriculo(Request $request){
+
+        $cadastro = PreCadastroJovem::find($request->id);
+
+        if($cadastro->email == ''){
+            return response()->json(array('status'=>'error', 'msg'=>"Nenhum e-mail cadastrado para esse cliente!"), 200);
+        }
+
+        $enviaEmail = Mail::to($cadastro->email)->bcc("administrativo@larmariadelourdes.org")->send(new EmailCurriculo($faturamento, $assunto));
+
+        if($enviaEmail){
+            return response()->json(array('status'=>'success', 'msg'=>"O e-mai foi enviado com sucesso!"), 200);
+        }
+
+    }
+
+    public function PreencherCurriculo($id){
+        $cadastro = PreCadastroJovem::find($id);
+        $estados = Estado::all();
+        return view('cadastro', compact('estados', 'cadastro'));
+    }
+
+    public function SalvarCurriculo(Request $request)
+    {
+
+        if((New Aluno())->verificaDuplicidade('cpf', Helper::limpa_campo($request->cpf))){
+            return redirect()->back()->with('message', 'Este CPF já consta em nosso banco de dados! Verifique.');
+        }
+
+        if((New UserController())->verificaDuplicidade('email', $request->email)){
+            return redirect()->back()->with('warning', 'Este e-mail ja está cadastrado! Verifique.');
+        }
+
+        $endereco = (new EnderecoController())->salvarEndereco($request);
+        $user = (new UserController())->gerarUsuario($request);
+
+        $aluno = new Aluno();
+        $aluno->endereco_id = $endereco->id;
+        $aluno->polo_id = (new PoloController())->getPoloCidade($endereco);
+        $aluno->user_id = $user->id;
+        $aluno->nome = $request->nome;
+        $aluno->sexo = $request->sexo ?? 'Masculino';
+        $aluno->cpf = Helper::limpa_campo($request->cpf);
+        $aluno->rg = Helper::limpa_campo($request->rg);
+        $aluno->orgao_expedidor = $request->orgao_expedidor;
+        $aluno->data_nascimento = $request->data_nascimento;
+        $aluno->telefone = Helper::limpa_campo($request->telefone);
+        $aluno->whatsapp = Helper::limpa_campo($request->whatsapp);
+        $aluno->estado_civil = $request->estado_civil;
+        $aluno->situacao = $request->situacao;
+        $aluno->escolaridade = $request->escolaridade;
+        $aluno->turno = $request->turno_matricula;
+        $aluno->contra_turno = 'Não';
+        $aluno->situacao = 'Ativo';
+        $aluno->tipo_cadastro = 'Candidato';
+
+        if($aluno->save()){
+
+            $curriculo = (new CurriculoAlunoController())->store($request, $aluno);
+
+            if($request->estado_civil == 'Casado'){
+                (new ConjugeController())->store($request, $aluno);
+            }
+
+            Mail::to($request->email)->send(new SendMailUser($aluno))->cc('contato@larmariadelourdes.org');
+            return view('cadastro', compact('aluno'))->with('success', 'Seu cadastro foi realizado!');
+
+        }else{
+            $user->delete();
+            $endereco->delete();
+            return redirect()->back()->with('warning', 'Não conseguimos concluir seu cadastro! Entre em contato com a administração.');
+        }
+
     }
 
 }

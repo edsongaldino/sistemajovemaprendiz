@@ -81,6 +81,9 @@
                 <td style="text-align: center;">{{ $cadastro->periodo_estudo }}</td>
                 <td>{{ $cadastro->cidade ?? '' }} - {{ $cadastro->estado ?? '' }}<br/>Bairro: {{ $cadastro->bairro ?? '' }}</td>
                 <td>
+                  @if($cadastro->situacao == "Aprovado")
+                  <a href="#" class="EnviarEmailCadastro" data-id="{{ $cadastro->id }}" data-token="{{ csrf_token() }}"><div class="btn btn-success"><i class="icon ion-envelope"></i></div></a>
+                  @endif
                   <a href="{{ url('sistema/cadastro/'.$cadastro->id.'/editar') }}"><div class="btn btn-info"><i class="icon ion-edit"></i></div></a>
                   <a href="#" class="excluirCadastro" data-id="{{ $cadastro->id }}" data-token="{{ csrf_token() }}"><div class="btn btn-danger"><i class="icon ion-close"></i></div></a>
                 </td>
