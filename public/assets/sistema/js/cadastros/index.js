@@ -1,8 +1,8 @@
 function EnviarFormCadastro() {
 
     var nome = FormCadastro.nome.value;
-    var telefone = FormCadastro.telefone.value;
-    var cep_endereco = FormCadastro.cep_endereco.value;
+    var whatsapp = FormCadastro.whatsapp.value;
+    var cep_endereco = FormCadastro.cep.value;
     var email = FormCadastro.email.value;
 
     if (nome == "") {
@@ -11,9 +11,9 @@ function EnviarFormCadastro() {
         return false;
     }
 
-    if (telefone == "") {
+    if (whatsapp == "") {
         swal({title: "Ops", text: "O campo telefone não pode ser vazio!", type: "error"});
-        FormCadastro.telefone.focus();
+        FormCadastro.whatsapp.focus();
         return false;
     }
 
@@ -82,3 +82,14 @@ $(document).on('click', '.EnviarEmailCadastro', function (e) {
         });
     });
   });
+
+  $(document).on('click', '.CadastroNaoAprovado', function (e) {
+
+    swal({title: "Ops", text: "Este cadastro ainda não está aprovado!", type: "warning"},
+        function(){
+            location.reload();
+        }
+    );
+
+  });
+  

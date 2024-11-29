@@ -168,9 +168,9 @@ class PreCadastroJovensController extends Controller
     public function update(Request $request)
     {
         $cadastro = PreCadastroJovem::findOrFail($request->id);
-        $cadastro->nome_completo = $request->nomeCompleto;
-        $cadastro->data_nascimento = $request->dataNascimento;
-        $cadastro->periodo_estudo = $request->periodoEstudo;
+        $cadastro->nome_completo = $request->nome;
+        $cadastro->data_nascimento = Helper::data_mysql($request->data_nascimento);
+        $cadastro->periodo_estudo = $request->periodo_estudo;
         $cadastro->email = $request->email;
         $cadastro->whatsapp = Helper::limpa_campo($request->whatsapp);
         $cadastro->sexo = $request->sexo;
@@ -178,18 +178,12 @@ class PreCadastroJovensController extends Controller
         $cadastro->estado = $request->estado;
         $cadastro->cidade = $request->cidade;
         $cadastro->bairro = $request->bairro;
-        $cadastro->situacao = 'Aguardando';
+        $cadastro->situacao = $request->situacao;
 
         if($cadastro->save()){
-            return response()->json([
-                'Status' => "Sucesso",
-                'Mensagem' => "O pré-cadastro do jovem foi atualizado com sucesso"
-              ]);
+            return redirect()->route('sistema.cadastros')->with('success', 'Dados Atualizados!');
         }else{
-            return response()->json([
-                'Status' => "Erro",
-                'Mensagem' => "Não foi possível atualizar o cadastro"
-              ]);
+            return redirect()->route('sistema.cadastros')->with('error', 'Erro ao atualizar dados!');
         }
 
     }
