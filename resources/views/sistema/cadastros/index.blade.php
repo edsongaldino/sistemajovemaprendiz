@@ -62,7 +62,7 @@
           <table class="table table-hover mg-b-0">
             <thead>
               <tr>
-                <th>ID</th>
+                <th style="text-align: center;">Data Cadastro</th>
                 <th>Nome do Aluno</th>
                 <th style="text-align: center;">Whatsapp</th>
                 <th style="text-align: center;">Idade</th>
@@ -74,7 +74,7 @@
             <tbody>
               @foreach ($cadastros as $cadastro)
               <tr>
-                <th scope="row">{{ $cadastro->id }}</th>
+                <th scope="row" style="text-align: center;">{{ Helper::datetime_br($cadastro->created_at) }}</th>
                 <td>{{ $cadastro->nome_completo }} <br/> {{ $cadastro->email }}</td>
                 <td style="text-align: center;">{{ $cadastro->whatsapp }}</td>
                 <td style="text-align: center;"><strong>{{ Helper::calcularIdade($cadastro->data_nascimento) }} anos</strong> <br/>{{ Helper::data_br($cadastro->data_nascimento) }}</td>
