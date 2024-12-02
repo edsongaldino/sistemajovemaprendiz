@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Aluno;
+use App\Estado;
 use App\Helpers\Helper;
 use App\PreCadastroJovem;
 use App\Http\Controllers\Controller;
+use App\Mail\EmailCurriculo;
+use App\Mail\SendMailUser;
 use App\Polo;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
 use OpenApi\Annotations as OA;
 
 /**
@@ -196,7 +200,9 @@ class PreCadastroJovensController extends Controller
             return response()->json(array('status'=>'error', 'msg'=>"Nenhum e-mail cadastrado para esse cliente!"), 200);
         }
 
-        $enviaEmail = Mail::to($cadastro->email)->bcc("administrativo@larmariadelourdes.org")->send(new EmailCurriculo($faturamento, $assunto));
+        $assunto = "Confirmação de cadastro - Preenchimento de Currículo (Jovem Aprendiz)";
+
+        $enviaEmail = Mail::to($cadastro->email)->bcc("administrativo@larmariadelourdes.org")->send(new EmailCurriculo($cadastro, $assunto));
 
         if($enviaEmail){
             return response()->json(array('status'=>'success', 'msg'=>"O e-mai foi enviado com sucesso!"), 200);
