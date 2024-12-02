@@ -11,29 +11,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--====== Favicon Icon ======-->
-    <link rel="shortcut icon" href="assets/site/images/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="/assets/site/images/favicon.png" type="image/png">
 
     <!--====== Magnific Popup CSS ======-->
-    <link rel="stylesheet" href="assets/site/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/site/css/magnific-popup.css">
 
     <!--====== Slick CSS ======-->
-    <link rel="stylesheet" href="assets/site/css/slick.css">
+    <link rel="stylesheet" href="/assets/site/css/slick.css">
 
     <!--====== Line Icons CSS ======-->
-    <link rel="stylesheet" href="assets/site/css/LineIcons.css">
+    <link rel="stylesheet" href="/assets/site/css/LineIcons.css">
 
     <!--====== Bootstrap CSS ======-->
-    <link rel="stylesheet" href="assets/site/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/site/css/bootstrap.min.css">
 
     <!--====== Default CSS ======-->
-    <link rel="stylesheet" href="assets/site/css/default.css">
+    <link rel="stylesheet" href="/assets/site/css/default.css">
 
     <!--====== Style CSS ======-->
-    <link rel="stylesheet" href="assets/site/css/style.css">
+    <link rel="stylesheet" href="/assets/site/css/style.css">
 
     <!--====== Jquery js ======-->
-    <script src="assets/site/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="assets/site/js/vendor/modernizr-3.7.1.min.js"></script>
+    <script src="/assets/site/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/assets/site/js/vendor/modernizr-3.7.1.min.js"></script>
 
     <link href="{{ asset('assets/sistema/lib/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 
@@ -53,31 +53,10 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
 
-                        <a class="navbar-brand" href="#">
-                            <img src="assets/site/images/logo.png" alt="Logo">
+                        <a class="navbar-brand logo-lar" href="#">
+                            <img src="/assets/site/images/logo.png" alt="Logo">
                         </a>
 
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo" aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarTwo">
-                            <ul class="navbar-nav m-auto">
-                                <li class="nav-item"><a class="page-scroll" href="#home">home</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="#about">Conheça o programa</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="#portfolio">Onde estamos</a></li>
-                                <li class="nav-item"><a href="http://www.intelecto.com.br/holerith/empresa/?id=2142" target="_blank">Holerite Online</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="#contact">Contato</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="navbar-btn d-none d-sm-inline-block">
-                            <ul>
-                                <li><a class="solid" href="/"><< VOLTAR</a></li>
-                            </ul>
-                        </div>
                     </nav> <!-- navbar -->
                 </div>
             </div> <!-- row -->
@@ -116,7 +95,7 @@
                                             <div class="form-input mt-10">
                                                 <label>Nome completo</label>
                                                 <div class="input-items default">
-                                                    <input name="nome" type="text" value="{{ $cadastro->nome_razao ?? '' }}" required>
+                                                    <input name="nome" type="text" value="{{ $cadastro->nome_completo ?? '' }}" required>
                                                     <i class="lni lni-user"></i>
                                                 </div>
                                             </div> <!-- form input -->
@@ -143,7 +122,7 @@
                                             <div class="form-input mt-10">
                                                 <label>Telefone</label>
                                                 <div class="input-items default">
-                                                    <input type="text" name="telefone" class="telefone" placeholder="Telefone" value="{{ $cadastro->telefone ?? '' }}" required>
+                                                    <input type="text" name="telefone" class="telefone" placeholder="Telefone" value="{{ $cadastro->whatsapp ?? '' }}" required>
                                                     <i class="lni lni-phone"></i>
                                                 </div>
                                             </div> <!-- form input -->
@@ -152,7 +131,7 @@
                                             <div class="form-input mt-10">
                                                 <label>Whatsapp</label>
                                                 <div class="input-items default">
-                                                    <input type="text" name="whatsapp" class="telefone"  placeholder="Whatsapp" value="{{ $cadastro->telefone ?? '' }}" required>
+                                                    <input type="text" name="whatsapp" class="telefone"  placeholder="Whatsapp" value="{{ $cadastro->whatsapp ?? '' }}" required>
                                                     <i class="lni lni-phone"></i>
                                                 </div>
                                             </div> <!-- form input -->
@@ -164,8 +143,8 @@
                                                 <div class="input-items default">
                                                     <select class="sel" name="sexo" id="sexo" required>
                                                         <option value="">Selecione</option>
-                                                        <option value="Masculino">Masculino</option>
-                                                        <option value="Feminino">Feminino</option>
+                                                        <option value="Masculino" @if( ($cadastro->sexo ?? '') == 'Masculino' ) selected @endif>Masculino</option>
+                                                        <option value="Feminino" @if( ($cadastro->sexo ?? '') == 'Feminino' ) selected @endif>Feminino</option>
                                                     </select>
                                                     <i class="lni lni-user"></i>
                                                 </div>
@@ -194,7 +173,7 @@
                                             <div class="form-input mt-10">
                                                 <label>CEP</label>
                                                 <div class="input-items default">
-                                                    <input name="cep_endereco" id="cep_endereco" type="text" value="" required>
+                                                    <input name="cep_endereco" id="cep_endereco" type="text" value="{{ $cadastro->cep ?? '' }}" required>
                                                     <i class="lni lni-map-marker"></i>
                                                 </div>
                                             </div> <!-- form input -->
@@ -674,7 +653,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="footer-logo text-center">
-                        <a class="mt-30" href="index.php"><img src="assets/site/images/logo.png" alt="Logo"></a>
+                        <a class="mt-30" href="index.php"><img src="/assets/site/images/logo.png" alt="Logo"></a>
                     </div> <!-- footer logo -->
                     <ul class="social text-center mt-60">
                         <li><a href="https://facebook.com/uideckHQ"><i class="lni lni-facebook-filled"></i></a></li>
@@ -687,7 +666,7 @@
                         <span class="mail">pja@larmariadelourdes.org</span>
                     </div>
                     <div class="copyright text-center mt-35">
-                        <a class="mt-30" href="index.php"><img src="assets/site/images/logo-datapix.png" alt="Logo"></a>
+                        <a class="mt-30" href="index.php"><img src="/assets/site/images/logo-datapix.png" alt="Logo"></a>
                     </div> <!--  copyright -->
                 </div>
             </div> <!-- row -->
@@ -720,34 +699,34 @@
 
 
     <!--====== Bootstrap js ======-->
-    <script src="assets/site/js/popper.min.js"></script>
-    <script src="assets/site/js/bootstrap.min.js"></script>
+    <script src="/assets/site/js/popper.min.js"></script>
+    <script src="/assets/site/js/bootstrap.min.js"></script>
 
     <!--====== Slick js ======-->
-    <script src="assets/site/js/slick.min.js"></script>
+    <script src="/assets/site/js/slick.min.js"></script>
 
     <!--====== Magnific Popup js ======-->
-    <script src="assets/site/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/site/js/jquery.magnific-popup.min.js"></script>
 
     <!--====== Ajax Contact js ======-->
-    <script src="assets/site/js/ajax-contact.js"></script>
+    <script src="/assets/site/js/ajax-contact.js"></script>
 
     <!--====== Isotope js ======-->
-    <script src="assets/site/js/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/site/js/isotope.pkgd.min.js"></script>
+    <script src="/assets/site/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/site/js/isotope.pkgd.min.js"></script>
 
     <!--====== Scrolling Nav js ======-->
-    <script src="assets/site/js/jquery.easing.min.js"></script>
-    <script src="assets/site/js/scrolling-nav.js"></script>
+    <script src="/assets/site/js/jquery.easing.min.js"></script>
+    <script src="/assets/site/js/scrolling-nav.js"></script>
 
     <!--====== Main js ======-->
-    <script src="assets/site/js/main.js"></script>
+    <script src="/assets/site/js/main.js"></script>
 
     <script src="{{ asset('assets/global/js/cep.js') }}"></script>
     <script src="{{ asset('assets/global/js/busca.js') }}"></script>
     <script src="{{ asset('assets/global/js/jquery.maskMoney.js') }}"></script>
     <script src="{{ asset('/assets/sistema/lib/jquery.maskedinput/jquery.maskedinput.js') }}"></script>
-    <script src="assets/global/js/mascaras.js"></script>
+    <script src="/assets/global/js/mascaras.js"></script>
     <script type="text/javascript" src="{{ asset('assets/sistema/lib/sweetalert/dist/sweetalert.min.js') }}" ></script>
     @include('sweetalert::alert')
 

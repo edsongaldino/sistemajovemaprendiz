@@ -120,6 +120,10 @@ p {
   color: #6c6c6c;
   margin-top: 24px; }
 
+  .logo-lar{
+    margin: auto;
+  }
+
 /*===== All Preloader Style =====*/
 .preloader {
   /* Body Overlay */
