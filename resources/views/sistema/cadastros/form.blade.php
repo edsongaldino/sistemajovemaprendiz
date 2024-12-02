@@ -23,7 +23,7 @@
     <div class="col-md-3 mg-t--1 mg-md-t-0">
         <div class="form-group mg-md-l--1">
         <label class="form-control-label">Telefone (Whatsapp): <span class="tx-danger">*</span></label>
-        <input class="form-control" id="phoneMask2" type="text" name="whatsapp" value="{{ $cadastro->whatsapp ?? '' }}" placeholder="Whatsapp" required>
+        <input class="form-control" id="whatsapp" type="text" name="whatsapp" value="{{ $cadastro->whatsapp ?? '' }}" placeholder="Whatsapp" required>
         </div>
     </div><!-- col-4 -->
 
