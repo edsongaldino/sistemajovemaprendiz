@@ -122,7 +122,7 @@
                                             <div class="form-input mt-10">
                                                 <label>Telefone</label>
                                                 <div class="input-items default">
-                                                    <input type="text" name="telefone" class="telefone" placeholder="Telefone" value="{{ $cadastro->whatsapp ?? '' }}" required>
+                                                    <input type="text" name="telefone" class="" placeholder="Telefone" value="{{ $cadastro->whatsapp ?? '' }}" required>
                                                     <i class="lni lni-phone"></i>
                                                 </div>
                                             </div> <!-- form input -->
@@ -131,7 +131,7 @@
                                             <div class="form-input mt-10">
                                                 <label>Whatsapp</label>
                                                 <div class="input-items default">
-                                                    <input type="text" name="whatsapp" class="telefone"  placeholder="Whatsapp" value="{{ $cadastro->whatsapp ?? '' }}" required>
+                                                    <input type="text" name="whatsapp" class=""  placeholder="Whatsapp" value="{{ $cadastro->whatsapp ?? '' }}" required>
                                                     <i class="lni lni-phone"></i>
                                                 </div>
                                             </div> <!-- form input -->
