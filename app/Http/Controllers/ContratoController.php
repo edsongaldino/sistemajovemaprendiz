@@ -252,7 +252,7 @@ class ContratoController extends Controller
 
     public function CalendarioPDF($id){
         $contrato = Contrato::find($id);
-        $mesesContrato = CalendarioAluno::selectRaw("MONTH(data) as mes")->selectRaw("YEAR(data) as ano")->where('contrato_id',$id)->distinct()->get();
+        $mesesContrato = CalendarioAluno::selectRaw("MONTH(data) as mes")->selectRaw("YEAR(data) as ano")->where('contrato_id',$id)->orderBy('id','asc')->distinct()->get();
         return view('sistema.contratos.calendarioPDF', compact('contrato', 'mesesContrato'));
     }
 

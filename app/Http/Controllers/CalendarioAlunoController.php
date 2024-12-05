@@ -53,6 +53,8 @@ class CalendarioAlunoController extends Controller
             $tot_especifico = 1;
             $tot_g = 1;
 
+            $ultimaAulabasico = false;
+
             while($total_dias <= $qtd_dias_contrato) {
 
                 $data = Carbon::createFromFormat("Y-m-d", $contrato->data_inicial)->addDays($tot_g);
@@ -119,7 +121,14 @@ class CalendarioAlunoController extends Controller
 
                                     }else{
 
-                                        if($tot_especifico <= $qtd_aulas_especifico){
+                                        if($tot_basico == ($qtd_aulas_basicas+1)){
+                                            $ultimaAulabasico = true;
+                                            $tot_basico++;
+                                        }else{
+                                            $ultimaAulabasico = false;
+                                        }
+
+                                        if($tot_especifico <= $qtd_aulas_especifico && $ultimaAulabasico != true){
 
                                             $calendario->tipo = 'Específico';
                                             $calendario->class_color = 'especifico';
