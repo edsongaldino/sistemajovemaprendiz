@@ -61,6 +61,10 @@ class AtualizacoesContratoController extends Controller
                 $atualizacao->valor = $request->valor;
                 break;
 
+            case "Exame Periodico":
+                $atualizacao->valor = $request->valor;
+                break;
+
             case "Exame Demissional":
                 $atualizacao->valor = $request->valor;
                 break;
@@ -78,7 +82,7 @@ class AtualizacoesContratoController extends Controller
                     $contrato->situacao = 'Encerrado';
                     $contrato->data_final = $request->data;
                 }
-                
+
                 $contrato->save();
 
                 break;

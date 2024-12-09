@@ -81,7 +81,7 @@
                 <td class="text-center">Quantidade <br/><b>{{ $atualizacao->quantidade }}</b></td>
                 <td class="text-center">Tamanho <br/><b>{{ $atualizacao->tamanho }}</b></td>
                 <td class="text-center">Valor <br/>R$ <b>{{ Helper::converte_valor_real($atualizacao->valor) }}</b></td>
-                @elseif($atualizacao->tipo == 'Exame Admissional' || $atualizacao->tipo == 'Exame Demissional')
+                @elseif($atualizacao->tipo == 'Exame Admissional' || $atualizacao->tipo == 'Exame Demissional' || $atualizacao->tipo == 'Exame Periodico')
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <td class="text-center">Valor <br/><b>{{ $atualizacao->valor }}</b></td>
@@ -239,6 +239,7 @@
                         <option label="Selecione"></option>
                         <option value="Exame Admissional">Exame Admissional</option>
                         <option value="Exame Demissional">Exame Demissional</option>
+                        <option value="Exame Periodico">Exame Periódico</option>
                     </select>
                     </div>
                 </div><!-- col-4 -->
@@ -331,7 +332,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-  
+
             <form action="{{ route('sistema.contrato.gravarAtualizacao') }}" method="POST" name="AtualizacaoContrato" id="AtualizacaoContrato">
               @csrf
               <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">

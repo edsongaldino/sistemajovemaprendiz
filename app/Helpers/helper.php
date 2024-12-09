@@ -259,7 +259,7 @@ class Helper{
 													$query->whereBetween('data', [$data_inicial, $data_final])->orWhere('faturamento_contrato_id', null);
 												})->get();
 
-		return $atualizacoes->count();										
+		return $atualizacoes->count();
 
     }
 
@@ -307,7 +307,7 @@ class Helper{
                 return $atualizacoes->sum('valor');
             break;
 
-            case "Exame Admissional" || "Exame Demissional":
+            case "Exame Admissional" || "Exame Demissional" || "Exame Periodico":
                 return $atualizacoes->sum('valor');
             break;
 
