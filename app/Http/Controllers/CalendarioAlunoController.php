@@ -51,7 +51,7 @@ class CalendarioAlunoController extends Controller
             $tot_basico = 1;
             $tot_pratica = 1;
             $tot_especifico = 1;
-            $tot_g = 1;
+            $tot_g = 0;
 
             $ultimaAulabasico = false;
 

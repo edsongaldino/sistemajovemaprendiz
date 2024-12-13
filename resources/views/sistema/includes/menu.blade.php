@@ -25,6 +25,7 @@
         <li class="nav-item"><a href="{{ route('sistema.perfis') }}" class="nav-link">Perfis/Permissões</a></li>
         <li class="nav-item"><a href="{{ route('sistema.regioes') }}" class="nav-link">Regiões</a></li>
         <li class="nav-item"><a href="{{ route('sistema.atualizacoes') }}" class="nav-link">Atualizacoes</a></li>
+        <li class="nav-item"><a href="{{ route('sistema.feriados') }}" class="nav-link">Feriados</a></li>
       </ul>
       @endif
 
