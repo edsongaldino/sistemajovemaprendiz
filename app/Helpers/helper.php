@@ -325,15 +325,16 @@ class Helper{
 
 	public static function getLancamentosFaturamento($faturamento_contrato_id, $tipo){
 
-		$atualizacoes =	AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->where('tipo', $tipo)->get();
 
         switch($tipo){
 
             case "Qtde Falta Trabalho":
+				$atualizacoes =	AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->where('tipo', 'Falta Trabalho')->get();
                 return $atualizacoes->count();
             break;
 
             case "Benefícios":
+				$atualizacoes =	AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->where('tipo', 'Benefícios')->get();
                 return $atualizacoes->count();
             break;
 
