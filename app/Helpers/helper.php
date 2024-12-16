@@ -325,9 +325,7 @@ class Helper{
 
 	public static function getLancamentosFaturamento($faturamento_contrato_id, $tipo){
 
-
-		$atualizacoes =	AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->get();
-
+		$atualizacoes =	AtualizacoesContrato::where('faturamento_contrato_id', $faturamento_contrato_id)->where('tipo', $tipo)->get();
 
         switch($tipo){
 
