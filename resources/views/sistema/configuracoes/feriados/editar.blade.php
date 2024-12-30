@@ -15,21 +15,21 @@
     <div class="br-pagebody">
         <div class="br-section-wrapper">
 
-            <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10"><i class="fa fa-bank"></i> Editar Pólo</h6>
+            <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10"><i class="fa fa-bank"></i> Editar Feriado</h6>
             <p class="mg-b-30 tx-gray-600">Preencha os dados abaixo para editar</p>
 
             <div class="form-layout form-layout-2">
-            <form name="FormPolo" id="FormPolo" action="{{ route('sistema.polo.update') }}" method="POST">
+            <form name="FormFeriado" id="FormFeriado" action="{{ route('sistema.feriado.update') }}" method="POST">
                 @csrf
                 @php $acao = "editar"; @endphp
-                @include('sistema.polos.form')
-                <input type="hidden" name="id" value="{{ $polo->id ?? '' }}">
-                <button type="button" onclick="EnviarFormPolo();" class="btn btn-info btn-gravar"> <i class="fa fa-save"></i> Atualizar pólo</button>
+                @include('sistema.configuracoes.feriados.form')
+                <input type="hidden" name="id" value="{{ $feriado->id ?? '' }}">
+                <button type="button" onclick="EnviarFormFeriado();" class="btn btn-info btn-gravar"> <i class="fa fa-save"></i> Atualizar feriado</button>
             </form>
             </div><!-- form-layout -->
 
         </div><!-- br-section-wrapper -->
     </div><!-- br-pagebody -->
-    <script src="{{ asset('assets/sistema/js/polos/index.js') }}"></script>
+    <script src="{{ asset('assets/sistema/js/feriados/index.js') }}"></script>
 
 @endsection

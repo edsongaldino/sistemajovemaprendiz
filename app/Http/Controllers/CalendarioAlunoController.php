@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Aluno;
 use App\CalendarioAluno;
 use App\Contrato;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -59,8 +60,9 @@ class CalendarioAlunoController extends Controller
 
                 $data = Carbon::createFromFormat("Y-m-d", $contrato->data_inicial)->addDays($tot_g);
                 $dia_semana = date('w', strtotime($data));
-
-                if($dia_semana > 0 && $dia_semana < 6){
+                $feriado = Helper::IsFeriado($data, $contrato->polo->endereco->cidade_id, $contrato->polo->endereco->cidade->estado_id);
+                
+                if($dia_semana > 0 && $dia_semana < 6 && $feriado == false){
 
                     $calendario = new CalendarioAluno();
                     $calendario->aluno_id = $aluno->id;

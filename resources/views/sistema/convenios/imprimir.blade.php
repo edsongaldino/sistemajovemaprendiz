@@ -162,12 +162,16 @@
     
     <p>CONVENIADA: {{ $convenio->empresa->razao_social ?? '' }}, 
         
-        @if($convenio->tipo_contrato == 'CNPJ')
-        CNPJ: {{ $convenio->empresa->cnpj ?? '' }} e Inscrição Estadual: {{ $convenio->empresa->inscricao_estadual ?? '' }}
+        @if($convenio->empresa->tipo_cadastro == 'CNPJ')
+        CNPJ: {{ Helper::mask($convenio->empresa->cnpj ?? '','##.###.###/####-##') }} e Inscrição Estadual: {{ $convenio->empresa->inscricao_estadual ?? '' }}
         @else
-        CPF: {{ $convenio->empresa->cpf ?? '' }} 
+        CPF: {{ Helper::mask($convenio->empresa->cpf ?? '','###.###.###-##') }} 
         @endif      
-        , situada na  {{ $convenio->empresa->endereco->logradouro_endereco ?? '' }}, Nº {{ $convenio->empresa->endereco->numero_endereco ?? '' }}, Bairro: {{ $convenio->empresa->endereco->bairro_endereco ?? '' }}, CEP: {{ $convenio->empresa->endereco->cep_endereco ?? '' }}, {{ $convenio->empresa->endereco->cidade->nome_cidade ?? '' }} - {{ $convenio->empresa->endereco->cidade->estado->uf_estado ?? '' }}, adiante denominado CONVENIADA, neste ato representado por seu representante/Procurador legal {{ $convenio->empresa->nome_responsavel ?? '' }}, portador (a) do RG: {{ $convenio->empresa->rg_responsavel }}/{{ $convenio->empresa->emissor_rg_responsavel }}, CPF: {{ $convenio->empresa->cpf_responsavel }}, celebram o presente convênio na forma das cláusulas a seguir explicitadas.</p>
+        , situada na  {{ $convenio->empresa->endereco->logradouro_endereco ?? '' }}, Nº {{ $convenio->empresa->endereco->numero_endereco ?? '' }}, Bairro: {{ $convenio->empresa->endereco->bairro_endereco ?? '' }}, CEP: {{ Helper::mask($convenio->empresa->endereco->cep_endereco ?? '','#####-###') }}, {{ $convenio->empresa->endereco->cidade->nome_cidade ?? '' }} - {{ $convenio->empresa->endereco->cidade->estado->uf_estado ?? '' }}, adiante denominado CONVENIADA, 
+        neste ato representado por seu representante/Procurador legal {{ $convenio->empresa->nome_responsavel ?? '' }}, 
+        portador (a) do RG: {{ $convenio->empresa->rg_responsavel }}/{{ $convenio->empresa->emissor_rg_responsavel }}, 
+        CPF: {{ Helper::mask($convenio->empresa->cpf_responsavel ?? '','###.###.###-##') }}, 
+        celebram o presente convênio na forma das cláusulas a seguir explicitadas.</p>
 
     <h2>CLÁUSULA PRIMEIRA - DO OBJETO</h2>
     <p>Parágrafo Primeiro - O presente Convênio tem por objeto promover o desenvolvimento pessoal e profissional de jovens carentes, com idade, preferencialmente, entre 14 (quatorze) e 24(vinte e quatro) anos na condição de assistidos, por intermédio de ações que lhes assegurem a aquisição de hábitos, experiências e atitudes indispensáveis à formação humana e social, formação técnico-profissional metódica, bem como a inserção no mercado de trabalho formal.</p>

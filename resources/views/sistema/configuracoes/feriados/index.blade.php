@@ -29,14 +29,14 @@
               <div class="col-md-4">
                 <div class="form-group">
                 <label class="form-control-label">Nome do Feriado: <span class="tx-danger">*</span></label>
-                <input class="form-control" type="text" name="nome" value="" placeholder="Nome do pólo">
+                <input class="form-control" type="text" name="nome" value="" placeholder="Nome do feriado">
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-md-3 mg-t--1 mg-md-t-0">
                 <div class="form-group mg-md-l--1">
                 <label class="form-control-label">Tipo do Feriado: <span class="tx-danger">*</span></label>
-                <select class="form-control" name="regiao" data-placeholder="Selecione o tipo">
+                <select class="form-control" name="tipo" data-placeholder="Selecione o tipo">
                   <option label="Selecione o tipo"></option>
                   <option value="Nacional">Nacional</option>
                   <option value="Estadual">Estadual</option>
@@ -78,7 +78,7 @@
               @foreach ($feriados as $feriado)
               <tr>
                 <th scope="row">{{ $feriado->id }}</th>
-                <td>{{ $feriado->data }}</td>
+                <td>{{ Helper::data_br($feriado->data) }}</td>
                 <td>{{ $feriado->descricao }}</td>
                 <td>{{ $feriado->tipo }}</td>
                 <td>

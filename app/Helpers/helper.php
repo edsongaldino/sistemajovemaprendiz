@@ -11,6 +11,7 @@ use App\Convenio;
 use App\Faturamento;
 use App\FaturamentoContrato;
 use App\FaturamentoCredito;
+use App\Feriado;
 use App\Http\Controllers\AtualizacoesContratoController;
 use App\Tabela;
 use Jenssegers\Agent\Agent;
@@ -113,6 +114,13 @@ class Helper{
 
 		$data = Carbon::parse($data)->format('Y-m-d');
 		return Helper::data_br($data);
+
+	}
+
+	public static function datetime_mysql($data){
+
+		$data = Carbon::parse($data)->format('Y-m-d');
+		return $data;
 
 	}
 
@@ -672,6 +680,19 @@ class Helper{
 
 	public static function removeAcentos($string){
     	return strtr(utf8_decode(html_entity_decode($string)),utf8_decode('ÀÁÃÂÉÊÍÓÕÔÚÜÇÑàáãâéêíóõôúüçñ'),'AAAAEEIOOOUUCNaaaaeeiooouucn');
+	}
+
+	public static function IsFeriado($data, $cidade, $estado){
+
+    	$BuscaFeriados = Feriado::where('data', Helper::datetime_mysql($data))->get();
+		$feriado = false;
+		foreach($BuscaFeriados as $feriado){
+			if($feriado->cidade_id == $cidade || $feriado->estado_id == $estado){
+				$feriado = true;
+			}
+		}
+		return $feriado;
+
 	}
 
 

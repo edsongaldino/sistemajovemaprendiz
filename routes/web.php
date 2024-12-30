@@ -43,13 +43,13 @@ Route::post('/login/do', 'AuthController@Login')->name('login.do');
 Route::get('logout', 'AuthController@Logout')->name('logout')->middleware('auth');
 
 //FERIADO ROTAS
-Route::get('/sistema/configuracoes/feriados', 'FeriadoController@index')->name('sistema.feriados')->middleware('auth');
+Route::get('sistema/configuracoes/feriados', 'FeriadoController@index')->name('sistema.feriados')->middleware('auth');
 Route::get('sistema/feriado/adicionar', 'FeriadoController@create')->name('sistema.feriado.adicionar')->middleware('auth');
 Route::post('sistema/feriado/salvar', 'FeriadoController@store')->name('sistema.feriado.salvar')->middleware('auth');
 Route::get('sistema/feriado/{id}/editar', 'FeriadoController@edit')->name('sistema.feriado.editar')->middleware('auth');
 Route::post('sistema/feriado/update', 'FeriadoController@update')->name('sistema.feriado.update')->middleware('auth');
 Route::post('sistema/feriado/excluir', 'FeriadoController@destroy')->name('sistema.feriado.excluir')->middleware('auth');
-Route::match(['get', 'post'], 'sistema/feriado/buscar', 'FeriadoController@search')->name('sistema.feriado.buscar');
+Route::match(['get', 'post'], 'sistema/feriado/buscar', 'FeriadoController@Busca')->name('sistema.feriado.buscar');
 
 //PRE CADASTRO ROTAS
 Route::get('sistema/cadastros', 'PreCadastroJovensController@index')->name('sistema.cadastros')->middleware('auth');

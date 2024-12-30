@@ -317,12 +317,12 @@
     <div class="bloco">
         <div class="titulo">ENTIDADE FORMADORA</div>
         <div class="item">RAZÃO SOCIAL: <strong>ASSOCIAÇÃO ESPÍRITA LAR MARIA DE LOURDES</strong></div>
-        <div class="item">CNPJ: <strong>{{ $poloMatriz->cnpj }}</strong></div>
+        <div class="item">CNPJ: <strong>{{ Helper::mask($poloMatriz->cnpj,'##.###.###/####-##') }}</strong></div>
         <div class="item">INSCRIÇÃO ESTADUAL: <strong>{{ $poloMatriz->inscricao_estadual }}</strong></div>
         <div class="item">ENDEREÇO: <strong>{{ $poloMatriz->endereco->logradouro_endereco }} - {{ $poloMatriz->endereco->numero_endereco }}</strong></div>
         <div class="item">CIDADE - UF: <strong>{{ $poloMatriz->endereco->cidade->nome_cidade }} - {{ $poloMatriz->endereco->cidade->estado->uf_estado }}</strong></div>
-        <div class="item">CEP: <strong>{{ $poloMatriz->endereco->cep_endereco }}</strong></div>
-        <div class="item">TELEFONE: <strong>{{ $poloMatriz->telefone }}</strong></div>
+        <div class="item">CEP: <strong>{{ Helper::mask($poloMatriz->endereco->cep_endereco,'#####-###') }}</strong></div>
+        <div class="item">TELEFONE: <strong>{{ Helper::Phone($poloMatriz->telefone) }}</strong></div>
         <div class="item">E-MAIL: <strong>{{ $poloMatriz->email }}</strong></div>
         <div class="item">RESPONSÁVEL: DIRCEU BELARMINO PEREIRA</strong></div>
     </div>
@@ -330,16 +330,16 @@
     <div class="bloco">
         <div class="titulo">ESTABELECIMENTO VINCULADO À COTA DE APRENDIZAGEM E CONTRATANTE</div>
         <div class="item">RAZÃO SOCIAL: <strong>{{ $contrato->empresa->razao_social }}</strong></div>
-        @if($contrato->tipo_contrato == 'CNPJ')
-        <div class="item">CNPJ: <strong>{{ $contrato->empresa->cnpj }}</strong></div>
+        @if($contrato->empresa->tipo_cadastro == 'CNPJ')
+        <div class="item">CNPJ: <strong>{{ Helper::mask($contrato->empresa->cnpj,'##.###.###/####-##') }}</strong></div>
         @else
-        <div class="item">CPF: <strong>{{ $contrato->empresa->cpf }}</strong></div>
+        <div class="item">CPF: <strong>{{ Helper::mask($contrato->empresa->cpf,'###.###.###-##') }}</strong></div>
         @endif
         <div class="item">INSCRIÇÃO ESTADUAL: <strong>{{ $contrato->empresa->inscricao_estadual ?? '' }}</strong></div>
         <div class="item">ENDEREÇO: <strong>{{ $contrato->empresa->endereco->logradouro_endereco }} - {{ $contrato->empresa->endereco->numero_endereco }} - {{ $contrato->empresa->endereco->bairro_endereco }}</strong></div>
         <div class="item">CIDADE: <strong>{{ $contrato->empresa->endereco->cidade->nome_cidade }}/{{ $contrato->empresa->endereco->cidade->estado->uf_estado }}</strong></div>
-        <div class="item">CEP: <strong>{{ $contrato->empresa->endereco->cep_endereco }}</strong></div>
-        <div class="item">TELEFONE: <strong>{{ $contrato->empresa->telefone }}</strong></div>
+        <div class="item">CEP: <strong>{{ Helper::mask($contrato->empresa->endereco->cep_endereco,'#####-###') }}</strong></div>
+        <div class="item">TELEFONE: <strong>{{ Helper::Phone($contrato->empresa->telefone) }}</strong></div>
         <div class="item">RESPONSÁVEL: <strong>{{ $contrato->empresa->nome_responsavel ?? '' }}</strong></div>
         <div class="item">RESPONSÁVEL PELO JOVEM NA EMPRESA: <strong>{{ $contrato->responsavelJovem->nome ?? '' }}</strong></div>
     </div>
@@ -348,17 +348,17 @@
         <div class="titulo">CONTRATADO</div>
         <div class="item">NOME: <strong>{{ $contrato->aluno->nome }}</strong></div>
         <div class="item">RG: <strong>{{ $contrato->aluno->rg }}</strong></div>
-        <div class="item">CPF: <strong>{{ $contrato->aluno->cpf }}</strong></div>
+        <div class="item">CPF: <strong>{{ Helper::mask($contrato->aluno->cpf,'###.###.###-##') }}</strong></div>
         <div class="item">DATA DE NASCIMENTO: <strong>{{ Helper::data_br($contrato->aluno->data_nascimento) }}</strong></div>
         <div class="item">ENDEREÇO: <strong>{{ $contrato->aluno->endereco->logradouro_endereco }} - {{ $contrato->aluno->endereco->numero_endereco }} - {{ $contrato->aluno->endereco->bairro_endereco }}</strong></div>
         <div class="item">CIDADE/UF: <strong>{{ $contrato->aluno->endereco->cidade->nome_cidade }}/{{ $contrato->aluno->endereco->cidade->estado->uf_estado }}</strong></div>
-        <div class="item">CEP: <strong>{{ $contrato->aluno->endereco->cep_endereco }}</strong></div>
-        <div class="item">TELEFONE: <strong>{{ $contrato->aluno->telefone }}</strong></div>
+        <div class="item">CEP: <strong>{{ Helper::mask($contrato->aluno->endereco->cep_endereco,'#####-###') }}</strong></div>
+        <div class="item">TELEFONE: <strong>{{ Helper::Phone($contrato->aluno->telefone) }}</strong></div>
         <div class="item">ESCOLARIDADE: <strong>{{ $contrato->aluno->escolaridade }}</strong></div>
         <div class="item">E-MAIL: <strong>{{ $contrato->aluno->user->email ?? '' }}</strong></div>
         <div class="item">RESPONSÁVEL: <strong>{{ $contrato->aluno->responsavel->nome ?? '' }} </strong></div>
         <div class="item">RG (RESPONSÁVEL): <strong>{{ $contrato->aluno->responsavel->rg ?? '' }} </strong></div>
-        <div class="item">CPF (RESPONSÁVEL): <strong>{{ $contrato->aluno->responsavel->cpf ?? '' }} </strong></div>
+        <div class="item">CPF (RESPONSÁVEL): <strong>{{ Helper::mask($contrato->aluno->responsavel->cpf ?? '','###.###.###-##') }} </strong></div>
     </div>
 
     <h2>Cláusula Primeira: DO OBJETO</h2>
