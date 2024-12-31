@@ -187,7 +187,16 @@ class FaturamentoController extends Controller
     public function VisualizarContratos($id)
     {
         $faturamento = Faturamento::find($id);
-        $contratos = Contrato::where('convenio_id','=', $faturamento->convenio_id)->where('data_final','>=', $faturamento->data_inicial)->paginate(20);
+        $data_inicial = $faturamento->data_inicial;
+        $contratos = Contrato::select('contratos.*')
+                                ->join('alunos', 'alunos.id', '=', 'contratos.aluno_id')
+                                ->where('contratos.convenio_id','=', $faturamento->convenio_id)
+                                ->where(function ($query) use ($data_inicial) {
+                                    $query->where('contratos.data_final','>=', $data_inicial)
+                                          ->Where('contratos.situacao','=', 'Ativo');
+                                })
+                                ->orderBy('alunos.nome', 'asc')
+                                ->paginate(20);
         $data_inicial = $faturamento->data_inicial;
         $data_final = $faturamento->data_final;
 
