@@ -292,7 +292,6 @@ class ContratoController extends Controller
 
     public function atualizaSituacao()
     {
-
         try {
             $contratos = Contrato::where('data_final', "<=", Carbon::now())->get();
 
@@ -305,7 +304,6 @@ class ContratoController extends Controller
         } catch (Exception $e) {
             echo 'Exceção capturada: ',  $e->getMessage(), "\n";
         }
-        
     }
 
 }

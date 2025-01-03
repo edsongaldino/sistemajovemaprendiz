@@ -12,3 +12,4 @@ $('.telefone').mask('(99) 9 9999-9999');
 
 $('.moeda').maskMoney({thousands: '.', decimal: ','});
 $('.moeda2').maskMoney({thousands: '', decimal: '.'});
+$('.percentual').maskMoney({thousands: '.', decimal: ',', precision: 5});

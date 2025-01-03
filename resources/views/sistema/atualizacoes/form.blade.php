@@ -27,7 +27,7 @@
     <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Valor (Percentual): <span class="tx-danger">*</span></label>
-        <input class="form-control moeda" type="text" name="percentual_atualizacao" value="{{ Helper::converte_valor_real($atualizacao->percentual_atualizacao ?? '') }}" placeholder="Percentual aplicado" required>
+        <input class="form-control percentual" type="text" name="percentual_atualizacao" value="{{ Helper::converte_valor_real($atualizacao->percentual_atualizacao ?? '') }}" placeholder="Percentual aplicado" required>
         </div>
     </div><!-- col-4 -->
 
