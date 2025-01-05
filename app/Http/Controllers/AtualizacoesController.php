@@ -7,6 +7,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Tabela;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,20 +51,19 @@ class AtualizacoesController extends Controller
         $atualizacao->data_atualizacao = $request->data_atualizacao;
         $atualizacao->percentual_atualizacao = Helper::converte_reais_to_mysql($request->percentual_atualizacao);
         $atualizacao->motivo_atualizacao = $request->motivo_atualizacao;
-        $atualizacao->situacao_atualizacao = $request->situacao_atualizacao;
         $atualizacao->save(); 
 
-        
-        if($atualizacao->modulo_atualizacao == 'Tabela'){
-            (new TabelaController())->atualizaTabela($atualizacao);
+        if($atualizacao->situacao_atualizacao == "Efetivada"){
+            if($atualizacao->modulo_atualizacao == 'Tabela'){
+                (new TabelaController())->atualizaTabela($atualizacao);
+            }
+
+            if($atualizacao->modulo_atualizacao == 'Salário'){
+                (new ContratoController())->atualizaValorBolsa($atualizacao->tipo_atualizacao, $atualizacao->percentual_atualizacao);
+            }
         }
 
-        if($atualizacao->modulo_atualizacao == 'Salário'){
-            (new ContratoController())->atualizaValorBolsa($atualizacao->tipo_atualizacao, $atualizacao->percentual_atualizacao);
-        }
-        
-
-        return redirect()->route('sistema.atualizacoes')->with('success', 'Dados Cadastrados!');
+        return redirect()->route('sistema.atualizacoes')->with('success', 'Atualizações Cadastradas!');
     }
 
     /**
@@ -116,5 +116,34 @@ class AtualizacoesController extends Controller
             $response_array['status'] = 'success';    
             echo json_encode($response_array);
         endif;
+    }
+
+    public function CronAtualizacoesAgendadas(){
+
+        $atualizacoes = Atualizacoes::where('situacao_atualizacao', 'Agendada')->get();
+        $total = 0;
+
+        foreach($atualizacoes as $atualizacao){
+
+            if($atualizacao->data_atualizacao <= Carbon::now()->format('Y-m-d')){
+
+                if($atualizacao->modulo_atualizacao == 'Tabela'){
+                    (new TabelaController())->atualizaTabela($atualizacao);
+                }
+    
+                if($atualizacao->modulo_atualizacao == 'Salário'){
+                    (new ContratoController())->atualizaValorBolsa($atualizacao->tipo_atualizacao, $atualizacao->percentual_atualizacao);
+                }
+
+                $atualizacao->situacao_atualizacao = 'Efetivada';
+                $atualizacao->save(); 
+                $total++;
+
+            }
+            
+        }
+
+        echo "Foram executadas " . $total . " atualizações";
+
     }
 }

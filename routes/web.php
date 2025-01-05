@@ -181,6 +181,8 @@ Route::get('/sistema/cron/atualizar-notas', 'FaturamentoController@CronAtualizar
 Route::get('/sistema/cron/atualizar-boletos-retorno/{data}', 'FaturamentoBoletoController@CronAtualizarBoletos');
 Route::get('/sistema/cron/atualizar-boletos', 'FaturamentoBoletoController@AtualizarBoletos');
 Route::get('/sistema/cron/atualizar-boletos-geral', 'FaturamentoBoletoController@AtualizarBoletosGeral');
+Route::get('/sistema/cron/executa-atualizacoes', 'AtualizacoesController@CronAtualizacoesAgendadas');
+
 
 //Notas Fiscais
 Route::post('sistema/faturamento/emitir-nf', 'FaturamentoNFController@EmitirNotaFiscal')->name('sistema.faturamento.emitirNF')->middleware('auth');

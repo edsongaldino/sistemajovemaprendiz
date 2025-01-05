@@ -37,8 +37,7 @@
         <select class="form-control" id="situacao_atualizacao" name="situacao_atualizacao" data-placeholder="Selecione o módulo">
             <option label="Selecione o tipo"></option>
             <option value="Efetivada" @if(($atualizacao->situacao_atualizacao ?? '') == "Efetivada") selected @endif>Efetivada</option>
-            <option value="Aguardando" @if(($atualizacao->situacao_atualizacao ?? '') == "Aguardando") selected @endif>Aguardando</option> 
-            <option value="Cancelada" @if(($atualizacao->situacao_atualizacao ?? '') == "Cancelada") selected @endif>Cancelada</option> 
+            <option value="Agendada" @if(($atualizacao->situacao_atualizacao ?? '') == "Agendada") selected @endif>Agendada</option> 
         </select>
         </div>
     </div>

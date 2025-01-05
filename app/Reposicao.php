@@ -10,7 +10,9 @@ class Reposicao extends Model
 
     public function gravarReposicao($contrato, $aluno_id){
 
-        $TemReposicao = Reposicao::where('contrato_id', $contrato->id)->get();
+        $TemReposicao = Reposicao::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
+
+        $reposicao = $TemReposicao;
 
         if($TemReposicao->count() > 0){
 

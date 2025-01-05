@@ -219,14 +219,14 @@
     <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Valor da Bolsa (Jovem): <span class="tx-danger">*</span></label>
-        <input class="form-control moeda valor-bolsa" type="text" name="valor_bolsa" value="{{ Helper::converte_valor_real($contrato->valor_bolsa ?? '0.00') }}" placeholder="R$" required>
+        <input class="form-control moeda valor-bolsa" type="text" name="valor_bolsa" value="{{ Helper::converte_valor_real($contrato->valor_bolsa ?? '0.00') }}" placeholder="R$" {{ $tipoInput ?? "required" }}>
         </div>
     </div><!-- col-4 -->
 
     <div class="col-md-8">
         <div class="form-group">
         <label class="form-control-label">Valor por Extenso (Bolsa Jovem Aprendiz): <span class="tx-danger">*</span></label>
-        <input class="form-control" type="text" name="valor_bolsa_extenso" value="{{ $contrato->valor_bolsa_extenso ?? '' }}" required>
+        <input class="form-control" type="text" name="valor_bolsa_extenso" value="{{ Helper::valor_por_extenso($contrato->valor_bolsa ?? '0.00', false) }}" {{ $tipoInput ?? "required" }}>
         </div>
     </div><!-- col-4 -->
 
