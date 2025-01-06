@@ -178,8 +178,14 @@
                   @endif                
                 </td>
                 <td>{{ $faturamento->notaFiscal->numero_nf ?? '' }}</td>
+                @if($faturamento->convenio->empresa->tipo_cadastro == "CPF")
+                <td>{{ $faturamento->convenio->empresa->cpf ?? '' }}</td>
+                <td>{{ $faturamento->convenio->empresa->nome_fantasia ?? '' }}</td>
+                @else
                 <td>{{ $faturamento->convenio->empresa->cnpj ?? '' }}</td>
                 <td>{{ $faturamento->convenio->empresa->razao_social ?? '' }}</td>
+                @endif
+                
                 @if(isset($faturamento->boleto->codigo_boleto))
                   <td>{{ Helper::data_br($faturamento->boleto->data_vencimento) ?? '' }}</td>
                   <td class="situacaoP">

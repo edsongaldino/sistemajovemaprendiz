@@ -99,7 +99,7 @@ class RelatoriosController extends Controller
                         case "3":
                             $buscaFaturamento->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
                             $buscaFaturamento
-                            ->where('faturamentos.situacao_pagamento','!=', 'Liquidado')
+                            ->whereNull('faturamentos.situacao_pagamento')
                             ->whereBetween('faturamentos.data_vencimento',[$request->data_inicial, $request->data_final]);
                         break;
                             case "4":
