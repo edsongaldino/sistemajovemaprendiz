@@ -192,8 +192,8 @@ class FaturamentoController extends Controller
                                 ->join('alunos', 'alunos.id', '=', 'contratos.aluno_id')
                                 ->where('contratos.convenio_id','=', $faturamento->convenio_id)
                                 ->where(function ($query) use ($data_inicial) {
-                                    $query->where('contratos.data_final','>=', $data_inicial)
-                                          ->Where('contratos.situacao','=', 'Ativo');
+                                    $query->where('contratos.data_final','>=', $data_inicial);
+                                          //->Where('contratos.situacao','=', 'Ativo');
                                 })
                                 ->orderBy('alunos.nome', 'asc')
                                 ->paginate(20);
