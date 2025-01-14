@@ -103,6 +103,7 @@ class RelatoriosController extends Controller
                             ->whereBetween('faturamentos.data_vencimento',[$request->data_inicial, $request->data_final]);
                         break;
                             case "4":
+                                //trazer todos os vencidos até o ultimo dia do veríodo, independente se foram pagos após o último dia
                                 $buscaFaturamento->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
                                 $dataInicial = $request->data_inicial;
                                 $dataFinal = $request->data_final;
