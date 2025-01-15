@@ -409,6 +409,22 @@ Route::get('/atualiza-emissao-notas', function() {
     return $notas->count()." atualizados";
 });
 
+Route::get('/atualiza-vencimento-depositos', function() {
+    $faturamentos = Faturamento::all();
+    $total = 0;
+    foreach($faturamentos as $faturamento){
+        if($faturamento->forma_pagamento == "Depósito"){
+            $data_vencimento = Helper::GetDataVencimentoFaturamento($faturamento); 
+            $faturamento->data_vencimento = $data_vencimento;
+            $faturamento->save();
+            $total++;
+        }
+    }
+    return $total." atualizados";
+});
+
+
+
 Route::get('/teste-api-post', function() {
 
     $url  = 'https://sistema.larjovemaprendiz.ong.br/api/gravar-pre-cadastro';

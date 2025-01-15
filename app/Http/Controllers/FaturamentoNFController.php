@@ -206,6 +206,13 @@ class FaturamentoNFController extends Controller
             $dadosNF['status'] = 'Aguardando Emissão';
             $this->create($dadosNF, $faturamento);
 
+            //Calcula data de vencimento do faturamento
+            if($faturamento->forma_pagamento == "Depósito"){
+                $data_vencimento = Helper::GetDataVencimentoFaturamento($faturamento); 
+                $faturamento->data_vencimento = $data_vencimento;
+                $faturamento->save();
+            }            
+
             $response_array['status'] = 'success';
             $response_array['message'] = 'NF emitida com sucesso!';
             echo json_encode($response_array);
