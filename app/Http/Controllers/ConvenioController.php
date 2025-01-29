@@ -52,7 +52,7 @@ class ConvenioController extends Controller
 
         $convenio = new Convenio();
         $convenio->empresa_id = $request->empresa_id;
-        $convenio->percentual_issqn = $request->percentual_issqn;
+        $convenio->percentual_issqn = Helper::converte_reais_to_mysql($request->percentual_issqn);
         $convenio->polo_id = $request->polo_id;
         $convenio->tabela_id = $request->tabela_id;
         $convenio->data_inicial = Helper::data_mysql($request->data_inicial);
@@ -103,11 +103,10 @@ class ConvenioController extends Controller
      */
     public function update(Request $request)
     {
-
         $convenio = Convenio::findOrFail($request->id);
         $convenio->polo_id = $request->polo_id;
         $convenio->tabela_id = $request->tabela_id;
-        $convenio->percentual_issqn = $request->percentual_issqn;
+        $convenio->percentual_issqn = Helper::converte_reais_to_mysql($request->percentual_issqn);
         $convenio->data_inicial = Helper::data_mysql($request->data_inicial);
         $convenio->dia_faturamento = $request->dia_faturamento;
         $convenio->vencimento_boleto = $request->vencimento_boleto;
