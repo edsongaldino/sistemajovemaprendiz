@@ -230,7 +230,7 @@ class FaturamentoController extends Controller
         }
 
         //Verifica se o contrato se encerra no mês atual
-        if($this->GetEncerramentoContratoMesAtual($request->id, $Faturamento->data)){
+        if($this->GetEncerramentoContratoMesAtual($request->id, $Faturamento->data_inicial)){
             $Faturamento->data_final = $contrato->data_final;
             $faturamentoPadrao = false;
         }else{
