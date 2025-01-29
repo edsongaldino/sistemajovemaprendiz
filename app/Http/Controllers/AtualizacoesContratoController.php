@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AtualizacoesContrato;
 use App\Contrato;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -88,9 +89,20 @@ class AtualizacoesContratoController extends Controller
                 break;
 
             case "Benefícios":
-                $atualizacao->valor = $request->valor;
-                $atualizacao->tipo_beneficio = $request->tipo_beneficio;
+
+                if($request->tipo_beneficio == "Férias"){
+                    $atualizacao->tipo = "Férias";
+                    $atualizacao->data = Carbon::now();
+                    $atualizacao->quantidade = $request->quantidade;
+                    $atualizacao->data_inicial = $request->data_inicial;
+                    $atualizacao->data_final = $request->data_final;
+                }else{
+                    $atualizacao->valor = $request->valor;
+                    $atualizacao->tipo_beneficio = $request->tipo_beneficio;
+                }
+                
                 break;
+
 
         }
 

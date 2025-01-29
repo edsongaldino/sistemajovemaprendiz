@@ -240,7 +240,7 @@ Route::post('sistema/processo-seletivo/gravar-atualizacao', 'ProcessoSeletivoCon
 Route::post('sistema/vaga/processo-seletivo/concluir', 'ProcessoSeletivoController@FinalizarProcessoSeletivoExterno')->name('sistema.processo-seletivo.finalizar');
 
 //Rota Calendário
-Route::get('sistema/calendario/aluno/{aluno}/contrato/{contrato}', 'CalendarioAlunoController@create')->name('sistema.calendario')->middleware('auth');
+Route::get('sistema/calendario/aluno/{aluno}/contrato/{contrato}/{acao}', 'CalendarioAlunoController@create')->name('sistema.calendario')->middleware('auth');
 
 //Rotas Alunos
 Route::get('sistema/cursos', 'CursoController@index')->name('sistema.cursos')->middleware('auth');

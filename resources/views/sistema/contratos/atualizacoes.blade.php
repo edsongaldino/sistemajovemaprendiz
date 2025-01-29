@@ -91,6 +91,9 @@
                 @elseif($atualizacao->tipo == 'Benefícios')
                 <td class="text-center">Tipo <br/><b>{{ $atualizacao->tipo_beneficio }}</b></td>
                 <td class="text-center" colspan="2">Valor <br/>R$ <b>{{ Helper::converte_valor_real($atualizacao->valor) }}</b></td>
+                @elseif($atualizacao->tipo == 'Férias')
+                <td class="text-center">Quantidade de Dias <br/><b>{{ $atualizacao->quantidade }}</b></td>
+                <td class="text-center" colspan="2">Período de Férias<br/> <b>{{ Helper::data_br($atualizacao->data_inicial) }} à {{ Helper::data_br($atualizacao->data_final) }}</b></td>
                 @else
                 <td class="text-center"></td>
                 <td class="text-center">Falta Justificada? <br/><b>{{ $atualizacao->falta_justificada }}</b></td>
@@ -333,18 +336,13 @@
               </button>
             </div>
 
-            <form action="{{ route('sistema.contrato.gravarAtualizacao') }}" method="POST" name="AtualizacaoContrato" id="AtualizacaoContrato">
+            <form action="{{ route('sistema.contrato.gravarAtualizacao') }}" method="POST" name="FormBeneficios" id="FormBeneficios">
               @csrf
               <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
               <input type="hidden" name="tipo" value="Benefícios">
               <div class="modal-body form-faturar">
                 <div class="row">
-                  <div class="col-md-4">
-                      <div class="form-group">
-                      <label class="form-control-label">Data: <span class="tx-danger">*</span></label>
-                      <input class="form-control" type="date" name="data" id="data" value="" placeholder="" required>
-                      </div>
-                  </div><!-- col-4 -->
+
                   <div class="col-md-5">
                     <div class="form-group">
                     <label class="form-control-label">Tipo Benefício: <span class="tx-danger">*</span></label>
@@ -353,27 +351,57 @@
                       <option value="Vale Alimentação">Vale Alimentação</option>
                       <option value="Vale Transporte">Vale Transporte</option>
                       <option value="Plano de Saúde">Plano de Saúde</option>
+                      <option value="Férias">Férias</option>
                     </select>
                     </div>
-                </div><!-- col-4 -->
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="form-control-label">Valor (R$): <span class="tx-danger">*</span></label>
-                    <input class="form-control moeda" type="text" name="valor" id="valor" value="" placeholder="R$" required>
-                  </div>
-                </div><!-- col-4 -->
+                  </div><!-- col-4 -->
+
+                  <div class="col-md-4 OutrosBeneficios">
+                      <div class="form-group">
+                      <label class="form-control-label">Data: <span class="tx-danger">*</span></label>
+                      <input class="form-control" type="date" name="data" id="dataBeneficio" value="" placeholder="">
+                      </div>
+                  </div><!-- col-4 -->
+                  
+                  <div class="col-md-4 OutrosBeneficios">
+                    <div class="form-group">
+                      <label class="form-control-label">Valor (R$): <span class="tx-danger">*</span></label>
+                      <input class="form-control moeda" type="text" name="valor" id="valorBeneficio" value="" placeholder="R$">
+                    </div>
+                  </div><!-- col-4 -->
+
+                  <div class="col-md-4 Ferias" style="display: none;">
+                    <div class="form-group">
+                      <label class="form-control-label">Qtde de Dias: <span class="tx-danger">*</span></label>
+                      <input class="form-control" type="text" name="quantidade" id="qtdeFerias" value="" placeholder="">
+                    </div>
+                  </div><!-- col-4 -->
+
+                  <div class="col-md-5 Ferias" style="display: none;">
+                    <div class="form-group">
+                    <label class="form-control-label">Data Inicial: <span class="tx-danger">*</span></label>
+                    <input class="form-control" type="date" name="data_inicial" id="data_inicial" value="" placeholder="">
+                    </div>
+                  </div><!-- col-4 -->
+                  <div class="col-md-4 Ferias" style="display: none;">
+                    <div class="form-group">
+                    <label class="form-control-label">Data Final: <span class="tx-danger">*</span></label>
+                    <input class="form-control" type="date" name="data_final" id="data_final" value="" placeholder="">
+                    </div>
+                  </div><!-- col-4 -->
+
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Gravar</button>
+                <button type="button" onclick="EnviarFormBeneficios();" class="btn btn-primary">Gravar</button>
               </div>
             </form>
           </div>
         </div>
       </div>
 
-      <script src="{{ asset('assets/sistema/js/contratos/index.js') }}"></script>
+      <script src="{{ asset('assets/sistema/js/contratos/index.js?v=1.2') }}"></script>
 
 
 @endsection

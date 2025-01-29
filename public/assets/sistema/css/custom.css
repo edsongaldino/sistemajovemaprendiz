@@ -118,6 +118,24 @@
     cursor: pointer;
 }
 
+.btn-atualizar-calendario{
+    height: 50px;
+    width: auto;
+    padding: 0 20px;
+    background-color: rgb(12, 110, 156);
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    float: right;
+    margin-top: -50px;
+    margin-right: 200px;
+}
+
+.btn-atualizar-calendario:hover{
+    background-color: rgb(3, 44, 82);
+    cursor: pointer;
+}
+
 .botoes-faturamento{
     width: 100%;
     height: 60px;

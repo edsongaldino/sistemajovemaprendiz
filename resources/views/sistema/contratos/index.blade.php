@@ -121,7 +121,7 @@
                 <td>
                   <a href="{{ url('sistema/contrato/'.$contrato->id.'/atualizacoes') }}" target="_blank"><div class="btn btn-info" title="Atualizações de Contrato"><i class="fa fa-check" aria-hidden="true"></i> Atualizações</div></a>
                   <a href="{{ url('sistema/contrato/'.$contrato->id.'/imprimir') }}" target="_blank"><div class="btn btn-warning" title="Imprimir Contrato"><i class="fa fa-print" aria-hidden="true"></i></div></a>
-                  <a href="{{ url('sistema/calendario/aluno/'.$contrato->aluno_id.'/contrato/'.$contrato->id.'') }}" target="_blank"><div class="btn btn-success" title="Visualizar Calendário"><i class="fa fa-calendar" aria-hidden="true"></i></div></a>
+                  <a href="{{ url('sistema/calendario/aluno/'.$contrato->aluno_id.'/contrato/'.$contrato->id.'/visualiza') }}" target="_blank"><div class="btn btn-success" title="Visualizar Calendário"><i class="fa fa-calendar" aria-hidden="true"></i></div></a>
                   <a href="{{ url('sistema/contrato/'.$contrato->id.'/editar') }}"><div class="btn btn-info"><i class="icon ion-edit"></i></div></a>
                   <a href="#" class="excluirContrato" data-id="{{ $contrato->id }}" data-token="{{ csrf_token() }}"><div class="btn btn-danger"><i class="icon ion-close"></i></div></a>
                 </td>

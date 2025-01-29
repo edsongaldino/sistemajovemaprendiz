@@ -18,7 +18,7 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label">Função: <span class="tx-danger">*</span></label>
             <input class="form-control" type="text" name="funcao" value="{{ $curso->funcao ?? '' }}" placeholder="Função" required>
@@ -26,7 +26,7 @@
     </div><!-- col-4 -->
    
 
-    <div class="col-md-8">
+    <div class="col-md-5">
         <div class="form-group">
         <label class="form-control-label">Selecione o pólo responsável por esse curso: <span class="tx-danger">*</span></label>
         <select class="form-control" id="polo_id" name="polo_id" data-placeholder="Selecione o pólo responsável">
@@ -36,7 +36,19 @@
             @endforeach
         </select>
         </div>
-    </div><!-- col-4 -->  
+    </div><!-- col-4 -->
+    
+    <div class="col-md-4">
+        <div class="form-group">
+        <label class="form-control-label">Selecione o tipo do calendário: <span class="tx-danger">*</span></label>
+        <select class="form-control" id="tipo_calendario_id" name="tipo_calendario_id" data-placeholder="Selecione o tipo do calendário">
+            <option label="Selecione o tipo do calendário"></option>
+            @foreach ($tiposCalendario as $tipo)
+            <option value="{{ $tipo->id }}" @if(($tipo->id ?? '') == ($curso->tipo_calendario_id ?? '')) selected @endif>{{ $tipo->nome }}</option> 
+            @endforeach
+        </select>
+        </div>
+    </div><!-- col-4 -->
     
     <div class="col-md-3">
         <div class="form-group">
@@ -71,6 +83,6 @@
             <label class="form-control-label">CH Diária: <span class="tx-danger">*</span></label>
             <input class="form-control" type="number" name="ch_diaria" value="{{ $curso->ch_diaria ?? '' }}" placeholder="CH Diária" required>
         </div>
-    </div><!-- col-4 -->
+    </div><!-- col-4 -->  
 
 </div><!-- row -->

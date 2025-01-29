@@ -325,7 +325,40 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label">Período (Horário) - Teórico <span class="tx-danger">*</span></label>
-            De <input type="time" name="hora_inicial_teorico" class="form-control" value="{{ $contrato->hora_inicial_teorico ?? '' }}" placeholder="Set time"> à <input type="time" value="{{ $contrato->hora_final_teorico ?? '' }}" name="hora_final_teorico" class="form-control" placeholder="Set time">
+            De <input type="time" name="hora_inicial_teorico" id="hora_inicial_teorico" class="form-control" value="{{ $contrato->hora_inicial_teorico ?? '' }}" placeholder="Set time"> à <input type="time" value="{{ $contrato->hora_final_teorico ?? '' }}" name="hora_final_teorico" id="hora_final_teorico" class="form-control" placeholder="Set time">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="form-control-label">Dia da Semana - Específico <span class="tx-danger">*</span></label>
+            <select class="form-control" id="dia_semana_especifico" name="dia_semana_especifico" data-placeholder="Selecione">
+                <option label="Selecione"></option>
+                <option value="Segunda-feira" @if(($contrato->dia_semana_especifico ?? '') == 'Segunda-feira') selected @endif>Segunda-feira</option>
+                <option value="Terça-feira" @if(($contrato->dia_semana_especifico ?? '') == 'Terça-feira') selected @endif>Terça-feira</option>
+                <option value="Quarta-feira" @if(($contrato->dia_semana_especifico ?? '') == 'Quarta-feira') selected @endif>Quarta-feira</option>
+                <option value="Quinta-feira" @if(($contrato->dia_semana_especifico ?? '') == 'Quinta-feira') selected @endif>Quinta-feira</option>
+                <option value="Sexta-feira" @if(($contrato->dia_semana_especifico ?? '') == 'Sexta-feira') selected @endif>Sexta-feira</option>
+            </select>
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="form-control-label">Período (Turno) - Específico <span class="tx-danger">*</span></label>
+            <select class="form-control" id="periodo_especifico" name="periodo_especifico" data-placeholder="Selecione">
+                <option label="Selecione"></option>
+                <option value="Manhã" @if(($contrato->periodo_especifico ?? '') == 'Manhã') selected @endif>Manhã</option>
+                <option value="Tarde" @if(($contrato->periodo_especifico ?? '') == 'Tarde') selected @endif>Tarde</option>
+                <option value="Noite" @if(($contrato->periodo_especifico ?? '') == 'Noite') selected @endif>Noite</option>
+            </select>
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="form-control-label">Período (Horário) - Específico <span class="tx-danger">*</span></label>
+            De <input type="time" name="hora_inicial_especifico" id="hora_inicial_especifico" class="form-control" value="{{ $contrato->hora_inicial_especifico ?? '' }}" placeholder="Set time"> à <input type="time" value="{{ $contrato->hora_final_especifico ?? '' }}" id="hora_final_especifico" name="hora_final_especifico" class="form-control" placeholder="Set time">
         </div>
     </div>
 
@@ -344,7 +377,7 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label">Período (Horário) - Prático <span class="tx-danger">*</span></label>
-            De <input type="time" name="hora_inicial_pratico" value="{{ $contrato->hora_inicial_pratico ?? '' }}" class="form-control" placeholder="Set time"> à <input type="time" name="hora_final_pratico" value="{{ $contrato->hora_final_pratico ?? '' }}" class="form-control" placeholder="Set time">
+            De <input type="time" name="hora_inicial_pratico" id="hora_inicial_pratico" value="{{ $contrato->hora_inicial_pratico ?? '' }}" class="form-control" placeholder="Set time"> à <input type="time" name="hora_final_pratico" value="{{ $contrato->hora_final_pratico ?? '' }}" id="hora_final_pratico" class="form-control" placeholder="Set time">
         </div>
     </div>
 

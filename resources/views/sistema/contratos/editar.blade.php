@@ -23,7 +23,7 @@
                 @csrf
                 @php $acao = "editar"; $tipoInput = "readonly"; @endphp
                 @include('sistema.contratos.form')
-                <input type="hidden" name="id" value="{{ $contrato->id ?? '' }}">
+                <input type="hidden" id="idContrato" name="id" value="{{ $contrato->id ?? '' }}">
                 <button type="button" onclick="EnviarFormContrato();" class="btn btn-info btn-gravar"> <i class="fa fa-save"></i> Atualizar contrato</button>
             </form>
             </div><!-- form-layout -->

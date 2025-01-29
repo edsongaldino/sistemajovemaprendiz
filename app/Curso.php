@@ -10,6 +10,7 @@ class Curso extends Model
 
     protected $fillable = [
         'polo_id',
+        'tipo_calendario_id',
         'nome',
         'numero',
         'funcao',
@@ -24,5 +25,10 @@ class Curso extends Model
     public function polo()
     {
         return $this->belongsTo(Polo::class, 'polo_id');
+    }
+
+    public function tipoCalendario()
+    {
+        return $this->belongsTo(TipoCalendario::class, 'tipo_calendario_id');
     }
 }

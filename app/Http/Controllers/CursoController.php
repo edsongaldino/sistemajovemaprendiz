@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Curso;
 use App\Polo;
+use App\TipoCalendario;
 use Illuminate\Http\Request;
 
 class CursoController extends Controller
@@ -27,7 +28,8 @@ class CursoController extends Controller
     public function create()
     {
         $polos = Polo::all();
-        return view('sistema.cursos.adicionar', compact('polos'));
+        $tiposCalendario = TipoCalendario::all();        
+        return view('sistema.cursos.adicionar', compact('polos', 'tiposCalendario'));
     }
 
     /**
@@ -63,7 +65,8 @@ class CursoController extends Controller
     {
         $curso = Curso::find($id);
         $polos = Polo::all();
-        return view('sistema.cursos.editar', compact('curso', 'polos'));
+        $tiposCalendario = TipoCalendario::all(); 
+        return view('sistema.cursos.editar', compact('curso', 'polos', 'tiposCalendario'));
     }
 
     /**

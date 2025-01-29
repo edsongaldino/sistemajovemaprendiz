@@ -11,14 +11,15 @@
 <div class="pd-x-20 pd-sm-x-30 pd-t-20 pd-sm-t-30">
       <h4 class="tx-gray-800 mg-b-5"><i class="fa fa-calendar"></i> Calendário</h4>
       <p class="mg-b-0">Calendário do aluno</p>
-
-     <a href="/sistema/contrato/{{ $contrato->id }}/calendario-pdf" target="_blank"><button class="btn btn-imprimir"><i class="fa fa-print"></i> Imprimir em PDF</button></a>
+	  <a href="#" class="atualizarCalendario" data-contrato="{{ $contrato->id }}" data-aluno="{{ $contrato->aluno_id }}" data-token="{{ csrf_token() }}"><button class="btn btn-atualizar-calendario"><i class="fa fa-refresh" aria-hidden="true"></i> Refazer Calendário</button></a>
+      <a href="/sistema/contrato/{{ $contrato->id }}/calendario-pdf" target="_blank"><button class="btn btn-imprimir"><i class="fa fa-print"></i> Imprimir em PDF</button></a>
 </div>
 
 <div class="br-pagebody">
 
     <link href='/assets/sistema/calendar/css/main.css' rel='stylesheet' />
 	<script src='/assets/sistema/calendar/js/main.js' type="text/javascript"></script>
+	<script src="{{ asset('assets/sistema/js/contratos/index.js?v=1.2') }}"></script>
     <script>
 
 		document.addEventListener('DOMContentLoaded', function() {

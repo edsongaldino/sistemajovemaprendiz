@@ -9,15 +9,15 @@
 
     <div class="col-md-4">
         <div class="form-group">
-        <label class="form-control-label">Validade: <span class="tx-danger">*</span></label>
-        <input class="form-control data" type="text" name="validade" value="{{ Helper::data_br($tabela->validade ?? '') }}" placeholder="Validade" required>
+            <label class="form-control-label">Validade: <span class="tx-danger">*</span></label>
+            <input class="form-control data" type="text" name="validade" value="{{ Helper::data_br($tabela->validade ?? '') }}" placeholder="Validade" required>
         </div>
     </div><!-- col-4 -->
 
     <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Valor: <span class="tx-danger">*</span></label>
-        <input class="form-control moeda" type="text" name="valor" value="{{ Helper::converte_valor_real(Helper::GetUltimaAtualizacaoValorTabela($tabela)) }}" placeholder="Valor da Tabela" @if($tabela) readonly @endif  required>   
+        <input class="form-control moeda" type="text" name="valor" placeholder="Valor da Tabela" @if($tabela) value="{{ Helper::converte_valor_real(Helper::GetUltimaAtualizacaoValorTabela($tabela)) }}" readonly @else value="" @endif  required>   
         </div>
     </div><!-- col-4 -->
 

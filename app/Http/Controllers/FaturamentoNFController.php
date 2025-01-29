@@ -350,7 +350,7 @@ class FaturamentoNFController extends Controller
                 echo json_encode($response_array);
             }else{
                 $response_array['status'] = 'error';
-                $response_array['message'] = $ex->getMessage();
+                $response_array['message'] = 'Não foi possível remover a NF do banco';
                 echo json_encode($response_array);
             }
 

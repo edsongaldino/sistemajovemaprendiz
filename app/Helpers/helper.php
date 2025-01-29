@@ -14,6 +14,7 @@ use App\FaturamentoCredito;
 use App\Feriado;
 use App\Http\Controllers\AtualizacoesContratoController;
 use App\Tabela;
+use DateTime;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Carbon;
 
@@ -610,6 +611,26 @@ class Helper{
 
 	}
 
+	public static function obterIdDiaSemana($dia) {
+		$diasSemana = [
+			'Domingo' => 0,
+			'Segunda-feira' => 1,
+			'Terça-feira' => 2,
+			'Quarta-feira' => 3,
+			'Quinta-feira' => 4,
+			'Sexta-feira' => 5,
+			'Sábado' => 6
+		];
+	
+		//$dia = strtolower($dia); // Para garantir que a comparação seja insensível a maiúsculas/minúsculas
+	
+		if (array_key_exists($dia, $diasSemana)) {
+			return $diasSemana[$dia];
+		} else {
+			return "Dia inválido"; // Retorna uma mensagem de erro caso o dia não exista
+		}
+	}
+
 
 	public static function ValorTotalRecebido($faturamentos){
 		$valorTotal = 0;
@@ -695,6 +716,34 @@ class Helper{
 
 	}
 
+	public static function IsFerias($data, $contrato_id){
+
+		$atualizacoes = AtualizacoesContrato::where('contrato_id', $contrato_id)->where('tipo', 'Férias')->get();
+		$feriado = false;
+
+		foreach($atualizacoes as $atualizacao){
+
+			$dataAtual   = new DateTime($data); // Today
+			$dataInicial = new DateTime($atualizacao->data_inicial);
+			$dataFinal   = new DateTime($atualizacao->data_final);
+
+			if ($dataAtual >= $dataInicial && $dataAtual <= $dataFinal->modify('+1 day')) {
+				$feriado = true;
+			}
+
+		}
+		
+		return $feriado;
+
+	}
+
+	public static function obterIdSemana($data) {
+		// Converte a data para o formato de timestamp
+		$timestamp = strtotime($data);
+		
+		// Retorna o número da semana para a data fornecida
+		return date('W', $timestamp);
+	}
 
 	public static function valor_por_extenso($valor = 0, $maiusculas = false) {
 		if(!$maiusculas){

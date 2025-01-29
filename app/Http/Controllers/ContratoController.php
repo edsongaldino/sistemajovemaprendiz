@@ -169,6 +169,12 @@ class ContratoController extends Controller
         $contrato->periodo_teorico = $request->periodo_teorico;
         $contrato->hora_inicial_teorico = $request->hora_inicial_teorico;
         $contrato->hora_final_teorico = $request->hora_final_teorico;
+
+        $contrato->dia_semana_especifico = $request->dia_semana_especifico;
+        $contrato->periodo_especifico = $request->periodo_especifico;
+        $contrato->hora_inicial_especifico = $request->hora_inicial_especifico;
+        $contrato->hora_final_especifico = $request->hora_final_especifico;
+
         $contrato->periodo_pratico = $request->periodo_pratico;
         $contrato->hora_inicial_pratico = $request->hora_inicial_pratico;
         $contrato->hora_final_pratico = $request->hora_final_pratico;

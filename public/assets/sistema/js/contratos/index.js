@@ -38,6 +38,19 @@ $('#tipo_cadastro').change(function (){
   }
 });
 
+$('#tipo_beneficio').change(function (){
+  var tipo_beneficio= ($(this).val());
+
+  if(tipo_beneficio == "Férias"){
+    $(".Ferias").css("display", "block");
+    $(".OutrosBeneficios").css("display", "none");
+
+  }else {
+    $(".OutrosBeneficios").css("display", "block");
+    $(".Ferias").css("display", "none");
+  }
+});
+
 
 function EnviarFormContrato() {
 
@@ -158,8 +171,7 @@ function EnviarFormContrato() {
               }
             );
           }
-
-          });
+        });
     });
   });
 
@@ -216,3 +228,93 @@ function EnviarFormContrato() {
     }
   });
   */
+
+  $(document).on('click', '.atualizarCalendario', function (e) {
+    e.preventDefault();
+    var contrato_id = $(this).data('contrato');
+    var aluno_id = $(this).data('aluno');
+      swal({
+          title: "Confirma a atualização desse calendário?",
+          type: "info",
+          confirmButtonClass: "btn-info",
+          confirmButtonText: "Sim!",
+          cancelButtonText: "Não",
+          showCancelButton: true,
+      },
+      function() {
+        window.location.href = '/sistema/calendario/aluno/'+ aluno_id +'/contrato/' + contrato_id + '/atualiza';
+      });
+  });
+
+  function EnviarFormBeneficios() {
+
+    var tipo_beneficio = $("#tipo_beneficio").val();
+
+    if (tipo_beneficio == "") {
+      swal({title: "Ops", text: "É obrigatório informar o tipo do benefício!", type: "info"});
+      return false;
+    }
+    
+
+    if (tipo_beneficio == "Férias") {
+
+        var quantidade = $("#qtdeFerias").val();
+        var data_inicial = $("#data_inicial").val();
+        var data_final = $("#data_final").val();
+
+        if (quantidade == "") {
+            swal({title: "Ops", text: "É obrigatório informar a quantidade de dias de férias!", type: "info"});
+            FormBeneficios.quantidade.focus();
+            return false;
+        }
+
+        if (data_inicial == "") {
+          swal({title: "Ops", text: "Informe o dia de início das férias!", type: "info"});
+          FormBeneficios.data_inicial.focus();
+          return false;
+        }
+
+        if (data_final == "") {
+          swal({title: "Ops", text: "Informe a data final!", type: "info"});
+          FormBeneficios.data_final.focus();
+          return false;
+        }
+
+    }else{
+        var data = $("#dataBeneficio").val();
+        var valor = $("#valorBeneficio").val();
+
+        if (data == "") {
+          swal({title: "Ops", text: "Informe o data corretamente!", type: "info"});
+          FormBeneficios.data.focus();
+          return false;
+        }
+
+        if (valor == "") {
+          swal({title: "Ops", text: "O valor do benefício não pode ser nulo!", type: "info"});
+          FormBeneficios.valor.focus();
+          return false;
+        }
+    }
+
+    document.getElementById('FormBeneficios').submit();
+  }
+
+  if($("#idContrato").val() == null){
+
+    $("#dia_semana_teorico option[value='Terça-feira']").prop('selected', true);
+    $("#periodo_teorico option[value='Tarde']").prop('selected', true);
+    $("#hora_inicial_teorico").val('13:00:00');
+    $("#hora_final_teorico").val('18:00:00');  
+
+    $("#dia_semana_especifico option[value='Sexta-feira']").prop('selected', true);
+    $("#periodo_especifico option[value='Tarde']").prop('selected', true);
+    $("#hora_inicial_especifico").val('13:00');
+    $("#hora_final_especifico").val('18:00');
+
+    $("#periodo_pratico option[value='Tarde']").prop('selected', true);
+    $("#hora_inicial_pratico").val('13:00');
+    $("#hora_final_pratico").val('18:00');
+
+  }
+  
