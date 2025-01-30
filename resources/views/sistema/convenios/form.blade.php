@@ -43,7 +43,7 @@
     <div class="col-md-2">
         <div class="form-group">
         <label class="form-control-label">Percentual ISSQN: <span class="tx-danger">*</span></label>
-        <input class="form-control percentual" type="text" name="percentual_issqn" value="{{ $convenio->percentual_issqn }}" placeholder="%" required>
+        <input class="form-control percentual" type="text" name="percentual_issqn" value="{{ $convenio->percentual_issqn ?? '' }}" placeholder="%" required>
         </div>
     </div><!-- col-4 -->
 
