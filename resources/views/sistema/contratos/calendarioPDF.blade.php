@@ -105,6 +105,18 @@ body {font-family: Verdana, sans-serif;}
   color: white !important;
 }
 
+.days li.feriado {
+  padding: 5px;
+  background-color: rgb(83, 99, 83);
+  color: white !important;
+}
+
+.days li.ferias {
+  padding: 5px;
+  background-color: rgb(3, 43, 3);
+  color: white !important;
+}
+
 
 .calendario .capa{
     width: 100%;
@@ -180,6 +192,16 @@ body {font-family: Verdana, sans-serif;}
   color: white !important;
 }
 
+.calendario .capa .legenda .item-legenda .cor.ferias {
+  background-color: rgb(3, 43, 3);
+  color: white !important;
+}
+
+.calendario .capa .legenda .item-legenda .cor.feriado {
+  background-color: rgb(83, 99, 83);
+  color: white !important;
+}
+
 
 
 
@@ -232,6 +254,16 @@ body {font-family: Verdana, sans-serif;}
             <div class="item-legenda">
                 <div class="cor especifico"></div>
                 <div class="descricao-cor">ESPECÍFICO</div>
+            </div>
+
+            <div class="item-legenda">
+              <div class="cor ferias"></div>
+              <div class="descricao-cor">FÉRIAS</div>
+            </div>
+
+            <div class="item-legenda">
+              <div class="cor feriado"></div>
+              <div class="descricao-cor">FERIADOS</div>
             </div>
 
         </div>
