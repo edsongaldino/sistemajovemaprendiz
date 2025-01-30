@@ -10,6 +10,10 @@ class Convenio extends Model
     protected $table = 'convenios';
     use SoftDeletes;
 
+    protected $fillable = [
+        'user_id'
+    ];
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_id');
@@ -18,6 +22,11 @@ class Convenio extends Model
     public function polo()
     {
         return $this->belongsTo(Polo::class, 'polo_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tabela()

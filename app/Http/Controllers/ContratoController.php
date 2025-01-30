@@ -19,6 +19,7 @@ use App\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ContratoController extends Controller
 {
@@ -152,6 +153,7 @@ class ContratoController extends Controller
     {
         $contrato = Contrato::findOrFail($request->id);
         $contrato->polo_id = $request->polo_id;
+        $contrato->user_id = Auth::user()->id;
         $contrato->empresa_id = $request->empresa_id;
         $contrato->empresa_contato_id = $request->empresa_contato_id;
         $contrato->convenio_id = $request->convenio_id;

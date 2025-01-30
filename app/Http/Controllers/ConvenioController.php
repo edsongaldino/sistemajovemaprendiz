@@ -10,6 +10,7 @@ use App\Helpers\Helper;
 use App\Contrato;
 use App\Polo;
 use App\Tabela;
+use Illuminate\Support\Facades\Auth;
 
 class ConvenioController extends Controller
 {
@@ -51,6 +52,7 @@ class ConvenioController extends Controller
         }
 
         $convenio = new Convenio();
+        $convenio->user_id = Auth::user()->id;
         $convenio->empresa_id = $request->empresa_id;
         $convenio->percentual_issqn = Helper::converte_reais_to_mysql($request->percentual_issqn);
         $convenio->polo_id = $request->polo_id;

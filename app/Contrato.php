@@ -13,6 +13,7 @@ class Contrato extends Model
     protected $fillable = [
         'polo_id',
         'empresa_id',
+        'user_id',
         'aluno_id',
         'tabela_id',
         'data_inicial',
@@ -28,6 +29,11 @@ class Contrato extends Model
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function responsavelJovem()
