@@ -82,7 +82,10 @@ class CalendarioAlunoController extends Controller
 
                     }else{
 
-                        if($tot_basico <= 21){
+                        $total_troca_basico = 21;
+                        if($contrato->curso->tipoCalendario->id == 3){$total_troca_basico = 9;}
+                        //9 dias para o calendario
+                        if($tot_basico <= $total_troca_basico){
 
                             $calendario->tipo = 'Básico';
                             $calendario->class_color = 'basico';
