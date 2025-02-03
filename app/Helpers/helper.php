@@ -510,11 +510,13 @@ class Helper{
 
         foreach($faturamentos as $faturamento){
 
-            if($faturamento->contrato->tipo_faturamento ?? '' == 'Instituição'){
-                $totalGeral += ($faturamento->FaturamentoContratoInstituicaoDados->valor_total ?? '0') + ($faturamento->FaturamentoContratoInstituicaoDados->valor_issqn ?? '0');
-            }else{
-                $totalGeral += ($faturamento->FaturamentoContratoEmpresaDados->valor_total ?? '0') + ($faturamento->FaturamentoContratoEmpresaDados->valor_issqn ?? '0');
-            }
+			if(isset($faturamento->contrato->tipo_faturamento)){
+				if($faturamento->contrato->tipo_faturamento == 'Instituição'){
+					$totalGeral += ($faturamento->FaturamentoContratoInstituicaoDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0);
+				}else{
+					$totalGeral += ($faturamento->FaturamentoContratoEmpresaDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoEmpresaDados->valor_issqn ?? 0);
+				}
+			}
 
         }
 
