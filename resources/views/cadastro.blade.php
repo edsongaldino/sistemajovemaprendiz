@@ -36,7 +36,7 @@
     <script src="/assets/site/js/vendor/modernizr-3.7.1.min.js"></script>
 
     <link href="{{ asset('assets/sistema/lib/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-
+    <script async src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 
 <body>
@@ -628,6 +628,9 @@
                                                 </div>
                                             </div> <!-- form input -->
                                         </div>
+
+                                        <!-- Google Recaptcha -->
+                                        <div class="g-recaptcha mt-4" data-sitekey={{config('services.recaptcha.key')}}></div>
 
                                         <p class="form-message"></p>
                                         <div class="col-md-12">
