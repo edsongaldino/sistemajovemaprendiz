@@ -518,8 +518,6 @@ class Helper{
 
         }
 
-		$totalGeral = $faturamentos->sum('valor');
-		
 		if(isset($credito)){
 			$totalGeral = $totalGeral - $credito->valor_credito;
 		}
