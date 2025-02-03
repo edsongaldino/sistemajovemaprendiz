@@ -507,6 +507,7 @@ class Helper{
 		$credito = FaturamentoCredito::where('faturamento_id', $faturamento_id)->first();
         $totalGeral = 0;
 
+
         foreach($faturamentos as $faturamento){
 
             if($faturamento->contrato->tipo_faturamento ?? '' == 'Instituição'){
@@ -516,6 +517,9 @@ class Helper{
             }
 
         }
+
+		$totalGeral = $faturamentos->sum('valor');
+		
 		if(isset($credito)){
 			$totalGeral = $totalGeral - $credito->valor_credito;
 		}
