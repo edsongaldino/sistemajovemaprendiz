@@ -1,5 +1,7 @@
 <?php
 
+use App\AtualizacoesContrato;
+use App\Contrato;
 use App\Faturamento;
 use App\FaturamentoBoleto;
 use App\FaturamentoContrato;
@@ -421,6 +423,24 @@ Route::get('/atualiza-vencimento-depositos', function() {
         }
     }
     return $total." atualizados";
+});
+
+Route::get('/remove-atualizacoes-salario', function() {
+
+    $contratos = Contrato::where('empresa_id', 1070)->get();
+    $total = 0;
+    foreach($contratos as $contrato){
+
+            $alteracoes = AtualizacoesContrato::where('contrato_id', $contrato->id)->where('tipo', 'Alteração Salarial')->get();
+
+            foreach($alteracoes as $alteracao){
+                $alteracao->delete();
+                $total++;
+            }
+        
+    }
+    return $total." removidos";
+    
 });
 
 

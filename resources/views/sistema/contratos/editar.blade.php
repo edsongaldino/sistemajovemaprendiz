@@ -21,7 +21,7 @@
             <div class="form-layout form-layout-2">
             <form name="FormContrato" id="FormContrato" action="{{ route('sistema.contrato.update') }}" method="POST">
                 @csrf
-                @php $acao = "editar"; $tipoInput = "readonly"; @endphp
+                @php $acao = "editar"; $tipoInput = ""; @endphp
                 @include('sistema.contratos.form')
                 <input type="hidden" id="idContrato" name="id" value="{{ $contrato->id ?? '' }}">
                 <button type="button" onclick="EnviarFormContrato();" class="btn btn-info btn-gravar"> <i class="fa fa-save"></i> Atualizar contrato</button>
