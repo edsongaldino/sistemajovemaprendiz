@@ -284,60 +284,62 @@
 
     @foreach ($faturamento->faturamentoContratos as $faturamentoContrato)
 
-    @php
-        $qtdFaltas = Helper::getLancamentosFaturamento($faturamentoContrato->id, 'Qtde Falta Trabalho');
-        $salario = ($faturamentoContrato->contrato->valor_bolsa/30)*($faturamentoContrato->quantidade_dias);
-        $txAdm = $faturamentoContrato->taxa_administrativa;
-    @endphp
+    @if(isset($faturamentoContrato->contrato->id))
+        @php
+            $qtdFaltas = Helper::getLancamentosFaturamento($faturamentoContrato->id, 'Qtde Falta Trabalho');
+            $salario = ($faturamentoContrato->contrato->valor_bolsa/30)*($faturamentoContrato->quantidade_dias);
+            $txAdm = $faturamentoContrato->taxa_administrativa;
+        @endphp
 
-    <div class="nome-jovem"><strong>Nome Aprendiz:</strong> {{ $faturamentoContrato->contrato->aluno->nome }}</div>
-    <div class="linha-relatorio">
+        <div class="nome-jovem"><strong>Nome Aprendiz:</strong> {{ $faturamentoContrato->contrato->aluno->nome }}</div>
+        <div class="linha-relatorio">
 
-        @if($faturamentoContrato->contrato->tipo_faturamento == 'Instituição')
+            @if($faturamentoContrato->contrato->tipo_faturamento == 'Instituição')
 
-        <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
-        <div class="col-5">{{ $qtdFaltas }}</div>
-        <div class="col-5">{{ Helper::converte_valor_real($salario) }}</div>
-        <div class="col-5">{{ Helper::calcularDesconto($salario, '7.5') }}</div>
-        <div class="col-5">{{ Helper::converte_valor_real($txAdm) }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_decimo_terceiro ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_ferias ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_terco_ferias ?? 0 }}</div>
-        <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_inss ?? 0 }}</div>
-        <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_fgts ?? 0 }}</div>
-        <div class="col-4">-</div>
-        <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_inss_provisionamento ?? 0 }}</div>
-        <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_fgts_provisionamento ?? 0 }}</div>
-        <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_pis_provisionamento ?? 0 }}</div>
-        <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_beneficios ?? 0 }}</div>
-        <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_descontos ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_exames ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_uniforme ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0 }}</div>
-        <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_total ?? 0) }}</div>
-        @else
-        <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
-        <div class="col-5">{{ $qtdFaltas }}</div>
-        <div class="col-5">{{ Helper::converte_valor_real($salario) }}</div>
-        <div class="col-5">-</div>
-        <div class="col-5">{{ Helper::converte_valor_real($txAdm) }}</div>
-        <div class="col-5">-</div>
-        <div class="col-5">-</div>
-        <div class="col-5">-</div>
-        <div class="col-4">-</div>
-        <div class="col-4">-</div>
-        <div class="col-4">-</div>
-        <div class="col-4">-</div>
-        <div class="col-4">-</div>
-        <div class="col-4">-</div>
-        <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_beneficios ?? 0  }}</div>
-        <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_descontos ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_exames ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_uniforme ?? 0 }}</div>
-        <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_issqn ?? 0 }}</div>
-        <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoEmpresaDados->valor_total ?? 0) }}</div>
-        @endif
-    </div>
+            <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
+            <div class="col-5">{{ $qtdFaltas }}</div>
+            <div class="col-5">{{ Helper::converte_valor_real($salario) }}</div>
+            <div class="col-5">{{ Helper::calcularDesconto($salario, '7.5') }}</div>
+            <div class="col-5">{{ Helper::converte_valor_real($txAdm) }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_decimo_terceiro ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_ferias ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_terco_ferias ?? 0 }}</div>
+            <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_inss ?? 0 }}</div>
+            <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_fgts ?? 0 }}</div>
+            <div class="col-4">-</div>
+            <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_inss_provisionamento ?? 0 }}</div>
+            <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_fgts_provisionamento ?? 0 }}</div>
+            <div class="col-4">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_pis_provisionamento ?? 0 }}</div>
+            <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_beneficios ?? 0 }}</div>
+            <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_descontos ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_exames ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_uniforme ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0 }}</div>
+            <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoInstituicaoDados->valor_total ?? 0) }}</div>
+            @else
+            <div class="col-5">{{ $faturamentoContrato->quantidade_dias }}</div>
+            <div class="col-5">{{ $qtdFaltas }}</div>
+            <div class="col-5">{{ Helper::converte_valor_real($salario) }}</div>
+            <div class="col-5">-</div>
+            <div class="col-5">{{ Helper::converte_valor_real($txAdm) }}</div>
+            <div class="col-5">-</div>
+            <div class="col-5">-</div>
+            <div class="col-5">-</div>
+            <div class="col-4">-</div>
+            <div class="col-4">-</div>
+            <div class="col-4">-</div>
+            <div class="col-4">-</div>
+            <div class="col-4">-</div>
+            <div class="col-4">-</div>
+            <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_beneficios ?? 0  }}</div>
+            <div class="col-6">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_descontos ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_exames ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_uniforme ?? 0 }}</div>
+            <div class="col-5">{{ $faturamentoContrato->FaturamentoContratoEmpresaDados->valor_issqn ?? 0 }}</div>
+            <div class="col-6">{{ Helper::converte_valor_real($faturamentoContrato->FaturamentoContratoEmpresaDados->valor_total ?? 0) }}</div>
+            @endif
+        </div>
+    @endif
     @endforeach
 
     <div class="linha-rodape">
