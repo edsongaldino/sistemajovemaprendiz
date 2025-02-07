@@ -196,9 +196,12 @@
                   </td>
                   @if($request->tipo_relatorio == "2")
                   <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->boleto->data_pagamento) ?? '' }}</td>
-                  @endif
+                  <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
+                  <td>R$ {{ Helper::converte_valor_real($faturamento->boleto->valor_pago) ?? '' }}</td>
+                  @else
                   <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
                   <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
+                  @endif
                   <td>{{ Helper::converte_valor_real($faturamento->boleto->valor_juros) }}</td>
                 @else
                   <td>-</td>
