@@ -207,7 +207,13 @@
                   <td class="dataP"><i class="fa fa-check-square" aria-hidden="true"></i> {{ Helper::data_br($faturamento->data_pagamento) ?? '' }}<br><span class="contaP">{{ $faturamento->informePagamento->conta->banco ?? '' }} ({{ $faturamento->informePagamento->conta->conta_corrente ?? '' }})</span></td>
                   @endif
                   <td>{{ $faturamento->forma_pagamento ?? '' }}</td>
+
+                  @if(isset($faturamento->informePagamento->valor_pago))
+                  <td>R$ {{ Helper::converte_valor_real($faturamento->informePagamento->valor_pago) }}</td>
+                  @else
                   <td>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturado($faturamento->id)) }}</td>
+                  @endif
+
                   <td></td>
                 @endif
               </tr>
