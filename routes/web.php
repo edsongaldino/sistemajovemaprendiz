@@ -163,6 +163,11 @@ Route::post('sistema/aluno/excluir', 'AlunoController@destroy')->name('sistema.a
 Route::get('sistema/aluno/consulta-cpf/{cpf}', 'AlunoController@consultaCPF')->name('sistema.aluno.consultaCPF')->middleware('auth');
 Route::match(['get', 'post'], 'sistema/alunos/buscar', 'AlunoController@AlunoBusca')->name('sistema.alunos.buscar');
 
+
+Route::match(['get', 'post'], '/sistema/financeiro/buscar', 'FaturamentoController@FaturadosBusca')->name('sistema.financeiro.buscar');
+Route::match(['get', 'post'], '/sistema/faturamento/convenio/buscar', 'FaturamentoController@FaturamentoConvenioBusca')->name('sistema.faturamento.convenio.buscar');
+Route::match(['get', 'post'], '/sistema/faturamentos/buscar', 'FaturamentoContratoController@FaturamentoContratoBusca')->name('sistema.faturamentos.buscar');
+
 //Rotas Alunos
 Route::get('sistema/financeiro', 'FaturamentoController@index')->name('sistema.financeiro')->middleware('auth');
 Route::get('sistema/faturamento/adicionar', 'FaturamentoController@create')->name('sistema.faturamento.adicionar')->middleware('auth');
@@ -172,9 +177,6 @@ Route::post('sistema/faturamento/contrato/excluir', 'FaturamentoContratoControll
 Route::get('sistema/faturamento/convenio/{id}/contratos', 'FaturamentoController@VisualizarContratos')->name('sistema.faturamento.visualizar-contratos')->middleware('auth');
 Route::get('sistema/faturamento/{id}/visualizar-relatorio', 'FaturamentoController@VisualizarRelatorio')->name('sistema.faturamento.visualizar-relatorio');
 
-Route::match(['get', 'post'], 'sistema/financeiro/buscar', 'FaturamentoController@FaturadosBusca')->name('sistema.financeiro.buscar');
-Route::match(['get', 'post'], 'sistema/faturamento/buscar', 'FaturamentoController@FaturamentoBusca')->name('sistema.faturamento.buscar');
-Route::match(['get', 'post'], 'sistema/faturamento/convenio/buscar', 'FaturamentoController@FaturamentoConvenioBusca')->name('sistema.faturamento.convenio.buscar');
 
 //Route::get('/sistema/faturamento/api-clientes', 'FaturamentoController@getClientes');
 //Route::get('/sistema/faturamento/api-cliente-novo', 'FaturamentoController@NovoCliente');

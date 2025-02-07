@@ -222,7 +222,7 @@ class PoloController extends Controller
 
         $polos = $BuscaPolo->paginate(20);
 
-        return view('sistema.polos.index', compact('polos', 'regioes'));
+        return view('sistema.polos.index', compact('polos', 'regioes', 'request'));
     }
 
 

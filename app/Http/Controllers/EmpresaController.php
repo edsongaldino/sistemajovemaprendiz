@@ -368,7 +368,7 @@ class EmpresaController extends Controller
 
         $empresas = $buscaEmpresas->orderBy('id','desc')->paginate(20);
 
-        return view('sistema.empresas.index', compact('empresas', 'polos'));
+        return view('sistema.empresas.index', compact('empresas', 'polos', 'request'));
     }
 
 }

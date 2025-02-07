@@ -91,7 +91,7 @@
             </tbody>
           </table>
 
-          {{ $polos->links() }}
+          {{ $polos->appends(Request::except('page'))->links() }}
 
         </div>
         </div>

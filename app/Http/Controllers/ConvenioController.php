@@ -184,7 +184,7 @@ class ConvenioController extends Controller
         }
 
         $convenios = $buscaConvenios->orderBy('convenios.id','desc')->paginate(20);
-        return view('sistema.convenios.index', compact('convenios', 'polos'));
+        return view('sistema.convenios.index', compact('convenios', 'polos', 'request'));
     }
 
     private function getConvenioAtivoByTipo($empresa, $tipo_convenio){

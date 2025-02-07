@@ -115,7 +115,7 @@
             </tbody>
           </table>
 
-          {{ $convenios->links() }}
+          {{ $convenios->appends(Request::except('page'))->links() }}
 
         </div>
         </div>

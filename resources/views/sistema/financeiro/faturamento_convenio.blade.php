@@ -128,7 +128,7 @@
 
         </table>
 
-        {{ $faturamentos->links() }}
+        {{ $faturamentos->appends(Request::except('page'))->links() }}
 
         </div>
 

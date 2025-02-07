@@ -19,7 +19,7 @@
 
       <div class="br-section-wrapper mg-t-10">
 
-        <form action="{{ route('sistema.faturamento.buscar') }}" method="POST" name="BuscaFaturamento" id="BuscaFaturamento">
+        <form action="{{ route('sistema.faturamentos.buscar') }}" method="POST" name="BuscaFaturamento" id="BuscaFaturamento">
           @csrf
           <div class="row">
             <div class="col-md-2">
@@ -148,7 +148,7 @@
 
               </table>
 
-              {{ $convenios->links() }}
+              {{ $convenios->appends(Request::except('page'))->links() }}
 
             </div>
 

@@ -111,7 +111,8 @@ class FaturamentoController extends Controller
         return view('sistema.financeiro.index', compact('faturamentos', 'polos', 'estados', 'request', 'FaturamentosTotal', 'contas'));
     }
 
-
+    /*
+    REMOVIDO POR PROBLEMAS DE CACHE - MOVIDO PARA FATURAMENTOCONTRATOCONTROLLER
     public function FaturamentoBusca(Request $request)
     {
         $buscaFaturamento = Convenio::select('convenios.*')
@@ -148,9 +149,11 @@ class FaturamentoController extends Controller
         }
 
         $convenios = $buscaFaturamento->paginate(20);
+
         return view('sistema.financeiro.faturamento', compact('convenios', 'request'));
 
     }
+    */
 
     public function FaturamentoConvenioBusca(Request $request)
     {

@@ -93,7 +93,7 @@
               @endforeach
             </tbody>
           </table>
-          {{ $cadastros->links() }}
+          {{ $cadastros->appends(Request::except('page'))->links() }}
         </div>
         </div>
     </div>

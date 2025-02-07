@@ -103,7 +103,7 @@
             </tbody>
           </table>
 
-          {{ $empresas->links() }}
+          {{ $empresas->appends(Request::except('page'))->links() }}
 
         </div>
         </div>

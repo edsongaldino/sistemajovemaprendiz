@@ -58,7 +58,7 @@ class PreCadastroController extends Controller
         }
 
         $alunos = $buscaAlunos->paginate(20);
-        return view('sistema.cadastros.index', compact('alunos', 'polos'));
+        return view('sistema.cadastros.index', compact('alunos', 'polos', 'request'));
     }
 
     /**

@@ -131,7 +131,7 @@
             </tbody>
           </table>
 
-          {{ $contratos->links() }}
+          {{ $contratos->appends(Request::except('page'))->links() }}
 
         </div>
         </div>

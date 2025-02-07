@@ -255,7 +255,7 @@ class ContratoController extends Controller
         }
 
         $contratos = $buscaContratos->orderBy('contratos.id','desc')->paginate(20);
-        return view('sistema.contratos.index', compact('contratos', 'polos'));
+        return view('sistema.contratos.index', compact('contratos', 'polos', 'request'));
     }
 
     public function CalendarioPDF($id){

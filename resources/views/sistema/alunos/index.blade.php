@@ -86,7 +86,7 @@
               @endforeach
             </tbody>
           </table>
-          {{ $alunos->links() }}
+          {{ $alunos->appends(Request::except('page'))->links() }}
         </div>
         </div>
     </div>
