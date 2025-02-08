@@ -64,6 +64,10 @@ class ContratoController extends Controller
             return redirect()->back()->with('warning', 'Já existe um contrato ativo para este CPF! Verifique.');
         }
 
+        if(Auth::check() === false){
+            return redirect()->route('login')->with('warning', 'Sua sessão expirou! Efetue login novamente.');
+        }
+
         $contrato = new Contrato();
         $contrato->polo_id = $request->polo_id;
         $contrato->empresa_id = $request->empresa_id;

@@ -51,11 +51,11 @@ Route::post('sistema/feriado/salvar', 'FeriadoController@store')->name('sistema.
 Route::get('sistema/feriado/{id}/editar', 'FeriadoController@edit')->name('sistema.feriado.editar')->middleware('auth');
 Route::post('sistema/feriado/update', 'FeriadoController@update')->name('sistema.feriado.update')->middleware('auth');
 Route::post('sistema/feriado/excluir', 'FeriadoController@destroy')->name('sistema.feriado.excluir')->middleware('auth');
-Route::match(['get', 'post'], 'sistema/feriado/buscar', 'FeriadoController@Busca')->name('sistema.feriado.buscar');
+Route::match(['get', 'post'], 'sistema/feriado/buscar', 'FeriadoController@Busca')->name('sistema.feriado.buscar')->middleware('auth');
 
 //PRE CADASTRO ROTAS
 Route::get('sistema/cadastros', 'PreCadastroJovensController@index')->name('sistema.cadastros')->middleware('auth');
-Route::match(['get', 'post'], 'sistema/cadastros/buscar', 'PreCadastroJovensController@CadastroBusca')->name('sistema.cadastros.buscar');
+Route::match(['get', 'post'], 'sistema/cadastros/buscar', 'PreCadastroJovensController@CadastroBusca')->name('sistema.cadastros.buscar')->middleware('auth');
 Route::get('sistema/cadastro/{id}/editar', 'PreCadastroJovensController@edit')->name('sistema.cadastro.editar')->middleware('auth');
 Route::post('sistema/cadastro/update', 'PreCadastroJovensController@update')->name('sistema.cadastro.update')->middleware('auth');
 Route::post('sistema/cadastro/excluir', 'PreCadastroJovensController@destroy')->name('sistema.cadastro.excluir')->middleware('auth');
@@ -90,7 +90,7 @@ Route::post('sistema/parceiro/salvar', 'ParceiroController@store')->name('sistem
 Route::get('sistema/parceiro/{id}/editar', 'ParceiroController@edit')->name('sistema.parceiro.editar')->middleware('auth');
 Route::post('sistema/parceiro/update', 'ParceiroController@update')->name('sistema.parceiro.update')->middleware('auth');
 Route::post('sistema/parceiro/excluir', 'ParceiroController@destroy')->name('sistema.parceiro.excluir')->middleware('auth');
-Route::match(['get', 'post'], 'sistema/parceiros/buscar', 'ParceiroController@ParceiroBusca')->name('sistema.parceiros.buscar');
+Route::match(['get', 'post'], 'sistema/parceiros/buscar', 'ParceiroController@ParceiroBusca')->name('sistema.parceiros.buscar')->middleware('auth');
 
 //Pólos rotas
 Route::get('sistema/polos', 'PoloController@index')->name('sistema.polos')->middleware('auth');
@@ -146,9 +146,9 @@ Route::post('sistema/produto/excluir', 'EstoqueProdutoController@destroy')->name
 Route::get('sistema/clientes', 'EstoqueProdutoController@clientes')->name('sistema.clientes')->middleware('auth');
 Route::get('sistema/novo-cliente', 'EstoqueProdutoController@NovoCliente')->name('sistema.novo-cliente')->middleware('auth');
 Route::get('sistema/nova-cobranca', 'EstoqueProdutoController@NovaCobranca')->name('sistema.nova-cobranca')->middleware('auth');
-Route::get('sistema/nova-nf', 'FaturamentoNFController@EmitirNF')->name('sistema.nova-nf');
+Route::get('sistema/nova-nf', 'FaturamentoNFController@EmitirNF')->name('sistema.nova-nf')->middleware('auth');
 
-Route::get('sistema/novo-boleto', 'FaturamentoBoletoController@GerarBoleto')->name('sistema.novo-boleto');
+Route::get('sistema/novo-boleto', 'FaturamentoBoletoController@GerarBoleto')->name('sistema.novo-boleto')->middleware('auth');
 
 Route::get('sistema/produto/{id}/movimentacao', 'EstoqueMovimentacaoController@index')->name('sistema.produto.movimentacao')->middleware('auth');
 Route::post('sistema/estoque/produto/movimentacao', 'EstoqueMovimentacaoController@store')->name('sistema.estoque.produto.movimentacao')->middleware('auth');
@@ -161,12 +161,12 @@ Route::get('sistema/aluno/{id}/editar', 'AlunoController@edit')->name('sistema.a
 Route::post('sistema/aluno/update', 'AlunoController@update')->name('sistema.aluno.update')->middleware('auth');
 Route::post('sistema/aluno/excluir', 'AlunoController@destroy')->name('sistema.aluno.excluir')->middleware('auth');
 Route::get('sistema/aluno/consulta-cpf/{cpf}', 'AlunoController@consultaCPF')->name('sistema.aluno.consultaCPF')->middleware('auth');
-Route::match(['get', 'post'], 'sistema/alunos/buscar', 'AlunoController@AlunoBusca')->name('sistema.alunos.buscar');
+Route::match(['get', 'post'], 'sistema/alunos/buscar', 'AlunoController@AlunoBusca')->name('sistema.alunos.buscar')->middleware('auth');
 
 
-Route::match(['get', 'post'], '/sistema/financeiro/buscar', 'FaturamentoController@FaturadosBusca')->name('sistema.financeiro.buscar');
-Route::match(['get', 'post'], '/sistema/faturamento/convenio/buscar', 'FaturamentoController@FaturamentoConvenioBusca')->name('sistema.faturamento.convenio.buscar');
-Route::match(['get', 'post'], '/sistema/faturamentos/buscar', 'FaturamentoContratoController@FaturamentoContratoBusca')->name('sistema.faturamentos.buscar');
+Route::match(['get', 'post'], '/sistema/financeiro/buscar', 'FaturamentoController@FaturadosBusca')->name('sistema.financeiro.buscar')->middleware('auth');
+Route::match(['get', 'post'], '/sistema/faturamento/convenio/buscar', 'FaturamentoController@FaturamentoConvenioBusca')->name('sistema.faturamento.convenio.buscar')->middleware('auth');
+Route::match(['get', 'post'], '/sistema/faturamentos/buscar', 'FaturamentoContratoController@FaturamentoContratoBusca')->name('sistema.faturamentos.buscar')->middleware('auth');
 
 //Rotas Alunos
 Route::get('sistema/financeiro', 'FaturamentoController@index')->name('sistema.financeiro')->middleware('auth');
@@ -175,7 +175,7 @@ Route::get('sistema/faturamento/{tipo}', 'FaturamentoController@show')->name('si
 Route::post('sistema/faturamento/excluir', 'FaturamentoController@destroy')->name('sistema.faturamento.excluir')->middleware('auth');
 Route::post('sistema/faturamento/contrato/excluir', 'FaturamentoContratoController@destroy')->name('sistema.faturamento.contrato.excluir')->middleware('auth');
 Route::get('sistema/faturamento/convenio/{id}/contratos', 'FaturamentoController@VisualizarContratos')->name('sistema.faturamento.visualizar-contratos')->middleware('auth');
-Route::get('sistema/faturamento/{id}/visualizar-relatorio', 'FaturamentoController@VisualizarRelatorio')->name('sistema.faturamento.visualizar-relatorio');
+Route::get('sistema/faturamento/{id}/visualizar-relatorio', 'FaturamentoController@VisualizarRelatorio')->name('sistema.faturamento.visualizar-relatorio')->middleware('auth');
 
 
 //Route::get('/sistema/faturamento/api-clientes', 'FaturamentoController@getClientes');
@@ -315,8 +315,8 @@ Route::get('envio-email-boleto', function(){
 
 //Relatórios
 Route::get('/sistema/relatorios', 'RelatoriosController@RelatorioBusca')->name('relatorios')->middleware('auth');
-Route::match(['get', 'post'], 'sistema/relatorios/buscar', 'RelatoriosController@RelatorioBusca')->name('sistema.relatorios.buscar');
-Route::post('sistema/relatorio/imprimir', 'RelatoriosController@ImprimirRelatorio')->name('sistema.relatorio.imprimir');
+Route::match(['get', 'post'], 'sistema/relatorios/buscar', 'RelatoriosController@RelatorioBusca')->name('sistema.relatorios.buscar')->middleware('auth');
+Route::post('sistema/relatorio/imprimir', 'RelatoriosController@ImprimirRelatorio')->name('sistema.relatorio.imprimir')->middleware('auth');
 
 // Clear application cache:
 Route::get('clear-cache', function() {

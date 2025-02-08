@@ -51,6 +51,10 @@ class ConvenioController extends Controller
             return redirect()->back()->with('warning', 'Esta empresa já possui um convênio ativo para este modelo! Verifique.');
         }
 
+        if(Auth::check() === false){
+            return redirect()->route('login')->with('warning', 'Sua sessão expirou! Efetue login novamente.');
+        }
+
         $convenio = new Convenio();
         $convenio->user_id = Auth::user()->id;
         $convenio->empresa_id = $request->empresa_id;
