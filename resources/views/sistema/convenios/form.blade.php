@@ -157,4 +157,37 @@
         </div>
     </div><!-- col-4 -->
 
+    <div class="col-md-4">
+        <div class="form-group">
+        <label class="form-control-label">Emissão Nota Fiscal: <span class="tx-danger">*</span></label>
+        <select class="form-control" id="tipo_emissao_nf" name="tipo_emissao_nf" data-placeholder="Selecione">
+            <option label="Selecione o formato de emissão"></option>
+            <option value="Simples (Individual)" @if(($convenio->tipo_emissao_nf ?? '') == 'Simples (Individual)') selected @endif>Simples (Individual)</option>
+            <option value="Aglutinado (Matriz)" @if(($convenio->tipo_emissao_nf ?? '') == 'Aglutinado (Matriz)') selected @endif>Aglutinado (Matriz)</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-4">
+        <div class="form-group">
+        <label class="form-control-label">Emissão Cobrança: <span class="tx-danger">*</span></label>
+        <select class="form-control" id="tipo_emissao_cobranca" name="tipo_emissao_cobranca" data-placeholder="Selecione">
+            <option label="Selecione o formato de emissão"></option>
+            <option value="Simples (Individual)" @if(($convenio->tipo_emissao_cobranca ?? '') == 'Simples (Individual)') selected @endif>Simples (Individual)</option>
+            <option value="Aglutinado (Matriz)" @if(($convenio->tipo_emissao_cobranca ?? '') == 'Aglutinado (Matriz)') selected @endif>Aglutinado (Matriz)</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
+    <div class="col-md-4">
+        <div class="form-group">
+        <label class="form-control-label">Envios (Notas/Boletos/Relatórios): <span class="tx-danger">*</span></label>
+        <select class="form-control" id="tipo_envio" name="tipo_envio" data-placeholder="Selecione">
+            <option label="Selecione o formato de envio"></option>
+            <option value="Simples (Individual)" @if(($convenio->tipo_envio ?? '') == 'Simples (Individual)') selected @endif>Simples (Individual)</option>
+            <option value="Aglutinado (Matriz)" @if(($convenio->tipo_envio ?? '') == 'Aglutinado (Matriz)') selected @endif>Aglutinado (Matriz)</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
 </div><!-- row -->

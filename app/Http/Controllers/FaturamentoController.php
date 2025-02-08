@@ -252,7 +252,7 @@ class FaturamentoController extends Controller
 
         $qtdDiasFaturamento = $qtdDias-$qtdFaltas;
 
-        $valorTabela = Helper::GetUltimaAtualizacaoValorTabela($contrato->tabela);
+        $valorTabela = Helper::GetUltimaAtualizacaoValorTabela($contrato->convenio->tabela);
 
         if($contrato->tipo_faturamento == 'Empresa'){
             $Faturamento->valor = ($valorTabela/30)*$qtdDiasFaturamento;
@@ -489,13 +489,14 @@ class FaturamentoController extends Controller
 
 
     public function getValorAFaturar($data_inicial, $data_final, $id){
+        
         $contrato = Contrato::find($id);
-
         $qtdDias = Helper::getDiasEntreDatas($data_inicial, $data_final);
+        $valorTabela = Helper::GetUltimaAtualizacaoValorTabela($contrato->convenio->tabela);
 
         if($contrato->tipo_faturamento == 'Empresa'){
 
-            $valorTotal = ($contrato->tabela->valor/30)*$qtdDias;
+            $valorTotal = ($valorTabela/30)*$qtdDias;
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Entrega de Uniforme');
             //$valorTotal = $valorTotal - Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Falta Trabalho');
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Admissional');

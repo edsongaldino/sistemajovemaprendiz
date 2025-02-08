@@ -15,7 +15,6 @@ class Contrato extends Model
         'empresa_id',
         'user_id',
         'aluno_id',
-        'tabela_id',
         'data_inicial',
         'data_final',
         'status'
@@ -54,11 +53,6 @@ class Contrato extends Model
     public function curso()
     {
         return $this->belongsTo(Curso::class, 'curso_id');
-    }
-
-    public function tabela()
-    {
-        return $this->belongsTo(Tabela::class, 'tabela_id');
     }
 
     public function comercial()

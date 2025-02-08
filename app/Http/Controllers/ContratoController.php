@@ -77,7 +77,6 @@ class ContratoController extends Controller
         $contrato->atuacao_comercial = $request->atuacao_comercial;
         $contrato->tipo_faturamento = $request->tipo_faturamento;
         $contrato->tipo = $request->tipo;
-        $contrato->tabela_id = $request->tabela_id;
         $contrato->data_inicial = Helper::data_mysql($request->data_inicial);
         $contrato->data_final = Helper::data_mysql($request->data_final);
         $contrato->valor_bolsa = Helper::converte_reais_to_mysql($request->valor_bolsa);
@@ -91,7 +90,6 @@ class ContratoController extends Controller
         $contrato->periodo_pratico = $request->periodo_pratico;
         $contrato->hora_inicial_pratico = $request->hora_inicial_pratico;
         $contrato->hora_final_pratico = $request->hora_final_pratico;
-        $contrato->data_alteracao_curso = Helper::data_mysql($request->data_alteracao_curso);
         if($request->data_ultimo_faturamento){
             $contrato->data_ultimo_faturamento = Helper::data_mysql($request->data_ultimo_faturamento);
         }
@@ -165,7 +163,6 @@ class ContratoController extends Controller
         $contrato->atuacao_comercial = $request->atuacao_comercial;
         $contrato->tipo_faturamento = $request->tipo_faturamento;
         $contrato->tipo = $request->tipo;
-        $contrato->tabela_id = $request->tabela_id;
         $contrato->data_inicial = Helper::data_mysql($request->data_inicial);
         $contrato->data_final = Helper::data_mysql($request->data_final);
         $contrato->curso_id = $request->curso_id;
@@ -184,7 +181,7 @@ class ContratoController extends Controller
         $contrato->periodo_pratico = $request->periodo_pratico;
         $contrato->hora_inicial_pratico = $request->hora_inicial_pratico;
         $contrato->hora_final_pratico = $request->hora_final_pratico;
-        $contrato->data_alteracao_curso = Helper::data_mysql($request->data_alteracao_curso);
+
         if($request->data_ultimo_faturamento){
             $contrato->data_ultimo_faturamento = Helper::data_mysql($request->data_ultimo_faturamento);
         }

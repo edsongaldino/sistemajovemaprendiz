@@ -180,38 +180,26 @@
     </div><!-- col-4 -->
     @endif
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Data Inicial: <span class="tx-danger">*</span></label>
         <input class="form-control data" type="text" name="data_inicial" value="{{ Helper::data_br($contrato->data_inicial ?? '') }}" placeholder="Data Inicial" required>
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Data Final: <span class="tx-danger">*</span></label>
         <input class="form-control data" type="text" name="data_final" value="{{ Helper::data_br($contrato->data_final ?? '') }}" placeholder="Data Final" required>
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
         <label class="form-control-label">Selecione o Status: <span class="tx-danger">*</span></label>
         <select class="form-control situacao-contrato" id="situacao" name="situacao" data-placeholder="Selecione a situação" disabled>
             <option value="Ativo" @if(($contrato->situacao ?? '') == 'Ativo') selected @endif>Ativo</option>
             <option value="Encerrado" @if(($contrato->situacao ?? '') == 'Encerrado') selected @endif>Encerrado</option>
-        </select>
-        </div>
-    </div><!-- col-4 -->
-
-    <div class="col-md-3">
-        <div class="form-group">
-        <label class="form-control-label">Selecione a tabela utilizada neste contrato: <span class="tx-danger">*</span></label>
-        <select class="form-control" id="tabela_id" name="tabela_id" data-placeholder="Selecione a tabela">
-            <option label="Selecione a tabela"></option>
-            @foreach ($tabelas as $tabela)
-            <option value="{{ $tabela->id }}" @if(($tabela->id ?? '') == ($contrato->tabela_id ?? '')) selected @endif>{{ $tabela->nome }} (R$ {{ Helper::converte_valor_real(Helper::GetUltimaAtualizacaoValorTabela($tabela)) }})</option>
-            @endforeach
         </select>
         </div>
     </div><!-- col-4 -->
@@ -362,7 +350,7 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label class="form-control-label">Período (Turno) - Prático <span class="tx-danger">*</span></label>
             <select class="form-control" id="periodo_pratico" name="periodo_pratico" data-placeholder="Selecione">
@@ -374,7 +362,7 @@
         </div>
     </div><!-- col-4 -->
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label class="form-control-label">Período (Horário) - Prático <span class="tx-danger">*</span></label>
             De <input type="time" name="hora_inicial_pratico" id="hora_inicial_pratico" value="{{ $contrato->hora_inicial_pratico ?? '' }}" class="form-control" placeholder="Set time"> à <input type="time" name="hora_final_pratico" value="{{ $contrato->hora_final_pratico ?? '' }}" id="hora_final_pratico" class="form-control" placeholder="Set time">
@@ -382,13 +370,6 @@
     </div>
 
     <div class="col-md-4">
-        <div class="form-group">
-        <label class="form-control-label">Data Alteração (Do Básico p/ Específico): <span class="tx-danger">*</span></label>
-        <input class="form-control data data-alteracao" type="text" name="data_alteracao_curso" value="{{ Helper::data_br($contrato->data_alteracao_curso ?? '') }}" placeholder="Data" required>
-        </div>
-    </div><!-- col-4 -->
-
-    <div class="col-md-2">
         @if(!isset($contrato) || $contrato->faturamento->count() == 0)
         <div class="form-group">
         <label class="form-control-label">Último dia faturado: </label>
