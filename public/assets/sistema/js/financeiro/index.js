@@ -75,6 +75,48 @@ function EnviarFormVaga() {
     });
   });
 
+  $(document).on('click', '.validarFaturamento', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    var token = $(this).data('token');
+
+        swal({
+            title: "Confirma a validação desse faturamento?",
+            type: "warning",
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Sim!",
+            cancelButtonText: "Não",
+            showCancelButton: true,
+        },
+        function() {
+          $.ajax({
+            url: '/sistema/faturamento/validar',
+            method: 'POST',
+            data: {
+              id: id,
+              "_token": token
+            },
+
+          success: function() {
+            swal({title: "OK", text: "Faturamento validado!", type: "success"},
+              function(){
+                  location.reload();
+              }
+            );
+          },
+
+          error: function() {
+            swal({title: "OPS", text: "Erro ao validar faturamento!", type: "warning"},
+              function(){
+                  location.reload();
+              }
+            );
+          }
+
+          });
+    });
+  });
+
   $("#codigoEmpresa").focusout(function(){
 
     //Início do Comando AJAX

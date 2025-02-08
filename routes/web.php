@@ -9,6 +9,7 @@ use App\FaturamentoNF;
 use App\Helpers\Helper;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\FaturamentoBoletoController;
+use App\Http\Controllers\FaturamentoNFController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Carbon;
@@ -215,6 +216,8 @@ Route::post('sistema/arquivo/gerar-arquivo', 'ArquivoController@GerarTXTFaturame
 Route::post('sistema/arquivo/excluir', 'ArquivoController@destroy')->name('sistema.arquivo.excluir')->middleware('auth');
 
 Route::post('sistema/faturamento/enviar-email', 'FaturamentoController@EnviarEmailFaturamento')->name('sistema.faturamento.enviar-email')->middleware('auth');
+Route::post('sistema/faturamento/validar', 'FaturamentoController@ValidarFaturamento')->name('sistema.faturamento.validar-faturamento')->middleware('auth');
+
 
 //Rotas Vagas
 Route::get('sistema/vagas', 'VagaController@index')->name('sistema.vagas')->middleware('auth');
@@ -474,3 +477,31 @@ Route::get('/teste-api-post', function() {
 
     curl_close($ch);
 });
+
+Route::get('/automatizacao-faturamentos', function() {
+    $faturamentos = Faturamento::where('etapa_faturamento','<>','Validação')->where('etapa_faturamento','<>','Finalizado')->get();
+    $total = 0;
+    foreach($faturamentos as $faturamento){
+
+        switch ($faturamento->etapa_faturamento) {
+            case "Nota Fiscal":
+                (New FaturamentoNFController())->EmitirNFAutomatico($faturamento->id);
+                break;
+            case "Boleto":
+                (New FaturamentoBoletoController())->GerarBoletoAutomatico($faturamento->id);
+                break;
+            case "Envio Relatório":
+                echo "Envio Relatório";
+                break;
+            case "Envio Faturamento":
+                echo "Envio Faturamento";
+                break;
+            default:
+                break;
+        }
+        $total++;
+    }
+    return $total." atualizados";
+});
+
+

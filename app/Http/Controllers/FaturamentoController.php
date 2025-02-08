@@ -563,7 +563,34 @@ class FaturamentoController extends Controller
             $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $request->tipo, $assunto));
         }
 
+        if($enviaEmail){
+            $faturamento->etapa_faturamento = 'Finalizado';
+            $faturamento->save();
+        }
+
         return response()->json(array('status'=>'success', 'msg'=>"E-mail Enviado com Sucesso!"), 200);
+
+    }
+
+    public function validarFaturamento(Request $request){
+
+        $faturamento = Faturamento::find($request->id);
+        $data_atual = Carbon::now();
+
+        if(Auth::check() === false){
+            return redirect()->route('login')->with('warning', 'Sua sessão expirou! Efetue login novamente.');
+        }
+
+        $faturamento->etapa_faturamento = 'Nota Fiscal';
+        $faturamento->data_validacao = $data_atual;
+        $faturamento->user_validacao = Auth::user()->id;
+
+
+        if($faturamento->save()){
+            return response()->json(array('status'=>'success', 'msg'=>"Faturamento Validado com Sucesso!"), 200);
+        }else{
+            return response()->json(array('status'=>'error', 'msg'=>"Não foi possível efetuar a validação!"), 200);
+        }       
 
     }
 

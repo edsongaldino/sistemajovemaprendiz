@@ -239,40 +239,43 @@
                   @endif
                 </td>
                 <td>
-                    @if(isset($faturamento->notaFiscal->codigo_nf))
-                        @if($faturamento->notaFiscal->status == 'Aguardando Emissão')
-                        <a href="#" class="btn btn-warning NFAguardando" data-codigo_nf="{{ $faturamento->notaFiscal->codigo_nf }}" data-token="{{ csrf_token() }}" title="{{ $faturamento->notaFiscal->status }}"><i class="fa fa-eye" aria-hidden="true"></i> Nota Fiscal</a>
-                        @elseif($faturamento->notaFiscal->status == 'Cancelada')
-                        <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Reemitir NF</a>
-                        @elseif($faturamento->notaFiscal->status == 'Cancelamento Solicitado')
-                        <a href="#" class="btn btn-warning NFCancelada"><i class="fa fa-clock-o" aria-hidden="true"></i> Em Cancelamento</a>
+                    @if($faturamento->etapa_faturamento == 'Validação' && (!isset($faturamento->notaFiscal->codigo_nf)))
+                      <a href="#" class="btn btn-success validarFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-check" aria-hidden="true"></i> Validar Faturamento</a>
+                    @else
+                      @if(isset($faturamento->notaFiscal->codigo_nf))
+                          @if($faturamento->notaFiscal->status == 'Aguardando Emissão')
+                          <a href="#" class="btn btn-warning NFAguardando" data-codigo_nf="{{ $faturamento->notaFiscal->codigo_nf }}" data-token="{{ csrf_token() }}" title="{{ $faturamento->notaFiscal->status }}"><i class="fa fa-eye" aria-hidden="true"></i> Nota Fiscal</a>
+                          @elseif($faturamento->notaFiscal->status == 'Cancelada')
+                          <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Reemitir NF</a>
+                          @elseif($faturamento->notaFiscal->status == 'Cancelamento Solicitado')
+                          <a href="#" class="btn btn-warning NFCancelada"><i class="fa fa-clock-o" aria-hidden="true"></i> Em Cancelamento</a>
+                          @else
+                          <a href="{{ $faturamento->notaFiscal->link_pdf }}" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Nota Fiscal</a>
+                          <a href="#" class="btn btn-danger CancelarNF" data-id="{{ $faturamento->notaFiscal->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar NF</a>
+                          @endif
+                      @else
+                          <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Emitir NF</a>
+                      @endif
+                    
+                      @if($faturamento->forma_pagamento == 'Depósito')
+                        @if(isset($faturamento->informePagamento->id))
+                        <a href="#" class="btn btn-success boletoLiquidado" title="Pagamento Informado"><i class="fa fa-money" aria-hidden="true"></i> Pagamento Informado</a>
                         @else
-                        <a href="{{ $faturamento->notaFiscal->link_pdf }}" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Nota Fiscal</a>
-                        <a href="#" class="btn btn-danger CancelarNF" data-id="{{ $faturamento->notaFiscal->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar NF</a>
+
                         @endif
-                    @else
-                        <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Emitir NF</a>
-                    @endif
-                   
-                    @if($faturamento->forma_pagamento == 'Depósito')
-                      @if(isset($faturamento->informePagamento->id))
-                      <a href="#" class="btn btn-success boletoLiquidado" title="Pagamento Informado"><i class="fa fa-money" aria-hidden="true"></i> Pagamento Informado</a>
+                      @elseif(isset($faturamento->boleto->codigo_boleto))
+                        @if($faturamento->boleto->status == 'LIQUIDACAO')
+                            <a href="#" class="btn btn-success boletoLiquidado" title="Boleto Liquidado"><i class="fa fa-check" aria-hidden="true"></i> Liquidado</a>
+                        @else
+                            <a href="faturamento/boleto/{{ $faturamento->boleto->id }}/visualizar" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Boleto</a>
+                            <a href="#" class="btn btn-danger excluirBoleto" data-id="{{ $faturamento->boleto->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar Cobrança</a>
+                            <a href="#" class="btn btn-danger boletoAtivo"><i class="fa fa-close" aria-hidden="true"></i></a>
+                        @endif
                       @else
-
+                          <a href="#" class="btn btn-info gerarCobranca" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" class="btn btn-info"><i class="fa fa-file-text-o" aria-hidden="true"></i> Gerar Cobrança</a>
+                          <a href="#" class="btn btn-danger excluirFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i></a>
                       @endif
-                    @elseif(isset($faturamento->boleto->codigo_boleto))
-                      @if($faturamento->boleto->status == 'LIQUIDACAO')
-                          <a href="#" class="btn btn-success boletoLiquidado" title="Boleto Liquidado"><i class="fa fa-check" aria-hidden="true"></i> Liquidado</a>
-                      @else
-                          <a href="faturamento/boleto/{{ $faturamento->boleto->id }}/visualizar" target="_blank" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> Boleto</a>
-                          <a href="#" class="btn btn-danger excluirBoleto" data-id="{{ $faturamento->boleto->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i> Cancelar Cobrança</a>
-                          <a href="#" class="btn btn-danger boletoAtivo"><i class="fa fa-close" aria-hidden="true"></i></a>
-                      @endif
-                    @else
-                        <a href="#" class="btn btn-info gerarCobranca" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" class="btn btn-info"><i class="fa fa-file-text-o" aria-hidden="true"></i> Gerar Cobrança</a>
-                        <a href="#" class="btn btn-danger excluirFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i></a>
                     @endif
-
                     <!-- Example single danger button -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
