@@ -9,6 +9,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Polo;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +17,7 @@ class RelatoriosController extends Controller
 {
     public function RelatorioBusca(Request $request)
     {
+
         $faturamentos = $this->GetFaturamentos($request);
 
         $polos = Polo::all();
@@ -131,8 +133,13 @@ class RelatoriosController extends Controller
                                         ->whereBetween('faturamentos.data',[$request->data_inicial, $request->data_final])
                                         ->where('faturamento_nf.id', null);
                                     break; 
-
             }
+        }else{
+            $dataAtual = new DateTime(); // Define o primeiro dia do mês atual 
+            $dataInicial = new DateTime($dataAtual->format('Y-m-01')); 
+            $dataFinal = new DateTime($dataAtual->format('Y-m-31')); 
+            $buscaFaturamento->join('faturamento_nf', 'faturamentos.id', '=', 'faturamento_nf.faturamento_id');
+            $buscaFaturamento->whereBetween('faturamento_nf.data_emissao',[$dataInicial, $dataFinal]);
         }
         
         $faturamentos = $buscaFaturamento->groupBy('faturamentos.id')->orderBy('convenios.polo_id', 'desc')->orderBy('faturamentos.data', 'desc')->get();
