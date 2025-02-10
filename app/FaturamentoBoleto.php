@@ -34,8 +34,8 @@ class FaturamentoBoleto extends Model
             $nome = $faturamento->convenio->empresa->nome_fantasia;
         }
 
-        #Dados do boleto
-        $fields = array(
+            #Dados do boleto
+            $fields = array(
             'boleto.conta.token'=> 'api-key_AcPcTRk_oMgFszHfxxsNd73lXoh6LKujV4MoMZ_Hn7s=',
             'boleto.emissao'=> date("Y-m-d"),
             'boleto.vencimento'=> date('Y-m-d', strtotime($data_vencimento)),
@@ -162,10 +162,10 @@ class FaturamentoBoleto extends Model
                 if($boleto){
 
                     $faturamento->etapa_faturamento = 'Envio Faturamento';
-                    $faturamento->save();
-                    
+                    $faturamento->save();                   
                     $response_array['status'] = 'success';
                     echo json_encode($response_array);
+                    
                 }else{
                     $response_array['status'] = 'error';
                     echo json_encode($response_array);
