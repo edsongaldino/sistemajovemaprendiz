@@ -58,7 +58,6 @@ function EnviarFormContrato() {
     var polo_id = FormContrato.polo_id.value;
     var empresa_id = FormContrato.empresa_id.value;
     var curso_id = FormContrato.curso_id.value;
-    var tabela_id = FormContrato.tabela_id.value;
     var aluno_id = FormContrato.aluno_id.value;
     var data_inicial = FormContrato.data_inicial.value;
     var data_final = FormContrato.data_final.value;
@@ -127,8 +126,8 @@ function EnviarFormContrato() {
             FormContrato.aluno_reposto.focus();
             return false;
         }
-    } 
-    
+    }
+
 
     document.getElementById('FormContrato').submit();
   }
@@ -254,7 +253,7 @@ function EnviarFormContrato() {
       swal({title: "Ops", text: "É obrigatório informar o tipo do benefício!", type: "info"});
       return false;
     }
-    
+
 
     if (tipo_beneficio == "Férias") {
 
@@ -305,7 +304,7 @@ function EnviarFormContrato() {
     $("#dia_semana_teorico option[value='Terça-feira']").prop('selected', true);
     $("#periodo_teorico option[value='Tarde']").prop('selected', true);
     $("#hora_inicial_teorico").val('13:00:00');
-    $("#hora_final_teorico").val('18:00:00');  
+    $("#hora_final_teorico").val('18:00:00');
 
     $("#dia_semana_especifico option[value='Sexta-feira']").prop('selected', true);
     $("#periodo_especifico option[value='Tarde']").prop('selected', true);
@@ -317,4 +316,3 @@ function EnviarFormContrato() {
     $("#hora_final_pratico").val('18:00');
 
   }
-  

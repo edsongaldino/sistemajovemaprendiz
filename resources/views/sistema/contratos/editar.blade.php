@@ -30,6 +30,6 @@
 
         </div><!-- br-section-wrapper -->
     </div><!-- br-pagebody -->
-    <script src="{{ asset('assets/sistema/js/contratos/index.js?v=1') }}"></script>
+    <script src="{{ asset('assets/sistema/js/contratos/index.js?v=2') }}"></script>
 
 @endsection
