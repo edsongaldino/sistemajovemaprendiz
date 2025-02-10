@@ -112,12 +112,6 @@ function EnviarFormContrato() {
       return false;
     }
 
-    if (tabela_id == "") {
-      swal({title: "Ops", text: "O campo tabela não pode ser vazio!", type: "error"});
-      FormContrato.tabela_id.focus();
-      return false;
-    }
-
     if (tipo == "Reposição") {
         var aluno_reposto_id = $("#aluno_reposto_id").val();
 
