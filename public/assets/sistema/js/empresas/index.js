@@ -84,8 +84,6 @@ function EnviarFormEmpresa() {
     var nome_responsavel = FormEmpresa.nome_responsavel.value;
     var cpf_responsavel = FormEmpresa.cpf_responsavel.value;
 
-    alert(cnpj);
-
     if (tipo_empresa == "") {
         swal({title: "Ops", text: "O campo tipo_empresa deve ser preenchido!", type: "error"});
         FormEmpresa.tipo_empresa.focus();
@@ -136,13 +134,13 @@ function EnviarFormEmpresa() {
         return false;
     }
 
-    
+
     if (inscricao_estadual == "") {
       swal({title: "Ops", text: "O campo inscricao_estadual deve ser preenchido!", type: "error"});
       FormEmpresa.inscricao_estadual.focus();
       return false;
     }
-    
+
 
     if (cpf_responsavel == "") {
         swal({title: "Ops", text: "O campo cpf_responsavel não pode ser vazio!", type: "error"});
