@@ -176,7 +176,7 @@ Route::get('sistema/faturamento/{tipo}', 'FaturamentoController@show')->name('si
 Route::post('sistema/faturamento/excluir', 'FaturamentoController@destroy')->name('sistema.faturamento.excluir')->middleware('auth');
 Route::post('sistema/faturamento/contrato/excluir', 'FaturamentoContratoController@destroy')->name('sistema.faturamento.contrato.excluir')->middleware('auth');
 Route::get('sistema/faturamento/convenio/{id}/contratos', 'FaturamentoController@VisualizarContratos')->name('sistema.faturamento.visualizar-contratos')->middleware('auth');
-Route::get('sistema/faturamento/{id}/visualizar-relatorio', 'FaturamentoController@VisualizarRelatorio')->name('sistema.faturamento.visualizar-relatorio')->middleware('auth');
+Route::get('sistema/faturamento/{id}/visualizar-relatorio', 'FaturamentoController@VisualizarRelatorio')->name('sistema.faturamento.visualizar-relatorio');
 
 
 //Route::get('/sistema/faturamento/api-clientes', 'FaturamentoController@getClientes');
@@ -421,7 +421,7 @@ Route::get('/atualiza-vencimento-depositos', function() {
     $total = 0;
     foreach($faturamentos as $faturamento){
         if($faturamento->forma_pagamento == "Depósito"){
-            $data_vencimento = Helper::GetDataVencimentoFaturamento($faturamento); 
+            $data_vencimento = Helper::GetDataVencimentoFaturamento($faturamento);
             $faturamento->data_vencimento = $data_vencimento;
             $faturamento->save();
             $total++;
@@ -442,10 +442,10 @@ Route::get('/remove-atualizacoes-salario', function() {
                 $alteracao->delete();
                 $total++;
             }
-        
+
     }
     return $total." removidos";
-    
+
 });
 
 
