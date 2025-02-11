@@ -238,7 +238,9 @@ class FaturamentoController extends Controller
             $Faturamento->data_final = $contrato->data_final;
             $faturamentoPadrao = false;
         }else{
-            $dataDesligamento = $this->GetDataDesligamentoContrato($request->id, $request->data_inicial);
+
+            $dataDesligamento = $this->GetDataDesligamentoContrato($request->id, $request->data_inicial);          
+
             if($dataDesligamento){
                 $Faturamento->data_final = $dataDesligamento;
             }else{
@@ -443,8 +445,6 @@ class FaturamentoController extends Controller
         $data_final = Carbon::createFromFormat("Y-m-d", date('Y-m-d', strtotime($data)))->endOfMonth()->toDateString();
 
         $faturamento = AtualizacoesContrato::where('contrato_id',$id)->where('situacao_contrato','Desligado')->whereBetween('data', [$data_inicial, $data_final])->first();
-
-        dd($data_inicial .'-'. $data_final);
 
         if(isset($faturamento->data)){
             return $faturamento->data;
