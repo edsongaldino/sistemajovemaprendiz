@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 include_once(base_path() . '/vendor/enotas/php-client/src/eNotasGW.php');
 
+use App\AtualizacoesContrato;
 use App\ContaBancaria;
 use App\Contrato;
 use App\Convenio;
@@ -233,12 +234,19 @@ class FaturamentoController extends Controller
         }
 
         //Verifica se o contrato se encerra no mês atual
-        if($this->GetEncerramentoContratoMesAtual($request->id, $Faturamento->data_inicial)){
+        if($this->GetEncerramentoContratoMesAtual($request->id, $request->data_inicial)){
             $Faturamento->data_final = $contrato->data_final;
             $faturamentoPadrao = false;
         }else{
-            $Faturamento->data_final = $request->data_final;
+            $dataDesligamento = $this->GetDataDesligamentoContrato($request->id, $request->data_inicial);
+            if($dataDesligamento){
+                $Faturamento->data_final = $dataDesligamento;
+            }else{
+                $Faturamento->data_final = $request->data_final;
+            }
         }
+
+        
 
         //Caso seja um faturamento padrão e quantidade de dias do mês seja maior que 30 parametriza o padrão de 30 dias
 
@@ -423,6 +431,23 @@ class FaturamentoController extends Controller
 
         if($faturamento->count() > 0){
             return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public static function GetDataDesligamentoContrato($id, $data){
+
+        $data_inicial = Carbon::createFromFormat("Y-m-d", date('Y-m-d', strtotime($data)))->startOfMonth()->toDateString();
+        $data_final = Carbon::createFromFormat("Y-m-d", date('Y-m-d', strtotime($data)))->endOfMonth()->toDateString();
+
+        $faturamento = AtualizacoesContrato::where('contrato_id',$id)->where('situacao_contrato','Desligado')->whereBetween('data', [$data_inicial, $data_final])->first();
+
+        dd($data_inicial .'-'. $data_final);
+
+        if(isset($faturamento->data)){
+            return $faturamento->data;
         }else{
             return false;
         }
