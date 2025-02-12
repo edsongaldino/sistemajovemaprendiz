@@ -480,7 +480,7 @@ Route::get('/teste-api-post', function() {
 
 Route::get('/automatizacao-faturamentos', function() {
     //$faturamentos = Faturamento::where('etapa_faturamento','<>','Validação')->where('etapa_faturamento','<>','Finalizado')->inRandomOrder()->limit(2)->get();
-    $faturamentos = Faturamento::where('etapa_faturamento','Nota Fiscal')->where('etapa_faturamento','Boleto')->inRandomOrder()->limit(2)->get();
+    $faturamentos = Faturamento::where('etapa_faturamento','Nota Fiscal')->orWhere('etapa_faturamento','Boleto')->inRandomOrder()->limit(2)->get();
     $total = 0;
     foreach($faturamentos as $faturamento){
 
