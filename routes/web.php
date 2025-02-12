@@ -489,8 +489,13 @@ Route::get('/automatizacao-faturamentos', function() {
                 (New FaturamentoNFController())->EmitirNFAutomatico($faturamento->id);
                 break;
             case "Boleto":
-                (New FaturamentoBoletoController())->GerarBoletoAutomatico($faturamento->id);
-                break;
+                if($faturamento->notaFiscal->status == 'Autorizada'){
+                    (New FaturamentoBoletoController())->GerarBoletoAutomatico($faturamento->id);
+                    break;
+                }else{
+                    echo "NF do faturamento " . $faturamento->id . "ainda não foi autorizada";
+                    break;
+                }
             case "Envio Relatório":
                 echo "Envio Relatório";
                 break;
