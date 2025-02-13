@@ -2,6 +2,7 @@
 
 use App\AtualizacoesContrato;
 use App\Contrato;
+use App\Convenio;
 use App\Faturamento;
 use App\FaturamentoBoleto;
 use App\FaturamentoContrato;
@@ -478,7 +479,41 @@ Route::get('/teste-api-post', function() {
     curl_close($ch);
 });
 
-Route::get('/automatizacao-faturamentos', function() {
+Route::get('/automatizacao-faturamento', function() {
+    
+    $dia = date('d');
+    $convenios = Convenio::where('dia_faturamento',$dia)->where('situacao','Ativo')->whereNull('deleted_at')->inRandomOrder()->limit(1)->get();
+    $total = 0;
+
+    $data_inicial = Carbon::createFromFormat("Y-m-d", date('Y-m-d'))->addMonth(1)->startOfMonth()->toDateString();
+    $data_final = Carbon::createFromFormat("Y-m-d", date('Y-m-d'))->addMonth(1)->endOfMonth()->toDateString();
+
+    foreach($convenios as $convenio){
+
+
+        if(!(New FaturamentoController())->GetFaturamentoConvenioByPeriodo($convenio->id,$data_inicial,$data_final)){
+
+            $faturamentoConvenio = (New FaturamentoController())->faturarConvenioAutomatico($convenio,$data_inicial,$data_final);  
+
+            if($faturamentoConvenio){
+
+                $contratos = Contrato::select('contratos.*')
+                ->where('contratos.convenio_id','=', $faturamentoConvenio->convenio_id)
+                ->where('contratos.data_final','>=', $data_inicial)->get();
+
+                foreach($contratos as $contrato){  
+                    $faturamentoContrato = (New FaturamentoController())->faturarContratoAutomatico($contrato->id,$faturamentoConvenio->id,$data_inicial,$data_final);  
+                    $total++;
+                }
+            }
+        }
+
+
+    }
+    return $total." contratos faturados";
+});
+
+Route::get('/automatizacao-notas-boletos-envios', function() {
     //$faturamentos = Faturamento::where('etapa_faturamento','<>','Validação')->where('etapa_faturamento','<>','Finalizado')->inRandomOrder()->limit(2)->get();
     $faturamentos = Faturamento::where('etapa_faturamento','Nota Fiscal')->where('etapa_faturamento','Boleto')->inRandomOrder()->limit(2)->get();
     $total = 0;

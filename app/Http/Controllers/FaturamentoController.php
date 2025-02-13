@@ -209,141 +209,59 @@ class FaturamentoController extends Controller
 
     public function faturarContrato(Request $request)
     {
-        $Faturamento = new FaturamentoContrato();
-        $Faturamento->user_id = Auth::user()->id;
-        $Faturamento->contrato_id = $request->id;
-        $Faturamento->faturamento_id = $request->faturamento_id;
-        $Faturamento->data = Carbon::now();
-
-        $contrato = Contrato::find($request->id);
-
-        $faturamentoPadrao = true;
-
-        //Pega a data do último faturamento, se existir ok, senão ele pega a data inicial do contrato
-        if($this->GetFaturamentoMesAnterior($request->id, $request->data_inicial)){
-            //Quando o período for maior que 30 - pegar somente 30 dias
-            $Faturamento->data_inicial = $request->data_inicial;
-        }else{
-            //Verificar Data do Ultimo Faturamento (Sistema Anterior)
-            if($contrato->data_ultimo_faturamento && $contrato->data_ultimo_faturamento <> '0000-00-00'){
-                $Faturamento->data_inicial = Carbon::parse($contrato->data_ultimo_faturamento)->addDay(1);
-            }else{
-                $Faturamento->data_inicial = $contrato->data_inicial;
-                $faturamentoPadrao = false;
-            }
-        }
-
-        //Verifica se o contrato se encerra no mês atual
-        if($this->GetEncerramentoContratoMesAtual($request->id, $request->data_inicial)){
-            $Faturamento->data_final = $contrato->data_final;
-            $faturamentoPadrao = false;
-        }else{
-
-            $dataDesligamento = $this->GetDataDesligamentoContrato($request->id, $request->data_inicial);          
-
-            if($dataDesligamento){
-                $Faturamento->data_final = $dataDesligamento;
-            }else{
-                $Faturamento->data_final = $request->data_final;
-            }
-        }
-
         
-
-        //Caso seja um faturamento padrão e quantidade de dias do mês seja maior que 30 parametriza o padrão de 30 dias
-
-        $qtdFaltas = Helper::getQtdeFaltas($Faturamento->data_inicial, $Faturamento->data_final, $request->id);
-
-        if($faturamentoPadrao){
-            $qtdDias = 30;
-        }else{
-            $qtdDias = Helper::getDiasEntreDatas($Faturamento->data_inicial,$Faturamento->data_final);
+        if(Auth::check() === false){
+            return redirect()->route('login')->with('warning', 'Sua sessão expirou! Efetue login novamente.');
         }
 
-        $qtdDiasFaturamento = $qtdDias-$qtdFaltas;
-
-        $valorTabela = Helper::GetUltimaAtualizacaoValorTabela($contrato->convenio->tabela);
-
-        if($contrato->tipo_faturamento == 'Empresa'){
-            $Faturamento->valor = ($valorTabela/30)*$qtdDiasFaturamento;
-        }else{
-            $Faturamento->valor = ($contrato->valor_bolsa/30)*$qtdDiasFaturamento;
-        }
-
-        $txAdm = ($valorTabela/30)*$qtdDias;
-
-        $Faturamento->taxa_administrativa = $txAdm;
-        $Faturamento->quantidade_dias = $qtdDias;
-        //Inserir ISSQN no faturamento da empresa
-
-        //return response()->json(array('status'=>'error', 'msg'=> $Faturamento->data_inicial), 200);
-
-        if($Faturamento->save()):
-
-            if($Faturamento->contrato->tipo_faturamento == 'Instituição'){
-                $dados = new FaturamentoContratoInstituicaoDados();
-                $dados->faturamento_contrato_id = $Faturamento->id;
-                $dados->valor_salario_liquido = $Faturamento->valor - Helper::calcularPer100DeValor($Faturamento->valor, '7.5');
-                $dados->valor_decimo_terceiro = Helper::calculaDecimo($Faturamento);
-                $dados->valor_ferias = Helper::calculaFerias($Faturamento);
-                $dados->valor_terco_ferias = $dados->valor_ferias/3;
-                $dados->valor_inss = Helper::calcularPer100DeValor($Faturamento->valor, '25.5') + Helper::calcularPer100DeValor($Faturamento->valor, '7.5');
-                $dados->valor_fgts = Helper::calcularPer100DeValor($Faturamento->valor, '2');
-                $dados->valor_pis = Helper::calcularPer100DeValor(($Faturamento->valor+$dados->valor_decimo_terceiro+$dados->valor_ferias+$dados->valor_terco_ferias), '2');
-                $dados->valor_inss_provisionamento = Helper::calcularPer100DeValor(($dados->valor_decimo_terceiro+$dados->valor_ferias+$dados->valor_terco_ferias), '25.5');
-                $dados->valor_fgts_provisionamento = Helper::calcularPer100DeValor(($dados->valor_decimo_terceiro+$dados->valor_ferias+$dados->valor_terco_ferias), '2');
-                $dados->valor_pis_provisionamento = Helper::calcularPer100DeValor(($Faturamento->valor+$dados->valor_decimo_terceiro+$dados->valor_ferias+$dados->valor_terco_ferias), '1');
-                $dados->valor_beneficios = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Benefícios');
-                $dados->valor_descontos = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Falta Trabalho');
-                $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Demissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Periodico');
-                $dados->valor_uniforme = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Entrega de Uniforme');
-
-                $dados->valor_total = ($dados->valor_salario_liquido+$txAdm+$dados->valor_decimo_terceiro+
-                                        $dados->valor_ferias+$dados->valor_terco_ferias+$dados->valor_inss+
-                                        $dados->valor_fgts+$dados->valor_inss_provisionamento+$dados->valor_fgts_provisionamento+$dados->valor_pis_provisionamento+
-                                        $dados->valor_beneficios+$dados->valor_exames+$dados->valor_uniforme)/*-($dados->valor_descontos)*/;
-                // Calcular ISSQN
-                $dados->valor_issqn = $this->CalculaISSQN($dados->valor_total, $contrato->convenio->percentual_issqn);
-                $dados->save();
-            }else{
-                $dados = new FaturamentoContratoEmpresaDados();
-                $dados->faturamento_contrato_id = $Faturamento->id;
-                $dados->valor_beneficios = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Benefícios');
-                $dados->valor_descontos = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Falta Trabalho');
-                $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Demissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Exame Periodico');
-                $dados->valor_uniforme = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $request->id, 'Entrega de Uniforme');
-
-                $dados->valor_total = ($txAdm+$dados->valor_beneficios+$dados->valor_exames+$dados->valor_uniforme)-($dados->valor_descontos);
-                // Calcular ISSQN
-                $dados->valor_issqn = $this->CalculaISSQN($dados->valor_total, $contrato->convenio->percentual_issqn);
-                $dados->save();
-            }
+        $faturamento = (New FaturamentoContrato())->FaturarContrato($request->id, $request->faturamento_id, $request->data_inicial, $request->data_final);
+        
+        if($faturamento){
             return response()->json(array('status'=>'success', 'msg'=>"Contrato Faturado com Sucesso!"), 200);
-        else:
+        }else{
             return response()->json(array('status'=>'error', 'msg'=>"Erro ao faturar contrato!"), 200);
-        endif;
+        }
 
     }
 
     public function faturarConvenio(Request $request)
     {
+
+        if(Auth::check() === false){
+            return redirect()->route('login')->with('warning', 'Sua sessão expirou! Efetue login novamente.');
+        }
+
         $convenio = Convenio::find($request->id);
 
-        $Faturamento = new Faturamento();
-        $Faturamento->user_id = Auth::user()->id;
-        $Faturamento->convenio_id = $request->id;
-        $Faturamento->data = Carbon::now();
-        $Faturamento->data_inicial = $request->data_inicial;
-        $Faturamento->data_final = $request->data_final;
-        $Faturamento->forma_pagamento = $convenio->forma_pagamento;
+        $faturamento = (New Faturamento())->FaturarConvenio($convenio, $request->data_inicial, $request->data_final);
 
-        if($Faturamento->save()):
+        if($faturamento):
             return true;
         else:
             $response_array['status'] = 'success';
             echo json_encode($response_array);
         endif;
     }
+
+    public function faturarConvenioAutomatico($convenio,$data_inicial,$data_final)
+    {
+        $faturamento = (New Faturamento())->FaturarConvenio($convenio, $data_inicial, $data_final);
+        return $faturamento;
+    }
+
+    public function GetFaturamentoConvenioByPeriodo($convenio_id,$data_inicial,$data_final)
+    {
+        $faturamento = Faturamento::where('convenio_id', $convenio_id)->whereBetween('faturamentos.data_inicial', [$data_inicial, $data_final])->whereNull('deleted_at')->get();
+        return $faturamento;
+    }
+
+    public function faturarContratoAutomatico($contrato_id,$faturamento_id,$data_inicial,$data_final)
+    {
+        $faturamento = (New FaturamentoContrato())->FaturarContrato($contrato_id, $faturamento_id, $data_inicial, $data_final);
+        return $faturamento;
+    }
+
+
 
     public function InformarNumeroPedido(Request $request)
     {

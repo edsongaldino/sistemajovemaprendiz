@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Faturamento extends Model
 {
@@ -17,6 +19,24 @@ class Faturamento extends Model
         $Faturamento->update();
 
         return $Faturamento;
+    }
+
+    public function FaturarConvenio($convenio, $data_inicial, $data_final){
+
+        $Faturamento = new Faturamento();
+        $Faturamento->user_id = Auth::user()->id;
+        $Faturamento->convenio_id = $convenio->id;
+        $Faturamento->data = Carbon::now();
+        $Faturamento->data_inicial = $data_inicial;
+        $Faturamento->data_final = $data_final;
+        $Faturamento->forma_pagamento = $convenio->forma_pagamento;
+        
+        if($Faturamento->save()){
+            return $Faturamento;
+        }else{
+            return false;
+        }      
+
     }
 
     public function convenio()
