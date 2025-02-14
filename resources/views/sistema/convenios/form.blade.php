@@ -190,4 +190,15 @@
         </div>
     </div><!-- col-4 -->
 
+    <div class="col-md-6">
+        <div class="form-group">
+        <label class="form-control-label">Deve Informar número do pedido no faturamento? <span class="tx-danger">*</span></label>
+        <select class="form-control" id="possui_pedido" name="possui_pedido" data-placeholder="Selecione">
+            <option label="Selecione"></option>
+            <option value="Sim" @if(($convenio->possui_pedido ?? '') == 'Sim') selected @endif>Sim</option>
+            <option value="Não" @if(($convenio->possui_pedido ?? '') == 'Não') selected @endif>Não</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
 </div><!-- row -->

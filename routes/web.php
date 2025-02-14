@@ -491,7 +491,7 @@ Route::get('/automatizacao-faturamentos', function() {
     foreach($convenios as $convenio){
 
 
-        if(!(New FaturamentoController())->GetFaturamentoConvenioByPeriodo($convenio->id,$data_inicial,$data_final)){
+        if((New FaturamentoController())->GetFaturamentoConvenioByPeriodo($convenio->id,$data_inicial,$data_final) == 0){
 
             $faturamentoConvenio = (New FaturamentoController())->faturarConvenioAutomatico($convenio,$data_inicial,$data_final);  
 

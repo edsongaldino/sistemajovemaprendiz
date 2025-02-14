@@ -252,7 +252,7 @@ class FaturamentoController extends Controller
     public function GetFaturamentoConvenioByPeriodo($convenio_id,$data_inicial,$data_final)
     {
         $faturamento = Faturamento::where('convenio_id', $convenio_id)->whereBetween('faturamentos.data_inicial', [$data_inicial, $data_final])->whereNull('deleted_at')->get();
-        return $faturamento;
+        return $faturamento->count();
     }
 
     public function faturarContratoAutomatico($contrato_id,$faturamento_id,$data_inicial,$data_final)

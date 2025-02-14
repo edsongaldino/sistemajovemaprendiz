@@ -71,6 +71,7 @@ class ConvenioController extends Controller
         $convenio->tipo_emissao_nf = $request->tipo_emissao_nf;
         $convenio->tipo_emissao_cobranca = $request->tipo_emissao_cobranca;
         $convenio->tipo_envio = $request->tipo_envio;
+        $convenio->possui_pedido = $request->possui_pedido;
         $convenio->save();
 
         $this->atualizaContrato($convenio->id);
@@ -126,6 +127,7 @@ class ConvenioController extends Controller
         $convenio->tipo_emissao_nf = $request->tipo_emissao_nf;
         $convenio->tipo_emissao_cobranca = $request->tipo_emissao_cobranca;
         $convenio->tipo_envio = $request->tipo_envio;
+        $convenio->possui_pedido = $request->possui_pedido;
         $convenio->save();
 
         return redirect()->route('sistema.convenios')->with('success', 'Dados Alterados!');
