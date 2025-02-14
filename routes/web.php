@@ -479,7 +479,7 @@ Route::get('/teste-api-post', function() {
     curl_close($ch);
 });
 
-Route::get('/automatizacao-faturamento', function() {
+Route::get('/automatizacao-faturamentos', function() {
     
     $dia = date('d');
     $convenios = Convenio::where('dia_faturamento',$dia)->where('situacao','Ativo')->whereNull('deleted_at')->inRandomOrder()->limit(1)->get();
