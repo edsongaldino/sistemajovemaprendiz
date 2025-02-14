@@ -261,8 +261,6 @@ class FaturamentoController extends Controller
         return $faturamento;
     }
 
-
-
     public function InformarNumeroPedido(Request $request)
     {
         $Faturamento = Faturamento::find($request->Modalfaturamento_id);

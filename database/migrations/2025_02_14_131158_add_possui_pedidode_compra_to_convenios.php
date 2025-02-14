@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('convenios', function (Blueprint $table) {
             $table->enum('possui_pedido', ['Sim', 'Não'])->default('Não')->after('tipo_envio');
+            $table->enum('envia_relatorio', ['Sim', 'Não'])->default('Não')->after('tipo_envio');
         });
     }
 
@@ -27,6 +28,7 @@ return new class extends Migration
     {
         Schema::table('convenios', function (Blueprint $table) {
             $table->dropColumn('possui_pedido');
+            $table->dropColumn('envia_relatorio');
         });
     }
 };

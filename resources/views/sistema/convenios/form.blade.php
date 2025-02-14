@@ -201,4 +201,15 @@
         </div>
     </div><!-- col-4 -->
 
+    <div class="col-md-6">
+        <div class="form-group">
+        <label class="form-control-label">Envia Relatório? <span class="tx-danger">*</span></label>
+        <select class="form-control" id="envia_relatorio" name="envia_relatorio" data-placeholder="Selecione">
+            <option label="Selecione"></option>
+            <option value="Sim" @if(($convenio->envia_relatorio ?? '') == 'Sim') selected @endif>Sim</option>
+            <option value="Não" @if(($convenio->envia_relatorio ?? '') == 'Não') selected @endif>Não</option>
+        </select>
+        </div>
+    </div><!-- col-4 -->
+
 </div><!-- row -->
