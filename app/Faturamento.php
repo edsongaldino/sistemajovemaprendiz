@@ -127,6 +127,11 @@ class Faturamento extends Model
         return $this->hasOne(InformePagamento::class)->orderBy('id', 'DESC');
     }
 
+    public function envios()
+    {
+        return $this->hasMany(NotificacaoFaturamento::class)->orderBy('id', 'DESC');
+    }
+
     public function credito()
     {
         return $this->hasOne(FaturamentoCredito::class)->orderBy('id', 'DESC');

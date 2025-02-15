@@ -21,6 +21,18 @@
     margin-top: -50px;
 }
 
+.status-envio{
+    text-align: center;
+}
+
+.status-envio i{
+    font-size: 20px;
+}
+
+.status-envio i.enviado{
+    color: #23bf08 !important;
+}
+
 .btn-incluir:hover{
     background-color: rgb(5, 85, 81);
     cursor: pointer;
@@ -243,7 +255,7 @@ span.data-cadastro{
     height: 70px;
     width: 100%;
     background-color: #17a2b8;
-    color: #fff;
+    color: #fff !important;
     font-size: 16px;
     text-align: center;
     float: right;
@@ -253,7 +265,7 @@ span.data-cadastro{
 .btn-busca:hover{
     background-color: #045d6b;
     cursor: pointer;
-    color: #fff;
+    color: #fff !important;
 }
 
 .btn-primary{

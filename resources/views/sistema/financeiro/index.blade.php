@@ -190,7 +190,13 @@
 
             @foreach ($faturamentos as $faturamento)
             <tr>
-                <th>{{ $faturamento->id }}</th>
+                <th class="status-envio">{{ $faturamento->id }} <br/> 
+                  @if($faturamento->envios->count() > 0)
+                  <i class="fa fa-paper-plane enviado" title="Envios já foram realizados" aria-hidden="true"></i>
+                  @else
+                  <i class="fa fa-paper-plane aguardando-envio" title="Aguardando envios" aria-hidden="true"></i>
+                  @endif
+                </th>
                 <td class="text-center">{{ Helper::datetime_br($faturamento->data) ?? '' }}<br/>{{ $faturamento->usuario->nome ?? '' }}<br/><b>{{ Helper::data_br($faturamento->data_inicial) }} à {{ Helper::data_br($faturamento->data_final) }}</b></td>
                 <td>
                   @if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ')
@@ -309,6 +315,10 @@
                         <a href="#" class="dropdown-item AlterarCredito" data-id="{{ $faturamento->id }}" data-credito-id="{{ $faturamento->credito->id }}" data-valor-credito="{{ $faturamento->credito->valor_credito }}" data-descricao-credito="{{ $faturamento->credito->descricao_credito }}">Alterar Crédito</a>
                         @else
                         <a href="#" class="dropdown-item InformarCredito" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}">Informar Crédito</a>
+                        @endif
+
+                        @if($faturamento->envios->count() > 0)
+                        <a class="dropdown-item" href="/sistema/faturamento/{{ $faturamento->id }}/visualizar-relatorio-envio">Relatório de Envios</a>
                         @endif
                         
                         </div>

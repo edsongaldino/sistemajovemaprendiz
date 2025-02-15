@@ -15,6 +15,7 @@ use App\Feriado;
 use App\Http\Controllers\AtualizacoesContratoController;
 use App\Tabela;
 use DateTime;
+use DateTimeZone;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Carbon;
 
@@ -66,6 +67,17 @@ class Helper{
 		return $agent->isMobile();
 	}
 	*/
+
+	public static function datahora_br($datetime) {
+		// Cria um objeto DateTime a partir do valor passado
+		$data = new DateTime($datetime);
+		
+		// Define o fuso horário para o Brasil
+		$data->setTimezone(new DateTimeZone('America/Santiago'));
+		
+		// Retorna a data formatada no padrão brasileiro
+		return $data->format('d/m/Y H:i:s');
+	}
 
 	public static function data_br($data,$retorno = "00/00/0000") {
 		if($data) {

@@ -207,6 +207,16 @@ class FaturamentoController extends Controller
         return view('sistema.financeiro.faturamento_contrato', compact('faturamento', 'contratos', 'data_inicial', 'data_final'));
     }
 
+    public function VisualizarEnvios($id)
+    {
+        $faturamento = Faturamento::find($id);
+        $data_inicial = $faturamento->data_inicial;
+        $data_inicial = $faturamento->data_inicial;
+        $data_final = $faturamento->data_final;
+
+        return view('sistema.financeiro.relatorio_envio', compact('faturamento', 'data_inicial', 'data_final'));
+    }
+
     public function faturarContrato(Request $request)
     {
         

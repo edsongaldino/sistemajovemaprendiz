@@ -178,6 +178,7 @@ Route::get('sistema/faturamento/{tipo}', 'FaturamentoController@show')->name('si
 Route::post('sistema/faturamento/excluir', 'FaturamentoController@destroy')->name('sistema.faturamento.excluir')->middleware('auth');
 Route::post('sistema/faturamento/contrato/excluir', 'FaturamentoContratoController@destroy')->name('sistema.faturamento.contrato.excluir')->middleware('auth');
 Route::get('sistema/faturamento/convenio/{id}/contratos', 'FaturamentoController@VisualizarContratos')->name('sistema.faturamento.visualizar-contratos')->middleware('auth');
+Route::get('sistema/faturamento/{id}/visualizar-relatorio-envio', 'FaturamentoController@VisualizarEnvios')->name('sistema.faturamento.visualizar-relatorio-envio')->middleware('auth');
 Route::get('sistema/faturamento/{id}/visualizar-relatorio', 'FaturamentoController@VisualizarRelatorio')->name('sistema.faturamento.visualizar-relatorio');
 
 
@@ -521,7 +522,7 @@ Route::get('/automatizacao-notas-boletos-envios', function() {
     foreach($faturamentos as $faturamento){
 
         if($faturamento->convenio->possui_pedido == "Sim" && $faturamento->numero_pedido == ""){
-            
+
             $descricao = "NF do faturamento " . $faturamento->id . " não foi gerada pois ainda não foi inserido o número do pedido.";
             $email = "dcr@larmariadelourdes.ong.br";
             (New NotificacaoSistema())->gravaNotificacao("Nota Fiscal", $email, $descricao);
