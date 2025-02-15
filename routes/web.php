@@ -11,6 +11,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\FaturamentoBoletoController;
 use App\Http\Controllers\FaturamentoNFController;
+use App\NotificacaoSistema;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Carbon;
@@ -485,8 +486,8 @@ Route::get('/automatizacao-faturamentos', function() {
     $convenios = Convenio::where('dia_faturamento',$dia)->where('situacao','Ativo')->whereNull('deleted_at')->inRandomOrder()->limit(1)->get();
     $total = 0;
 
-    $data_inicial = Carbon::createFromFormat("Y-m-d", date('Y-m-d'))->addMonth(1)->startOfMonth()->toDateString();
-    $data_final = Carbon::createFromFormat("Y-m-d", date('Y-m-d'))->addMonth(1)->endOfMonth()->toDateString();
+    $data_inicial = Carbon::createFromFormat("Y-m-d", date('Y-m-d'))->startOfMonth()->toDateString();
+    $data_final = Carbon::createFromFormat("Y-m-d", date('Y-m-d'))->endOfMonth()->toDateString();
 
     foreach($convenios as $convenio){
 
@@ -514,35 +515,49 @@ Route::get('/automatizacao-faturamentos', function() {
 });
 
 Route::get('/automatizacao-notas-boletos-envios', function() {
-    //$faturamentos = Faturamento::where('etapa_faturamento','<>','Validação')->where('etapa_faturamento','<>','Finalizado')->inRandomOrder()->limit(2)->get();
-    $faturamentos = Faturamento::where('etapa_faturamento','Nota Fiscal')->orWhere('etapa_faturamento','Boleto')->inRandomOrder()->limit(2)->get();
+
+    $faturamentos = Faturamento::where('etapa_faturamento','<>','Validação')->where('etapa_faturamento','<>','Finalizado')->inRandomOrder()->limit(2)->get();
     $total = 0;
     foreach($faturamentos as $faturamento){
 
-        switch ($faturamento->etapa_faturamento) {
-            case "Nota Fiscal":
-                (New FaturamentoNFController())->EmitirNFAutomatico($faturamento->id);
-                break;
-            case "Boleto":
-                if($faturamento->notaFiscal->status == 'Autorizada'){
-                    (New FaturamentoBoletoController())->GerarBoletoAutomatico($faturamento->id);
+        if($faturamento->convenio->possui_pedido == "Sim" && $faturamento->numero_pedido == ""){
+            
+            $descricao = "NF do faturamento " . $faturamento->id . " não foi gerada pois ainda não foi inserido o número do pedido.";
+            $email = "dcr@larmariadelourdes.ong.br";
+            (New NotificacaoSistema())->gravaNotificacao("Nota Fiscal", $email, $descricao);
+
+        }else{
+            switch ($faturamento->etapa_faturamento) {
+                case "Nota Fiscal":
+                    (New FaturamentoNFController())->EmitirNFAutomatico($faturamento->id);
                     break;
-                }else{
-                    echo "NF do faturamento " . $faturamento->id . "ainda não foi autorizada";
+                case "Boleto":
+                    if($faturamento->notaFiscal->status == 'Autorizada'){
+                        (New FaturamentoBoletoController())->GerarBoletoAutomatico($faturamento->id);
+                        break;
+                    }else{
+                        echo "NF do faturamento " . $faturamento->id . "ainda não foi autorizada";
+                        break;
+                    }
+                case "Envio Relatório":
+                    if($faturamento->convenio->envia_relatorio == "Sim"){
+                        (New FaturamentoController())->EnviarEmailFaturamentoAutomatico($faturamento->id, "relatorio");
+                    }else{
+                        $faturamento->etapa_faturamento = 'Envio Faturamento';
+                        $faturamento->save();
+                    }
                     break;
-                }
-            case "Envio Relatório":
-                echo "Envio Relatório";
-                break;
-            case "Envio Faturamento":
-                echo "Envio Faturamento";
-                break;
-            default:
-                break;
+                case "Envio Faturamento":
+                    (New FaturamentoController())->EnviarEmailFaturamentoAutomatico($faturamento->id, "boleto-nf");
+                    break;
+                default:
+                    break;
+            }
+            $total++;
         }
-        $total++;
     }
     return $total." atualizados";
+
 });
 
 

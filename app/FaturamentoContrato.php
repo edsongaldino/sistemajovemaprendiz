@@ -39,8 +39,14 @@ class FaturamentoContrato extends Model
 
     public function FaturarContrato($contrato_id,$faturamento_id, $data_inicial, $data_final){
 
+        if(isset(Auth::user()->id)){
+            $user_id = Auth::user()->id;
+        }else{
+            $user_id = 1;
+        }
+
         $Faturamento = new FaturamentoContrato();
-        $Faturamento->user_id = Auth::user()->id;
+        $Faturamento->user_id = $user_id;
         $Faturamento->contrato_id = $contrato_id;
         $Faturamento->faturamento_id = $faturamento_id;
         $Faturamento->data = Carbon::now();

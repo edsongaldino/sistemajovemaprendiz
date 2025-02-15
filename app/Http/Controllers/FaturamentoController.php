@@ -467,51 +467,21 @@ class FaturamentoController extends Controller
 
     public function EnviarEmailFaturamento(Request $request){
 
-        $faturamento = Faturamento::find($request->id);
-        $data_atual = Carbon::now()->format('d/m/Y H:i');
-        $EmailDestinatario = EmpresaContato::where('Setor','FINANCEIRO')->where('empresa_id',$faturamento->convenio->empresa_id)->get();
-
-        if($EmailDestinatario->count() < 1){
-            return response()->json(array('status'=>'error', 'msg'=>"Nenhum e-mail cadastrado para esse cliente!"), 200);
-        }
-
-        if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
-            $cpfCnpj = $faturamento->convenio->empresa->cnpj;
-            $nome = $faturamento->convenio->empresa->razao_social;
+        $envio = (New Faturamento())->EnviaEmail($request->id, $request->tipo);
+        
+        if($envio){
+            return response()->json(array('status'=>'success', 'msg'=>"E-mail Enviado com Sucesso!"), 200);
         }else{
-            $cpfCnpj = $faturamento->convenio->empresa->cpf;
-            $nome = $faturamento->convenio->empresa->nome_fantasia;
+            return response()->json(array('status'=>'error', 'msg'=>"E-mail não foi enviado!"), 200);
         }
+        
+    }
 
-        $assunto = "RELATÓRIO DE FATURAMENTO - " . strtoupper($nome) . " - " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
+    public function EnviarEmailFaturamentoAutomatico($faturamento_id, $tipo_envio){
 
-        if($request->tipo == "boleto-nf"){
-            $assunto = "NFS E BOLETO - " . strtoupper($nome) . " " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
-        }
-
-        $i = 1;
-        foreach($EmailDestinatario as $destinatario){
-            if($i == 1){
-                $EmailTo = $destinatario->email;
-            }else{
-                $arrayEmails[] = $destinatario->email;
-            }
-            $i++;
-        }
-
-        if($i > 2){
-            $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $request->tipo, $assunto));
-        }else{
-            $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $request->tipo, $assunto));
-        }
-
-        if($enviaEmail){
-            $faturamento->etapa_faturamento = 'Finalizado';
-            $faturamento->save();
-        }
-
-        return response()->json(array('status'=>'success', 'msg'=>"E-mail Enviado com Sucesso!"), 200);
-
+        $envio = (New Faturamento())->EnviaEmail($faturamento_id, $tipo_envio); 
+        return $envio;
+        
     }
 
     public function validarFaturamento(Request $request){

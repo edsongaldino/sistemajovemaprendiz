@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('notificacoes_faturamento', function (Blueprint $table) {
+        Schema::create('notificacoes_sistema', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('faturamento_id')->constrained('faturamentos');
-            $table->enum('tipo_notificacao', ['Relatório','Emissão','Vencimento','Atraso','Pagamento']);
+            $table->enum('tipo_notificacao', ['Faturamento','Relatório','Nota Fiscal','Boleto']);
+            $table->enum('situacao', ['Criada','Resolvida']);
+            $table->string('descricao');
             $table->string('email');
             $table->date('data_envio');
-            $table->date('data_visualizacao');
+            $table->integer('user_validacao')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notificacoes');
+        Schema::dropIfExists('notificacoes_sistema');
     }
 };
