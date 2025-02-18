@@ -90,7 +90,9 @@ class Faturamento extends Model
         if($i > 2){
             $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $tipo_envio, $assunto));
         }else{
-            $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $tipo_envio, $assunto));
+            $enviaEmail = Mail::to($EmailTo)
+            //->bcc("dcr@larmariadelourdes.org")
+            ->send(new EmailFaturamento($faturamento, $tipo_envio, $assunto));
         }
 
         if($enviaEmail){
