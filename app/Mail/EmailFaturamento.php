@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
 
 class EmailFaturamento extends Mailable
@@ -30,13 +29,20 @@ class EmailFaturamento extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email_faturamento')
-                    ->from('aprendiz@larjovemaprendiz.ong.br', 'Lar Maria de Lourdes - Jovem Aprendiz')
-                    ->replyTo('dcr@larmariadelourdes.org', 'Lar Maria de Lourdes - Jovem Aprendiz')
-                    ->attachData(
-                        $this->faturamento->notaFiscal->link_pdf, 
-                        'NotaFiscal'. $this->faturamento->notaFiscal->numero_nf.'.pdf', ['mime' => 'application/pdf',])
-                    ->subject($this->assunto);
+        return $this->view('emails.email_faturamento')->from('aprendiz@larjovemaprendiz.ong.br', 'Lar Maria de Lourdes - Jovem Aprendiz')->replyTo('dcr@larmariadelourdes.org', 'Lar Maria de Lourdes - Jovem Aprendiz')->subject($this->assunto);
     }
 
+    /*
+    return $this->view('emails.email_faturamento')
+                    ->from('aprendiz@larjovemaprendiz.ong.br', 'Lar Maria de Lourdes - Jovem Aprendiz')
+                    ->replyTo('dcr@larmariadelourdes.org', 'Lar Maria de Lourdes - Jovem Aprendiz');
+
+                    if($this->faturamento->notaFiscal->link_pdf){
+                        Storage::put('temp/nf.pdf', $this->faturamento->notaFiscal->link_pdf);
+                        $this->attachData(Storage::get('temp/nf.pdf'), 'NotaFiscal'. $this->faturamento->notaFiscal->numero_nf.'.pdf', ['mime' => 'application/pdf',]);
+                    };
+
+                    Storage::delete('temp/nf.pdf');
+
+                    $this->subject($this->assunto);*/
 }
