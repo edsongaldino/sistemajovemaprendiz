@@ -14,6 +14,7 @@ use App\Endereco;
 use App\Cidade;
 use App\Curso;
 use App\Empresa;
+use App\EmpresaContato;
 use App\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailProcessoSeletivo;
@@ -252,11 +253,31 @@ class VagaController extends Controller
     public function EnviarProcesso(Request $request)
     {
         $vaga = Vaga::find($request->vaga_id);
-        if($vaga->empresa->email_responsavel != null){
-            $destinatario = $vaga->empresa->email_responsavel;
-            Mail::to($destinatario)->cc('edson@lancamentosonline.com.br')->send(new EmailProcessoSeletivo($vaga));
+        $EmailDestinatario = EmpresaContato::where('Setor','RH')->where('empresa_id',$vaga->empresa_id)->get();
+
+        if($EmailDestinatario->count() < 1){
+            return response()->json(array('status'=>'error', 'msg'=>"Nenhum e-mail cadastrado para esse cliente!"), 200);
+        }
+
+        $i = 1;
+        foreach($EmailDestinatario as $destinatario){
+            if($i == 1){
+                $EmailTo = $destinatario->email;
+            }else{
+                $arrayEmails[] = $destinatario->email;
+            }
+            $i++;
+        }
+
+        if($i > 2){
+            $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailProcessoSeletivo($vaga));
+        }else{
+            $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailProcessoSeletivo($vaga));
+        }
+
+        if($enviaEmail){
             //GRava Log
-            $log = (new LogController())->gravaLog('Envio de Processo Seletivo', $destinatario, $vaga->id);
+            $log = (new LogController())->gravaLog('Envio de Processo Seletivo', $EmailTo, $vaga->id);
             return redirect()->back()->with('success', 'A lista dos candidatos foi enviada para a empresa!');
         }else{
             return redirect()->back()->with('error', 'Não foi possível enviar, porque a empresa não possui um e-mail cadastrado!');
