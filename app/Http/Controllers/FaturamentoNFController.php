@@ -98,11 +98,11 @@ class FaturamentoNFController extends Controller
     {
         $notafiscal = FaturamentoNF::find($id);
         $notafiscal->status = $dadosNF['status'];
-        $notafiscal->link_pdf = $dadosNF['link_pdf'];
-        $notafiscal->link_xml = $dadosNF['link_xml'];
-        $notafiscal->numero_rps = $dadosNF['numero_rps'];
-        $notafiscal->numero_nf = $dadosNF['numero_nf'];
-        $notafiscal->data_emissao = Helper::data_mysql(Helper::datetime_br($dadosNF['data_emissao']));
+        $notafiscal->link_pdf = $dadosNF['link_pdf'] ?? '';
+        $notafiscal->link_xml = $dadosNF['link_xml'] ?? '';
+        $notafiscal->numero_rps = $dadosNF['numero_rps'] ?? '';
+        $notafiscal->numero_nf = $dadosNF['numero_nf'] ?? '';
+        $notafiscal->data_emissao = Helper::data_mysql(Helper::datetime_br($dadosNF['data_emissao'] ?? '2000-01-01'));
         if($notafiscal->save()):
             return true;
         endif;
