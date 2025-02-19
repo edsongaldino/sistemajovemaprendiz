@@ -31,18 +31,4 @@ class EmailFaturamento extends Mailable
     {
         return $this->view('emails.email_faturamento')->from('aprendiz@larjovemaprendiz.ong.br', 'Lar Maria de Lourdes - Jovem Aprendiz')->replyTo('dcr@larmariadelourdes.org', 'Lar Maria de Lourdes - Jovem Aprendiz')->subject($this->assunto);
     }
-
-    /*
-    return $this->view('emails.email_faturamento')
-                    ->from('aprendiz@larjovemaprendiz.ong.br', 'Lar Maria de Lourdes - Jovem Aprendiz')
-                    ->replyTo('dcr@larmariadelourdes.org', 'Lar Maria de Lourdes - Jovem Aprendiz');
-
-                    if($this->faturamento->notaFiscal->link_pdf){
-                        Storage::put('temp/nf.pdf', $this->faturamento->notaFiscal->link_pdf);
-                        $this->attachData(Storage::get('temp/nf.pdf'), 'NotaFiscal'. $this->faturamento->notaFiscal->numero_nf.'.pdf', ['mime' => 'application/pdf',]);
-                    };
-
-                    Storage::delete('temp/nf.pdf');
-
-                    $this->subject($this->assunto);*/
 }
