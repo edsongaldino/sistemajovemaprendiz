@@ -137,13 +137,11 @@ class Faturamento extends Model
             $faturamento->etapa_faturamento = 'Finalizado';
             $tipo_notificacao = "Emissão";
 
-            $fileUrls = [
-                $faturamento->notaFiscal->link_pdf,
-                $faturamento->notaFiscal->link_xml
-            ];
-
+            $fileUrls[] = ['pdf','PDF_Nota_' . $faturamento->notaFiscal->numero_nf,$faturamento->notaFiscal->link_pdf];
+            $fileUrls[] = ['xml','XML_Nota_' . $faturamento->notaFiscal->numero_nf,$faturamento->notaFiscal->link_xml];
+                
             if(isset($faturamento->boleto->codigo_boleto)){
-                $fileUrls[] = 'https://sistema.larjovemaprendiz.ong.br/sistema/faturamento/boleto/'.$faturamento->boleto->id.'/visualizar';
+                $fileUrls[] = ['pdf','Boleto_'. $faturamento->boleto->id, 'https://sistema.larjovemaprendiz.ong.br/sistema/faturamento/boleto/'.$faturamento->boleto->id.'/visualizar'];
             };
             
         }
