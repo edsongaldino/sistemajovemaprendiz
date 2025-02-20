@@ -37,27 +37,37 @@ class EmailFaturamentoAnexo extends Mailable
         $tempPaths = [];
 
         foreach ($this->fileUrls as $url) {
-            $fileContent = Http::get($url)->body();
-            $fileName = basename(parse_url($url, PHP_URL_PATH)); // Extrai o nome do arquivo da URL
-            $tempPath = storage_path('app/' . $fileName);
+            $fileName = basename(parse_url($url, PHP_URL_PATH)); // Obtém o nome original do arquivo
+            $tempPath = storage_path("app/temp_{$fileName}");
 
-            file_put_contents($tempPath, $fileContent);
-            $tempPaths[] = $tempPath;
+            // Faz a requisição HTTP para baixar o arquivo como binário
+            $response = Http::withOptions(['stream' => true])->get($url);
 
-            // Anexa o arquivo ao e-mail
-            $email->attach($tempPath, [
-                'as' => $fileName, // Mantém o nome original
-                'mime' => mime_content_type($tempPath), // Detecta o tipo do arquivo
-            ]);
+            if ($response->successful()) {
 
-            // Exclui os arquivos temporários após o envio (se não estiver usando filas)
-            register_shutdown_function(function () use ($tempPaths) {
-                foreach ($tempPaths as $tempPath) {
-                    if (file_exists($tempPath)) {
-                        unlink($tempPath);
+                // Escreve o conteúdo no arquivo sem alterar o encoding
+                file_put_contents($tempPath, $response->body());
+                
+                $tempPaths[] = $tempPath;
+
+                // Anexa o arquivo ao e-mail
+                $email->attach($tempPath, [
+                    'as' => $fileName, // Mantém o nome original
+                    'mime' => mime_content_type($tempPath), // Detecta o tipo do arquivo
+                ]);
+
+                // Exclui os arquivos temporários após o envio (se não estiver usando filas)
+                /*
+                register_shutdown_function(function () use ($tempPaths) {
+                    foreach ($tempPaths as $tempPath) {
+                        if (file_exists($tempPath)) {
+                            unlink($tempPath);
+                        }
                     }
-                }
-            });
+                });
+                */
+                
+            }
         }
 
         return $email;
