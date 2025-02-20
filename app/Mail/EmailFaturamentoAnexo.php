@@ -58,7 +58,7 @@ class EmailFaturamentoAnexo extends Mailable
 
                 // Anexa o arquivo ao e-mail
                 $email->attach($tempPath, [
-                    'as' => $nome.$extension, // Mantém o nome original
+                    'as' => $nome.'.'.$extension, // Mantém o nome original
                     'mime' => $mimeType
                 ]);
 
