@@ -561,4 +561,7 @@ Route::get('/automatizacao-notas-boletos-envios', function() {
 
 });
 
+Route::get('/envia-email-teste-com-anexo', function() {
+    (New Faturamento())->EnviaEmailComAnexo(47, 'boleto-nf');
+});
 

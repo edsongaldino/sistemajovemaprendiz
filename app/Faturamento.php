@@ -108,7 +108,7 @@ class Faturamento extends Model
         }
     }
 
-    public function EnviaEmailComAnexo($faturamento_id, $tipo_envio){
+    public static function EnviaEmailComAnexo($faturamento_id, $tipo_envio){
 
         $faturamento = Faturamento::find($faturamento_id);
         $data_atual = Carbon::now()->format('d/m/Y H:i');
@@ -159,9 +159,11 @@ class Faturamento extends Model
         }
 
         if($i > 2){
-            $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamentoAnexo($faturamento, $tipo_envio, $assunto, $fileUrls));
+            //->bcc("dcr@larmariadelourdes.org")
+            $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->send(new EmailFaturamentoAnexo($faturamento, $tipo_envio, $assunto, $fileUrls));
         }else{
-            $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamentoAnexo($faturamento, $tipo_envio, $assunto, $fileUrls));
+            //->bcc("dcr@larmariadelourdes.org")
+            $enviaEmail = Mail::to($EmailTo)->send(new EmailFaturamentoAnexo($faturamento, $tipo_envio, $assunto, $fileUrls));
         }
 
         if($enviaEmail){

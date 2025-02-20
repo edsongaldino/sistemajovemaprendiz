@@ -60,8 +60,6 @@ class EmailFaturamentoAnexo extends Mailable
             });
         }
 
-        dd($email);
-
         return $email;
     }
 
