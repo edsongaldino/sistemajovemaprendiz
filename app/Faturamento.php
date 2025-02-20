@@ -40,12 +40,12 @@ class Faturamento extends Model
         $Faturamento->data_inicial = $data_inicial;
         $Faturamento->data_final = $data_final;
         $Faturamento->forma_pagamento = $convenio->forma_pagamento;
-        
+
         if($Faturamento->save()){
             return $Faturamento;
         }else{
             return false;
-        }      
+        }
 
     }
 
@@ -70,12 +70,20 @@ class Faturamento extends Model
         $assunto = "RELATÓRIO DE FATURAMENTO - " . strtoupper($nome) . " - " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
         $faturamento->etapa_faturamento = 'Envio Faturamento';
         $tipo_notificacao = "Relatório";
+        $fileUrls = [];
 
 
         if($tipo_envio == "boleto-nf"){
             $assunto = "NFS E BOLETO - " . strtoupper($nome) . " " . strtoupper($faturamento->convenio->empresa->endereco->cidade->nome_cidade) . " (" . $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado . ") " . strtoupper(Helper::ParteData($faturamento->data_inicial, 'mes'))."/".Helper::ParteData($faturamento->data_inicial, 'ano');
             $faturamento->etapa_faturamento = 'Finalizado';
             $tipo_notificacao = "Emissão";
+
+            $fileUrls[] = ['pdf','PDF_Nota_' . $faturamento->notaFiscal->numero_nf,$faturamento->notaFiscal->link_pdf];
+            $fileUrls[] = ['xml','XML_Nota_' . $faturamento->notaFiscal->numero_nf,$faturamento->notaFiscal->link_xml];
+
+            if(isset($faturamento->boleto->codigo_boleto)){
+                $fileUrls[] = ['pdf','Boleto_'. $faturamento->boleto->id, 'https://sistema.larjovemaprendiz.ong.br/sistema/faturamento/boleto/'.$faturamento->boleto->id.'/visualizar'];
+            };
         }
 
         $i = 1;
@@ -89,9 +97,9 @@ class Faturamento extends Model
         }
 
         if($i > 2){
-            $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $tipo_envio, $assunto));
+            $enviaEmail = Mail::to($EmailTo)->cc($arrayEmails)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamentoAnexo($faturamento, $tipo_envio, $assunto, $fileUrls));
         }else{
-            $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamento($faturamento, $tipo_envio, $assunto));
+            $enviaEmail = Mail::to($EmailTo)->bcc("dcr@larmariadelourdes.org")->send(new EmailFaturamentoAnexo($faturamento, $tipo_envio, $assunto, $fileUrls));
         }
 
         if($enviaEmail){
@@ -139,11 +147,11 @@ class Faturamento extends Model
 
             $fileUrls[] = ['pdf','PDF_Nota_' . $faturamento->notaFiscal->numero_nf,$faturamento->notaFiscal->link_pdf];
             $fileUrls[] = ['xml','XML_Nota_' . $faturamento->notaFiscal->numero_nf,$faturamento->notaFiscal->link_xml];
-                
+
             if(isset($faturamento->boleto->codigo_boleto)){
                 $fileUrls[] = ['pdf','Boleto_'. $faturamento->boleto->id, 'https://sistema.larjovemaprendiz.ong.br/sistema/faturamento/boleto/'.$faturamento->boleto->id.'/visualizar'];
             };
-            
+
         }
 
         $i = 1;

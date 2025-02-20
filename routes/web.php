@@ -482,7 +482,7 @@ Route::get('/teste-api-post', function() {
 });
 
 Route::get('/automatizacao-faturamentos', function() {
-    
+
     $dia = date('d');
     $convenios = Convenio::where('dia_faturamento',$dia)->where('situacao','Ativo')->whereNull('deleted_at')->inRandomOrder()->limit(1)->get();
     $total = 0;
@@ -495,7 +495,7 @@ Route::get('/automatizacao-faturamentos', function() {
 
         if((New FaturamentoController())->GetFaturamentoConvenioByPeriodo($convenio->id,$data_inicial,$data_final) == 0){
 
-            $faturamentoConvenio = (New FaturamentoController())->faturarConvenioAutomatico($convenio,$data_inicial,$data_final);  
+            $faturamentoConvenio = (New FaturamentoController())->faturarConvenioAutomatico($convenio,$data_inicial,$data_final);
 
             if($faturamentoConvenio){
 
@@ -503,8 +503,8 @@ Route::get('/automatizacao-faturamentos', function() {
                 ->where('contratos.convenio_id','=', $faturamentoConvenio->convenio_id)
                 ->where('contratos.data_final','>=', $data_inicial)->get();
 
-                foreach($contratos as $contrato){  
-                    $faturamentoContrato = (New FaturamentoController())->faturarContratoAutomatico($contrato->id,$faturamentoConvenio->id,$data_inicial,$data_final);  
+                foreach($contratos as $contrato){
+                    $faturamentoContrato = (New FaturamentoController())->faturarContratoAutomatico($contrato->id,$faturamentoConvenio->id,$data_inicial,$data_final);
                     $total++;
                 }
             }
