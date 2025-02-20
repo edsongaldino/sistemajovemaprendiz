@@ -37,8 +37,13 @@ class EmailFaturamentoAnexo extends Mailable
         $tempPaths = [];
 
         foreach ($this->fileUrls as $url) {
-            $fileName = basename(parse_url($url, PHP_URL_PATH)); // Obtém o nome original do arquivo
-            $tempPath = storage_path("app/temp_{$fileName}");
+            // Obtém o nome original do arquivo na URL
+            $pathInfo = pathinfo(parse_url($url, PHP_URL_PATH));
+            $extension = isset($pathInfo['extension']) ? $pathInfo['extension'] : 'pdf'; // Usa 'bin' se não houver extensão
+            $fileName = $pathInfo['basename']; // Nome original do arquivo
+
+            // Caminho temporário correto
+            $tempPath = storage_path("app/{$fileName}.{$extension}");
 
             // Faz a requisição HTTP para baixar o arquivo como binário
             $response = Http::withOptions(['stream' => true])->get($url);
@@ -50,10 +55,13 @@ class EmailFaturamentoAnexo extends Mailable
                 
                 $tempPaths[] = $tempPath;
 
+                // Detecta o MIME corretamente
+                $mimeType = mime_content_type($tempPath);
+
                 // Anexa o arquivo ao e-mail
                 $email->attach($tempPath, [
                     'as' => $fileName, // Mantém o nome original
-                    'mime' => mime_content_type($tempPath), // Detecta o tipo do arquivo
+                    'mime' => $mimeType ?: 'application/octet-stream',
                 ]);
 
                 // Exclui os arquivos temporários após o envio (se não estiver usando filas)
@@ -68,6 +76,7 @@ class EmailFaturamentoAnexo extends Mailable
                 */
                 
             }
+
         }
 
         return $email;
