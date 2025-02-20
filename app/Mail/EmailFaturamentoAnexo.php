@@ -59,7 +59,7 @@ class EmailFaturamentoAnexo extends Mailable
                 $mimeType = mime_content_type($tempPath);
 
                 // Anexa o arquivo ao e-mail
-                $email->AddAttachment($tempPath, $fileName);
+                $email->AddAttachment($tempPath, $nome.'.'.$extension);
 
                 // Exclui os arquivos temporários após o envio (se não estiver usando filas)
                 /*
