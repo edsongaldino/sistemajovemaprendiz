@@ -415,7 +415,9 @@ class Helper{
 
     public static function calculaDecimo($Faturamento){
         //calculo
-        $tempo_contrato = Helper::getDiasEntreDatas($Faturamento->data_inicial, $Faturamento->data_final);
+		//Mudamos o calcula da quantidade de dias entre datas pra pegar direto do faturamento
+		//Helper::getDiasEntreDatas($Faturamento->data_inicial, $Faturamento->data_final)
+        $tempo_contrato = $Faturamento->quantidade_dias;
 		$totalFaturamentos = FaturamentoContrato::where('contrato_id', $Faturamento->contrato_id)->count();
 
         switch ($tempo_contrato){
@@ -442,7 +444,7 @@ class Helper{
 
     public static function calculaFerias($Faturamento){
         //calculo
-        $tempo_contrato = Helper::getDiasEntreDatas($Faturamento->data_inicial, $Faturamento->data_final);
+        $tempo_contrato = $Faturamento->quantidade_dias;
 		$totalFaturamentos = FaturamentoContrato::where('contrato_id', $Faturamento->contrato_id)->count();
 
         switch ($tempo_contrato){
