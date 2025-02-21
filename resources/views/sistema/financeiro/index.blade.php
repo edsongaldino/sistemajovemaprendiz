@@ -190,7 +190,7 @@
 
             @foreach ($faturamentos as $faturamento)
             <tr>
-                <th class="status-envio">{{ $faturamento->id }} <br/> 
+                <th class="status-envio">{{ $faturamento->id }} <br/>
                   @if($faturamento->envios->count() > 0)
                   <i class="fa fa-paper-plane enviado" title="Envios já foram realizados" aria-hidden="true"></i>
                   @else
@@ -204,7 +204,7 @@
                   @else
                   CPF: <b>{{ Helper::mask($faturamento->convenio->empresa->cpf, '###.###.###-##') ?? '' }}</b>
                   @endif
-                  
+
                   <br/>{{ $faturamento->convenio->empresa->razao_social ?? $faturamento->convenio->empresa->nome_fantasia }}<br/>{{ $faturamento->convenio->empresa->endereco->cidade->nome_cidade ?? '' }} ({{ $faturamento->convenio->empresa->endereco->cidade->estado->uf_estado ?? '' }})</td>
                 @if(isset($faturamento->convenio->contratos))
                 <td class="ver-contratos">
@@ -241,7 +241,7 @@
                   @endif
 
                   @if(isset($faturamento->credito->id))
-                    <br/><span class="credito" title="{{ $faturamento->credito->descricao_credito }}">[C] R$ {{ Helper::converte_valor_real($faturamento->credito->valor_credito) }}</span> 
+                    <br/><span class="credito" title="{{ $faturamento->credito->descricao_credito }}">[C] R$ {{ Helper::converte_valor_real($faturamento->credito->valor_credito) }}</span>
                   @endif
                 </td>
                 <td>
@@ -262,7 +262,7 @@
                       @else
                           <a href="#" class="btn btn-info EmitirNotaFiscal" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Emitir NF</a>
                       @endif
-                    
+
                       @if($faturamento->forma_pagamento == 'Depósito')
                         @if(isset($faturamento->informePagamento->id))
                         <a href="#" class="btn btn-success boletoLiquidado" title="Pagamento Informado"><i class="fa fa-money" aria-hidden="true"></i> Pagamento Informado</a>
@@ -278,8 +278,12 @@
                             <a href="#" class="btn btn-danger boletoAtivo"><i class="fa fa-close" aria-hidden="true"></i></a>
                         @endif
                       @else
-                          <a href="#" class="btn btn-info gerarCobranca" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" class="btn btn-info"><i class="fa fa-file-text-o" aria-hidden="true"></i> Gerar Cobrança</a>
-                          <a href="#" class="btn btn-danger excluirFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i></a>
+                        @if(isset($faturamento->notaFiscal->codigo_nf))
+                            @if($faturamento->notaFiscal->status == 'Autorizada')
+                            <a href="#" class="btn btn-info gerarCobranca" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" class="btn btn-info"><i class="fa fa-file-text-o" aria-hidden="true"></i> Gerar Cobrança</a>
+                            @endif
+                        @endif
+                        <a href="#" class="btn btn-danger excluirFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i></a>
                       @endif
                     @endif
                     <!-- Example single danger button -->
@@ -291,7 +295,7 @@
                         <a href="#" class="dropdown-item EnviarEmailFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" data-tipo="boleto-nf">Enviar E-mail (Boleto + NF)</a>
                         <a class="dropdown-item" target="_blank" href="/sistema/faturamento/{{ $faturamento->id }}/visualizar-relatorio">Visualizar Relatório</a>
                         <a href="#" class="dropdown-item EnviarEmailFaturamento" data-id="{{ $faturamento->id }}" data-token="{{ csrf_token() }}" data-tipo="relatorio">Enviar Relatório</a>
-                        
+
                         @if(isset($faturamento->numero_pedido))
                         <a href="#" class="dropdown-item AlterarNumeroPedido" data-id="{{ $faturamento->id }}" data-numero-pedido="{{ $faturamento->numero_pedido }}" data-dados-bancarios="{{ $faturamento->dados_bancarios }}">Alterar Número do Pedido</a>
                         @else
@@ -320,7 +324,7 @@
                         @if($faturamento->envios->count() > 0)
                         <a class="dropdown-item" href="/sistema/faturamento/{{ $faturamento->id }}/visualizar-relatorio-envio">Relatório de Envios</a>
                         @endif
-                        
+
                         </div>
                     </div>
 
@@ -397,7 +401,7 @@
                         <label for="message-text" class="col-form-label">Nº do Pedido:</label>
                         <input type="text" name="numero_pedido" id="numero_pedido" class="form-control" value="">
                       </div>
-                    
+
                       <div class="form-group">
                         <label for="message-text" class="col-form-label">Dados Bancários:</label>
                         <textarea type="text" name="dados_bancarios" id="dados_bancarios" class="form-control"></textarea>
@@ -431,7 +435,7 @@
                       <label for="message-text" class="col-form-label">Nova data de venmcimento:</label>
                       <input type="date" name="nova_data" id="nova_data" class="form-control nova-data" value="">
                     </div>
-                  
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i> Cancelar</button>
@@ -461,7 +465,7 @@
                         <label for="message-text" class="col-form-label">Data do Pagamento:</label>
                         <input type="date" name="data_pagamento" id="data_pagamento" class="form-control" value="">
                       </div>
-                    
+
                       <div class="form-group col-md-6">
                         <label for="message-text" class="col-form-label">Valor Pago:</label>
                         <input type="text" name="valor_pago" id="valor_pago" class="form-control moeda">
@@ -506,7 +510,7 @@
                       <label for="message-text" class="col-form-label">Valor Crédito:</label>
                       <input type="text" name="valor_credito" id="valor_credito" class="form-control moeda" value="">
                     </div>
-                  
+
                     <div class="form-group">
                       <label for="message-text" class="col-form-label">Descrição:</label>
                       <textarea type="text" name="descricao_credito" id="descricao_credito" class="form-control"></textarea>
