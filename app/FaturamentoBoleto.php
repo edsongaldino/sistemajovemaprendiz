@@ -24,7 +24,7 @@ class FaturamentoBoleto extends Model
         $faturamento = Faturamento::find($id);
 
         //Calcula data de vencimento do boleto
-        $data_vencimento = Helper::GetDataVencimentoFaturamento($faturamento);        
+        $data_vencimento = Helper::GetDataVencimentoFaturamento($faturamento);
 
         if($faturamento->convenio->empresa->tipo_cadastro == 'CNPJ'){
             $cpfCnpj = $faturamento->convenio->empresa->cnpj;
@@ -53,7 +53,8 @@ class FaturamentoBoleto extends Model
             'boleto.pagador.endereco.complemento'=> $faturamento->convenio->empresa->endereco->complemento_endereco ?? '',
             'boleto.instrucao'=> array(
                                         '*O DEPOSITO NAO QUITA ESTE BOLETO*',
-                                        'BOLETO REFERENTE AO PERÍODO '.strtoupper(Helper::ParteData($faturamento->data_final,'mes')).'/'.Helper::ParteData($faturamento->data_final,'ano')
+                                        'BOLETO REFERENTE AO PERÍODO '.strtoupper(Helper::ParteData($faturamento->data_final,'mes')).'/'.Helper::ParteData($faturamento->data_final,'ano'),
+                                        'COBRANÇA REFERENTE À NOTA FISCAL DE Nº ' . $faturamento->notaFiscal->numero_nf
                                 )
             );
             //NOTA '.$faturamento->notaFiscal->id ?? '0'.'
@@ -162,10 +163,10 @@ class FaturamentoBoleto extends Model
                 if($boleto){
 
                     $faturamento->etapa_faturamento = 'Envio Faturamento';
-                    $faturamento->save();                   
+                    $faturamento->save();
                     $response_array['status'] = 'success';
                     echo json_encode($response_array);
-                    
+
                 }else{
                     $response_array['status'] = 'error';
                     echo json_encode($response_array);
@@ -184,5 +185,5 @@ class FaturamentoBoleto extends Model
             * Para saber mais sobre tratamento de erros veja a seção Status & Erros
             **/
     }
-    
+
 }
