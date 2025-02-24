@@ -12,22 +12,20 @@ class Reposicao extends Model
 
         $TemReposicao = Reposicao::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
 
-        $reposicao = $TemReposicao;
-
-        if($TemReposicao->count() > 0){
+        if(isset($TemReposicao)){
 
             $TemReposicao->aluno_id = $aluno_id;
             $TemReposicao->contrato_id = $contrato->id;
             $TemReposicao->save();
 
         }else{
-            $reposicao = new Reposicao();
-            $reposicao->aluno_id = $aluno_id;
-            $reposicao->contrato_id = $contrato->id;
-            $reposicao->save();
+            $TemReposicao = new Reposicao();
+            $TemReposicao->aluno_id = $aluno_id;
+            $TemReposicao->contrato_id = $contrato->id;
+            $TemReposicao->save();
         }
         
-        return $reposicao;
+        return $TemReposicao;
     }
 
     public function aluno()
