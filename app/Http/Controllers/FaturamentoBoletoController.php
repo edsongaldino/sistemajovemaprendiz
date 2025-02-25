@@ -605,16 +605,19 @@ class FaturamentoBoletoController extends Controller
 
                                 $FaturamentoBoleto = FaturamentoBoleto::where('codigo_boleto', $titulo->token)->first();
 
-                                $boleto = FaturamentoBoleto::findOrFail($FaturamentoBoleto->id);
-                                $boleto->status = $ocorrencia->situacao;
-                                $boleto->valor_pago = $ocorrencia->info->valorPago ?? null;
-                                $boleto->valor_juros = $ocorrencia->info->jurosMora ?? null;
-                                $boleto->data_pagamento = $data_pagamento;
-                                $boleto->save();
+                                if(isset($FaturamentoBoleto->id)){
 
-                                if($ocorrencia->situacao == 'LIQUIDACAO'){
-                                    //Informa Pagamento
-                                    Faturamento::InformarPagamento($FaturamentoBoleto->faturamento_id,$data_pagamento, 'Boleto');
+                                    $boleto = FaturamentoBoleto::findOrFail($FaturamentoBoleto->id);
+                                    $boleto->status = $ocorrencia->situacao;
+                                    $boleto->valor_pago = $ocorrencia->info->valorPago ?? null;
+                                    $boleto->valor_juros = $ocorrencia->info->jurosMora ?? null;
+                                    $boleto->data_pagamento = $data_pagamento;
+                                    $boleto->save();
+
+                                    if($ocorrencia->situacao == 'LIQUIDACAO'){
+                                        //Informa Pagamento
+                                        Faturamento::InformarPagamento($FaturamentoBoleto->faturamento_id,$data_pagamento, 'Boleto');
+                                    }
                                 }
 
                             }
