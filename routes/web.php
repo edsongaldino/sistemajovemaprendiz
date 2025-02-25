@@ -378,6 +378,11 @@ Route::get('/atualiza-boletos-hoje', function() {
     return $valor;
 });
 
+Route::get('/atualiza-boletos/{data}', function($data) {
+    $valor = FaturamentoBoletoController::CronAtualizarBoletos($data);
+    return $valor;
+});
+
 Route::get('/atualiza-pagamentos', function() {
     $boletosPagos = FaturamentoBoleto::where('status', 'LIQUIDACAO')->get();
     $i = 0;
