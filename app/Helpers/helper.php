@@ -328,7 +328,7 @@ class Helper{
                 return $atualizacoes->sum('valor');
             break;
 
-            case "Exame Admissional" || "Exame Demissional" || "Exame Periodico":
+            case "Exame Admissional" || "Exame Demissional" || "Exame Periódico":
                 return $atualizacoes->sum('valor');
             break;
 

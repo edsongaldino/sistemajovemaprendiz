@@ -129,7 +129,7 @@ class FaturamentoContrato extends Model
                 $dados->valor_pis_provisionamento = Helper::calcularPer100DeValor(($Faturamento->valor+$dados->valor_decimo_terceiro+$dados->valor_ferias+$dados->valor_terco_ferias), '1');
                 $dados->valor_beneficios = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Benefícios');
                 $dados->valor_descontos = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Falta Trabalho');
-                $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Demissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Periodico');
+                $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Demissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Periódico');
                 $dados->valor_uniforme = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Entrega de Uniforme');
 
                 $dados->valor_total = ($dados->valor_salario_liquido+$txAdm+$dados->valor_decimo_terceiro+
@@ -144,7 +144,7 @@ class FaturamentoContrato extends Model
                 $dados->faturamento_contrato_id = $Faturamento->id;
                 $dados->valor_beneficios = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Benefícios');
                 $dados->valor_descontos = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Falta Trabalho');
-                $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Demissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Periodico');
+                $dados->valor_exames = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Admissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Demissional') + Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Exame Periódico');
                 $dados->valor_uniforme = Helper::getAtualizacaoContrato($Faturamento->data_inicial, $Faturamento->data_final, $contrato_id, 'Entrega de Uniforme');
 
                 $dados->valor_total = ($txAdm+$dados->valor_beneficios+$dados->valor_exames+$dados->valor_uniforme)-($dados->valor_descontos);

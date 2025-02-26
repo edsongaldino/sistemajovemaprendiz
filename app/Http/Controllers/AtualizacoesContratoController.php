@@ -62,7 +62,7 @@ class AtualizacoesContratoController extends Controller
                 $atualizacao->valor = $request->valor;
                 break;
 
-            case "Exame Periodico":
+            case "Exame Periódico":
                 $atualizacao->valor = $request->valor;
                 break;
 

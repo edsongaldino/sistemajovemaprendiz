@@ -452,7 +452,7 @@ class FaturamentoController extends Controller
             //$valorTotal = $valorTotal - Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Falta Trabalho');
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Admissional');
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Demissional');
-            $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Periodico');
+            $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Periódico');
 
         }else{
 
@@ -461,7 +461,7 @@ class FaturamentoController extends Controller
             $valorTotal = $valorTotal - Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Falta Trabalho');
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Admissional');
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Demissional');
-            $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Periodico');
+            $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Exame Periódico');
             $valorTotal = $valorTotal + Helper::getAtualizacaoContrato($data_inicial, $data_final, $id, 'Benefícios');
         }
 
