@@ -520,11 +520,11 @@ class Helper{
         $faturamentos = FaturamentoContrato::where('faturamento_id', $faturamento_id)->whereNull('deleted_at')->get();
 		$credito = FaturamentoCredito::where('faturamento_id', $faturamento_id)->first();
         $totalGeral = 0;
-
-
+	
         foreach($faturamentos as $faturamento){
 
 			if(isset($faturamento->contrato->tipo_faturamento)){
+				
 				if($faturamento->contrato->tipo_faturamento == 'Empresa'){
 					$totalGeral += ($faturamento->FaturamentoContratoEmpresaDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoEmpresaDados->valor_issqn ?? 0);
 				}else{
