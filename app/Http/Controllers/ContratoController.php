@@ -278,7 +278,7 @@ class ContratoController extends Controller
                             ->where('contratos.empresa_id', $empresa)
                             ->where('contratos.situacao','Encerrado')
                             ->whereNotIn('contratos.id', DB::table('reposicao')->pluck('reposicao.aluno_id')->toArray())
-                            ->groupBy('alunos.id')->get();              
+                            ->groupBy('alunos.id')->get();
         return view('global.getAlunosReposicao', compact('alunos'));
     }
 
@@ -293,9 +293,9 @@ class ContratoController extends Controller
                 $Nvalor = $contrato->valor_bolsa - ($contrato->valor_bolsa / 100 * $valorP);
             }
             $contrato->valor_bolsa = $Nvalor;
-            $contrato->save(); 
+            $contrato->save();
         }
-         
+
         return redirect()->route('sistema.atualizacoes')->with('success', 'Dados Atualizados!');
     }
 
@@ -305,8 +305,20 @@ class ContratoController extends Controller
             $contratos = Contrato::where('data_final', "<=", Carbon::now())->get();
 
             foreach($contratos as $contrato){
+
                 $contrato->situacao = "Encerrado";
-                $contrato->save(); 
+                $contrato->save();
+
+                //Grava atualização
+                $atualizacao = new AtualizacoesContrato();
+                $atualizacao->user_id = 1;
+                $atualizacao->contrato_id = $contrato->id;
+                $atualizacao->tipo = 'Atualização Contratual';
+                $atualizacao->data = Carbon::now()->format('Y-m-d');
+                $atualizacao->motivo_desligamento = 'Término de Contrato';
+                $atualizacao->situacao_contrato = 'Término de Contrato';
+                $atualizacao->save();
+
             }
 
             return $contratos->count() . " contratos atualizados!";
@@ -315,5 +327,5 @@ class ContratoController extends Controller
         }
     }
 
-    
+
 }
