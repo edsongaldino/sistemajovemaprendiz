@@ -567,6 +567,6 @@ Route::get('/automatizacao-notas-boletos-envios', function() {
 });
 
 Route::get('/testes', function() {
-    Helper::GetValorTotalFaturado(305);
+    Helper::GetValorTotalFaturado(498);
 });
 

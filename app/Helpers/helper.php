@@ -520,16 +520,20 @@ class Helper{
         $faturamentos = FaturamentoContrato::where('faturamento_id', $faturamento_id)->whereNull('deleted_at')->get();
 		$credito = FaturamentoCredito::where('faturamento_id', $faturamento_id)->first();
         $totalGeral = 0;
-	
+
         foreach($faturamentos as $faturamento){
 
 			if(isset($faturamento->contrato->tipo_faturamento)){
-				
 				if($faturamento->contrato->tipo_faturamento == 'Empresa'){
-					$totalGeral += ($faturamento->FaturamentoContratoEmpresaDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoEmpresaDados->valor_issqn ?? 0);
+					$valorFaturado = ($faturamento->FaturamentoContratoEmpresaDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoEmpresaDados->valor_issqn ?? 0);
 				}else{
-					$totalGeral += ($faturamento->FaturamentoContratoInstituicaoDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0);
+					$valorFaturado = ($faturamento->FaturamentoContratoInstituicaoDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0);
 				}
+
+				if($valorFaturado == 0){
+					$valorFaturado = $faturamento->valor;
+				}
+				$totalGeral += $valorFaturado;
 			}
 			
         }
@@ -539,6 +543,24 @@ class Helper{
 		}
 
         return $totalGeral;
+
+    }
+
+	public static function GetValorTotalFaturadoByContrato($faturamento_contrato_id){
+
+        $faturamento = FaturamentoContrato::find($faturamento_contrato_id);
+
+		if($faturamento->contrato->tipo_faturamento == 'Empresa'){
+			$valorFaturado = ($faturamento->FaturamentoContratoEmpresaDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoEmpresaDados->valor_issqn ?? 0);
+		}else{
+			$valorFaturado = ($faturamento->FaturamentoContratoInstituicaoDados->valor_total ?? 0) + ($faturamento->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0);
+		}
+
+		if($valorFaturado == 0){
+			$valorFaturado = $faturamento->valor;
+		}
+
+        return $valorFaturado;
 
     }
 

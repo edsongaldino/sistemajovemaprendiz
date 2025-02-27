@@ -123,13 +123,7 @@
                     @endphp
 
                     @if($FaturamentoContrato)
-
-                        @if($contrato->tipo_faturamento == 'Instituição')
-                        <td class="total-faturado"><strong>R$ {{ Helper::converte_valor_real(($FaturamentoContrato->FaturamentoContratoInstituicaoDados->valor_total ?? 0) + ($FaturamentoContrato->FaturamentoContratoInstituicaoDados->valor_issqn ?? 0)) }}</strong></td>
-                        @else
-                        <td class="total-faturado"><strong>R$ {{ Helper::converte_valor_real(($FaturamentoContrato->FaturamentoContratoEmpresaDados->valor_total ?? 0) + ($FaturamentoContrato->FaturamentoContratoEmpresaDados->valor_issqn ?? 0)) }}</strong></td>
-                        @endif
-
+                        <td class="total-faturado"><strong>R$ {{ Helper::converte_valor_real(Helper::GetValorTotalFaturadoByContrato($FaturamentoContrato->id)) }}</strong></td>
                         <td>
                         <a href="#" class="btn btn-success ContratoFaturado"><i class="fa fa-check" aria-hidden="true"></i> Faturado</a>
                         <a href="#" class="btn btn-danger excluirFaturamentoContrato" data-id="{{ $FaturamentoContrato->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-close" aria-hidden="true"></i></a>
