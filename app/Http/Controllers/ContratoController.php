@@ -302,7 +302,7 @@ class ContratoController extends Controller
     public function atualizaSituacao()
     {
         try {
-            $contratos = Contrato::where('data_final', "<=", Carbon::now())->get();
+            $contratos = Contrato::where('data_final', "<=", Carbon::now())->where('situacao', "Ativo")->get();
 
             foreach($contratos as $contrato){
 
